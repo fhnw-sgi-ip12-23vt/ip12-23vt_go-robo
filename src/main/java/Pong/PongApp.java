@@ -9,7 +9,7 @@ public class PongApp extends PApplet {
     float diam = 20;
     float rectSize = 80;
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         PApplet.main(new String[] { PongApp.class.getName() });
     }
 
@@ -23,8 +23,8 @@ public class PongApp extends PApplet {
     }
 
     void reset() {
-        x = width/2;
-        y = height/2;
+        x = width /2F;
+        y = height/2F;
         speedX = random(3, 5);
         speedY = random(3, 5);
     }
@@ -47,8 +47,8 @@ public class PongApp extends PApplet {
 
         // if ball hits wall, change direction of X
         if (x < 25) {
-            speedX *= -1.1;
-            speedY *= 1.1;
+            speedX *= -1.1F;
+            speedY *= 1.1F;
             x += speedX;
         }
 
