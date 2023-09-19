@@ -1,7 +1,8 @@
-package DemoApp;
+package demoApp;
 
 import processing.core.PApplet;
 
+/*Author: Michael Job*/
 public class DemoApp extends PApplet {
 
     public static void main(String[] args) {

@@ -31,6 +31,7 @@ public class GraphApp extends PApplet {
            ellipse(cur.getX(), cur.getY(), 20,20);
            Node next= cur.getNext();
            if (next !=null){
+               fill(255,0,0);
                line(cur.getX(), cur.getY(), next.getX(), next.getY());
            }
            cur= next;

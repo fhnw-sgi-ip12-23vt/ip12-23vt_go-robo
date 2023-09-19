@@ -1,7 +1,7 @@
-import Pong.PongApp;
-import DemoApp.DemoApp;
+import demoApp.DemoApp;
 import processing.core.PApplet;
 
+/*Author: Michael Job*/
 public class MainClass extends PApplet {
     public static void main(String[] args){
         //define which ProcessingApp should run on start (also import it)

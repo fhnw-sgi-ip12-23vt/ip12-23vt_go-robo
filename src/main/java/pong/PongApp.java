@@ -1,9 +1,9 @@
-package Pong;
+package pong;
 
 import processing.core.PApplet;
 
 
-//Source https://gist.github.com/dc74089/4094da7928839063ae06
+/*Source https://gist.github.com/dc74089/4094da7928839063ae06*/
 public class PongApp extends PApplet {
     float x, y, speedX, speedY;
     float diam = 20;

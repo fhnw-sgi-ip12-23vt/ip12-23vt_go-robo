@@ -4,7 +4,6 @@ Run MainClass to start any Processing project defined there.
 Use packages to define different apps/projects in this repo.
 
 
-
 ### IDE Setup
 
 Basic Processing Setup for IntelliJ IDE  
