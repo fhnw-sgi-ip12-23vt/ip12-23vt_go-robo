@@ -69,8 +69,8 @@ public class GameField extends PApplet {
 
     public void setup() {
         imageMode(CENTER);
-        PImage p = loadImage("../../resources/img/player.png");
-        player = new Player(this, p, 0.5f);
+        PImage p = loadImage("../../resources/img/roomba2-pixel-dark.png");
+        player = new Player(this, p, 0.3f);
         player.center_x = 100;
         player.change_y = 550;
         obstacles = new ArrayList<Sprite>();
