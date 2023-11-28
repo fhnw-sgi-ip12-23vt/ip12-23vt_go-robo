@@ -70,7 +70,7 @@ public class GameField extends PApplet {
     public void setup() {
         imageMode(CENTER);
         PImage p = loadImage("../../resources/img/player.png");
-        player = new Player(this, p, 0.8f);
+        player = new Player(this, p, 0.5f);
         player.center_x = 100;
         player.change_y = 550;
         obstacles = new ArrayList<Sprite>();
@@ -128,8 +128,10 @@ public class GameField extends PApplet {
             Sprite collided = col_list.get(0);
             if (s.change_x > 0) {
                 s.setRight(collided.getLeft());
+                stopAtObstacle();
             } else if (s.change_x < 0) {
                 s.setLeft(collided.getRight());
+                stopAtObstacle();
             }
         }
     }
@@ -198,27 +200,23 @@ public class GameField extends PApplet {
         if (nextLevel) {
             setup();
         } else if ((keyCode == RIGHT || key == 'd') || player.direction == Constants.NEUTRAL_FACING) {
+            player.change_y = 0;
             player.change_x = Constants.MOVE_SPEED;
         } else if ((keyCode == LEFT || key == 'a')  || player.direction == Constants.NEUTRAL_FACING) {
+            player.change_y = 0;
             player.change_x = -Constants.MOVE_SPEED;
         } else if ((keyCode == DOWN || key == 's') || player.direction == Constants.NEUTRAL_FACING) {
+            player.change_x = 0;
             player.change_y = Constants.MOVE_SPEED;
         } else if ((keyCode == UP || key == 'w') || player.direction == Constants.NEUTRAL_FACING) {
+            player.change_x = 0;
             player.change_y = -Constants.MOVE_SPEED;
         }
     }
 
-    // called whenever a key is released.
-    public void keyReleased() {
-        if (keyCode == RIGHT || key == 'd') {
+    public void stopAtObstacle(){
+        if (player.hitObstacle){
             player.change_x = 0;
-        } else if (keyCode == LEFT || key == 'a') {
-            player.change_x = 0;
-        }
-        else if (keyCode == UP || key == 'w') {
-            player.change_y = 0;
-        }
-        else if (keyCode == DOWN || key == 's') {
             player.change_y = 0;
         }
     }
