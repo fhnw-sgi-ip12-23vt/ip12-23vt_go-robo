@@ -11,6 +11,7 @@ public class GameField extends PApplet {
     private final int Xsize = 800;
     private final int Ysize = 600;
 
+
     private boolean nextLevel = false;
     List<Sprite> obstacles;
     List<Sprite> goal;
@@ -68,6 +69,7 @@ public class GameField extends PApplet {
     }
 
     public void setup() {
+
         imageMode(CENTER);
         PImage p = loadImage("../../resources/img/player.png");
         player = new Player(this, p, 0.5f);
@@ -75,7 +77,7 @@ public class GameField extends PApplet {
         player.change_y = 550;
         obstacles = new ArrayList<Sprite>();
         goal = new ArrayList<Sprite>();
-        
+
         chargingStation = loadImage("../../resources/img/gold1.png");
 
         ball = loadImage("../../resources/img/red_brick.png");
@@ -103,8 +105,10 @@ public class GameField extends PApplet {
 
     public boolean isHitObstacles(Sprite s, List<Sprite> walls) {
         s.center_y += 5;
+        s.center_x += 5;
         ArrayList<Sprite> col_list = checkCollisionList(s, walls);
         s.center_y -= 5;
+        s.center_x -= 5;
         return !col_list.isEmpty();
     }
 
@@ -199,23 +203,23 @@ public class GameField extends PApplet {
 
         if (nextLevel) {
             setup();
-        } else if ((keyCode == RIGHT || key == 'd') || player.direction == Constants.NEUTRAL_FACING) {
+        } else if (((keyCode == RIGHT || key == 'd') || player.direction == Constants.NEUTRAL_FACING ) && player.inPlace) {
             player.change_y = 0;
             player.change_x = Constants.MOVE_SPEED;
-        } else if ((keyCode == LEFT || key == 'a')  || player.direction == Constants.NEUTRAL_FACING) {
+        } else if (((keyCode == LEFT || key == 'a') || player.direction == Constants.NEUTRAL_FACING ) && player.inPlace) {
             player.change_y = 0;
             player.change_x = -Constants.MOVE_SPEED;
-        } else if ((keyCode == DOWN || key == 's') || player.direction == Constants.NEUTRAL_FACING) {
+        } else if (((keyCode == DOWN || key == 's') || player.direction == Constants.NEUTRAL_FACING ) && player.inPlace) {
             player.change_x = 0;
             player.change_y = Constants.MOVE_SPEED;
-        } else if ((keyCode == UP || key == 'w') || player.direction == Constants.NEUTRAL_FACING) {
+        } else if (((keyCode == UP || key == 'w') || player.direction == Constants.NEUTRAL_FACING ) && player.inPlace) {
             player.change_x = 0;
             player.change_y = -Constants.MOVE_SPEED;
         }
     }
 
-    public void stopAtObstacle(){
-        if (player.hitObstacle){
+    public void stopAtObstacle() {
+        if (player.hitObstacle) {
             player.change_x = 0;
             player.change_y = 0;
         }
