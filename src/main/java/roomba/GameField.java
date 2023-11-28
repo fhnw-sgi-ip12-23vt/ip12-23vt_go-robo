@@ -11,7 +11,6 @@ public class GameField extends PApplet {
     private final int Xsize = 800;
     private final int Ysize = 600;
 
-
     private boolean nextLevel = false;
     List<Sprite> obstacles;
     List<Sprite> goal;
@@ -40,7 +39,7 @@ public class GameField extends PApplet {
 
     void updateAll() {
         player.updateAnimation();
-        resolvePlatformCollisions(player, obstacles);
+        resolveObstaclesCollisions(player, obstacles);
 
     }
 
@@ -112,16 +111,19 @@ public class GameField extends PApplet {
         return !col_list.isEmpty();
     }
 
-    public void resolvePlatformCollisions(Sprite s, List<Sprite> walls) {
-        s.change_y += 0;
+    public void resolveObstaclesCollisions(Sprite s, List<Sprite> walls) {
         s.center_y += s.change_y;
         ArrayList<Sprite> col_list = checkCollisionList(s, walls);
         if (!col_list.isEmpty()) {
             Sprite collided = col_list.get(0);
             if (s.change_y > 0) {
                 s.setBottom(collided.getTop());
+                stopAtObstacle();
+
             } else if (s.change_y < 0) {
                 s.setTop(collided.getBottom());
+                stopAtObstacle();
+
             }
             s.change_y = 0;
         }
@@ -137,6 +139,8 @@ public class GameField extends PApplet {
                 s.setLeft(collided.getRight());
                 stopAtObstacle();
             }
+
+            s.change_x =0;
         }
     }
 
@@ -203,16 +207,19 @@ public class GameField extends PApplet {
 
         if (nextLevel) {
             setup();
-        } else if (((keyCode == RIGHT || key == 'd') || player.direction == Constants.NEUTRAL_FACING ) && player.inPlace) {
+        } else if (((keyCode == RIGHT || key == 'd') || player.direction == Constants.NEUTRAL_FACING)
+                && player.inPlace) {
             player.change_y = 0;
             player.change_x = Constants.MOVE_SPEED;
-        } else if (((keyCode == LEFT || key == 'a') || player.direction == Constants.NEUTRAL_FACING ) && player.inPlace) {
+        } else if (((keyCode == LEFT || key == 'a') || player.direction == Constants.NEUTRAL_FACING)
+                && player.inPlace) {
             player.change_y = 0;
             player.change_x = -Constants.MOVE_SPEED;
-        } else if (((keyCode == DOWN || key == 's') || player.direction == Constants.NEUTRAL_FACING ) && player.inPlace) {
+        } else if (((keyCode == DOWN || key == 's') || player.direction == Constants.NEUTRAL_FACING)
+                && player.inPlace) {
             player.change_x = 0;
             player.change_y = Constants.MOVE_SPEED;
-        } else if (((keyCode == UP || key == 'w') || player.direction == Constants.NEUTRAL_FACING ) && player.inPlace) {
+        } else if (((keyCode == UP || key == 'w') || player.direction == Constants.NEUTRAL_FACING) && player.inPlace) {
             player.change_x = 0;
             player.change_y = -Constants.MOVE_SPEED;
         }
