@@ -97,7 +97,7 @@ public class GameField extends PApplet {
         if (goal.isEmpty()) {
             nextLevel = true;
             // TODO
-            // Call next levle
+            // Call next leve
 
         }
     }
@@ -207,21 +207,79 @@ public class GameField extends PApplet {
 
         if (nextLevel) {
             setup();
-        } else if (((keyCode == RIGHT || key == 'd') || player.direction == Constants.NEUTRAL_FACING)
-                && player.inPlace) {
-            player.change_y = 0;
-            player.change_x = Constants.MOVE_SPEED;
+        } else if (((keyCode == RIGHT || key == 'd') && player.inPlace)) {
+            if (player.direction == Constants.RIGHT_FACING){ //right
+                player.change_y = Constants.MOVE_SPEED;
+                player.change_x = 0;
+            }
+            if (player.direction == Constants.LEFT_FACING){ //left
+                player.change_y = -Constants.MOVE_SPEED;
+                player.change_x = 0;
+            }
+            if (player.direction == Constants.UP_FACING){ //up
+                player.change_y = 0;
+                player.change_x = -Constants.MOVE_SPEED;
+            }
+            if (player.direction == Constants.DOWN_FACING || player.direction == Constants.NEUTRAL_FACING){ //down
+                player.change_y = 0;
+                player.change_x = Constants.MOVE_SPEED;
+            }
+
         } else if (((keyCode == LEFT || key == 'a') || player.direction == Constants.NEUTRAL_FACING)
                 && player.inPlace) {
-            player.change_y = 0;
-            player.change_x = -Constants.MOVE_SPEED;
+            if (player.direction == Constants.RIGHT_FACING){
+                player.change_y = -Constants.MOVE_SPEED;
+                player.change_x = 0;
+            }
+            if (player.direction == Constants.LEFT_FACING){
+                player.change_y = Constants.MOVE_SPEED;
+                player.change_x = 0;
+            }
+            if (player.direction == Constants.UP_FACING){
+                player.change_y = 0;
+                player.change_x = Constants.MOVE_SPEED;
+            }
+            if (player.direction == Constants.DOWN_FACING || player.direction == Constants.NEUTRAL_FACING){ //down
+                player.change_y = 0;
+                player.change_x = -Constants.MOVE_SPEED;
+            }
+
         } else if (((keyCode == DOWN || key == 's') || player.direction == Constants.NEUTRAL_FACING)
                 && player.inPlace) {
-            player.change_x = 0;
-            player.change_y = Constants.MOVE_SPEED;
+            if (player.direction == Constants.RIGHT_FACING || player.direction == Constants.NEUTRAL_FACING){ //right
+                player.change_x = -Constants.MOVE_SPEED;
+                player.change_y = 0;
+            }
+            if (player.direction == Constants.LEFT_FACING){ //left
+                player.change_x = Constants.MOVE_SPEED;
+                player.change_y = 0;
+            }
+            if (player.direction == Constants.UP_FACING){ //up
+                player.change_x = 0;
+                player.change_y = -Constants.MOVE_SPEED;
+            }
+            if (player.direction == Constants.DOWN_FACING){ //down
+                player.change_x = 0;
+                player.change_y = Constants.MOVE_SPEED;
+            }
         } else if (((keyCode == UP || key == 'w') || player.direction == Constants.NEUTRAL_FACING) && player.inPlace) {
-            player.change_x = 0;
-            player.change_y = -Constants.MOVE_SPEED;
+            if (player.direction == Constants.RIGHT_FACING){ //right
+                player.change_y = 0;
+                player.change_x = Constants.MOVE_SPEED;
+            }
+            if (player.direction == Constants.LEFT_FACING){ //left
+                player.change_y = 0;
+                player.change_x = -Constants.MOVE_SPEED;
+            }
+            if (player.direction == Constants.UP_FACING){ //up
+                player.change_y = Constants.MOVE_SPEED;
+                player.change_x = 0;
+            }
+            if (player.direction == Constants.DOWN_FACING || player.direction == Constants.NEUTRAL_FACING){ //down
+                player.change_y = -Constants.MOVE_SPEED;
+                player.change_x = 0;
+            }
+
         }
     }
 

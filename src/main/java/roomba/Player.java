@@ -14,7 +14,7 @@ public class Player extends AnimatedSprite {
 	public Player(GameField gamefield, PImage img, float scale) {
 		super(gamefield, img, scale);
 		this.gamefield = gamefield;
-		levelName = "Tutorial";
+		levelName = "";
 		direction = Constants.NEUTRAL_FACING;
 		hitObstacle = false;
 		inPlace = true;
@@ -43,6 +43,7 @@ public class Player extends AnimatedSprite {
 		moveDown[1] = pApplet.loadImage("../../resources/img/player_walk_left2.png");
 		currentImages = FaceRight;
 	}
+
 
 	@Override
 	public void updateAnimation() {
