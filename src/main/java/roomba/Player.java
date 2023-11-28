@@ -39,7 +39,7 @@ public class Player extends AnimatedSprite {
 		moveUp[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-orange-top.png");
 		moveUp[1] = pApplet.loadImage("../../resources/img/roomba2-pixel-dark.png");
 		moveDown = new PImage[2];
-		moveDown[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-orange-top.png");
+		moveDown[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-orange-bottom.png");
 		moveDown[1] = pApplet.loadImage("../../resources/img/roomba2-pixel-dark.png");
 		currentImages = FaceRight;
 	}
