@@ -14,4 +14,8 @@ public class PhysicalController extends ControllerBase<PhysicalModel> {
         model.inputQueue.offer(input);
     }
 
+    public String popFromQueue(){
+        return model.inputQueue.poll();
+    }
+
 }
