@@ -78,7 +78,7 @@ public class GameField extends PApplet {
         
         chargingStation = loadImage("../../resources/img/gold1.png");
 
-        ball = loadImage("../../resources/img/gold1.png");
+        ball = loadImage("../../resources/img/red_brick.png");
         pillow = loadImage("../../resources/img/spider_walk_right1.png");
         toy = loadImage("../../resources/img/red_brick.png");
         plushie = loadImage("../../resources/img/brown_brick.png");
@@ -197,17 +197,13 @@ public class GameField extends PApplet {
 
         if (nextLevel) {
             setup();
-        } else if ((keyCode == RIGHT || key == 'd') && isHitObstacles(player, obstacles)
-                || player.direction == Constants.NEUTRAL_FACING) {
+        } else if ((keyCode == RIGHT || key == 'd') || player.direction == Constants.NEUTRAL_FACING) {
             player.change_x = Constants.MOVE_SPEED;
-        } else if ((keyCode == LEFT || key == 'a') && isHitObstacles(player, obstacles)
-                || player.direction == Constants.NEUTRAL_FACING) {
+        } else if ((keyCode == LEFT || key == 'a')  || player.direction == Constants.NEUTRAL_FACING) {
             player.change_x = -Constants.MOVE_SPEED;
-        } else if ((keyCode == DOWN || key == 's') && isHitObstacles(player, obstacles)
-                || player.direction == Constants.NEUTRAL_FACING) {
+        } else if ((keyCode == DOWN || key == 's') || player.direction == Constants.NEUTRAL_FACING) {
             player.change_y = Constants.MOVE_SPEED;
-        } else if ((keyCode == UP || key == 'w') && isHitObstacles(player, obstacles)
-                || player.direction == Constants.NEUTRAL_FACING) {
+        } else if ((keyCode == UP || key == 'w') || player.direction == Constants.NEUTRAL_FACING) {
             player.change_y = -Constants.MOVE_SPEED;
         }
     }
