@@ -21,26 +21,26 @@ public class Player extends AnimatedSprite {
 
 		//TODO Change resource img
 		FaceLeft = new PImage[1];
-		FaceLeft[0] = pApplet.loadImage("../../resources/img/player_stand_left.png");
+		FaceLeft[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-green-left.png");
 		FaceRight = new PImage[1];
-		FaceRight[0] = pApplet.loadImage("../../resources/img/player_stand_right.png");
+		FaceRight[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-green-right.png");
 		FaceDown = new PImage[1];
-		FaceDown[0] = pApplet.loadImage("../../resources/img/player_stand_right.png");
+		FaceDown[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-green-top.png");
 		FaceUp = new PImage[1];
-		FaceUp[0] = pApplet.loadImage("../../resources/img/player_stand_right.png");
+		FaceUp[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-green-bottom.png");
 
 		moveLeft = new PImage[2];
-		moveLeft[0] = pApplet.loadImage("../../resources/img/player_walk_left1.png");
-		moveLeft[1] = pApplet.loadImage("../../resources/img/player_walk_left2.png");
+		moveLeft[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-orange-left.png");
+		moveLeft[1] = pApplet.loadImage("../../resources/img/roomba2-pixel-dark.png");
 		moveRight = new PImage[2];
-		moveRight[0] = pApplet.loadImage("../../resources/img/player_walk_right1.png");
-		moveRight[1] = pApplet.loadImage("../../resources/img/player_walk_right2.png");
+		moveRight[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-orange-right.png");
+		moveRight[1] = pApplet.loadImage("../../resources/img/roomba2-pixel-dark.png");
 		moveUp = new PImage[2];
-		moveUp[0] = pApplet.loadImage("../../resources/img/player_walk_left1.png");
-		moveUp[1] = pApplet.loadImage("../../resources/img/player_walk_left2.png");
+		moveUp[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-orange-top.png");
+		moveUp[1] = pApplet.loadImage("../../resources/img/roomba2-pixel-dark.png");
 		moveDown = new PImage[2];
-		moveDown[0] = pApplet.loadImage("../../resources/img/player_walk_left1.png");
-		moveDown[1] = pApplet.loadImage("../../resources/img/player_walk_left2.png");
+		moveDown[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-orange-top.png");
+		moveDown[1] = pApplet.loadImage("../../resources/img/roomba2-pixel-dark.png");
 		currentImages = FaceRight;
 	}
 
