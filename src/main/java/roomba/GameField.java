@@ -1,7 +1,10 @@
 package roomba;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import processing.core.PImage;
 import processing.core.PApplet;
@@ -15,6 +18,8 @@ public class GameField extends PApplet {
     List<Sprite> obstacles;
     List<Sprite> goal;
     Player player;
+    int difficulty = 0;
+    String levelPath = "../../resources/files/";
     PImage ball, toy, pillow, plushie, chargingStation;
 
     float view_x = 0;
@@ -22,8 +27,8 @@ public class GameField extends PApplet {
 
     @Override
     public void settings() {
-        fullScreen();
-        // size(Xsize, Ysize);
+        //fullScreen();
+         size(Xsize, Ysize);
     }
 
     public void draw() {
@@ -85,7 +90,42 @@ public class GameField extends PApplet {
         toy = loadImage("../../resources/img/red_brick.png");
         plushie = loadImage("../../resources/img/brown_brick.png");
 
-        createPlatforms("../../resources/files/map.csv");
+        createPlatforms(getNextLevel());
+        System.out.println("Resultat: " + getNextLevel());
+    }
+
+    //selects a level, currently random within difficulty tier
+    public String getNextLevel(){
+        File[] listOfFiles = new File[0];
+        //resets difficulty after 3
+        difficulty++;
+        if (difficulty == 4){
+            difficulty = 1;
+        }
+        String p = "C:\\Users\\Svenj\\IdeaProjects\\lost-roomba\\src\\main\\resources\\files\\level";
+        //String p = "../../resources/files/level";
+        File folder = new File(p);
+        //Path folder = new Path(p);
+        //is Directory
+//        System.out.println(folder.isDirectory());
+        //exists
+//        System.out.println(folder.exists());
+        if (folder.exists() && folder.isDirectory()) {
+            listOfFiles = folder.listFiles();
+        }
+
+       // Path folderPath = new Path("../../")
+        ArrayList<String> rightLevels = new ArrayList<String>();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            System.out.println("Level first Part: " + listOfFiles[i].getName().substring(0, listOfFiles[i].getName().indexOf("_")));
+            System.out.println("Difficulty: " + difficulty);
+            if (listOfFiles[i].getName().substring(0, listOfFiles[i].getName().indexOf("_")).equals("" + difficulty)){
+                rightLevels.add(listOfFiles[i].getName());
+            }
+        }
+        Random r = new Random();
+        return "../../resources/files/level/" + rightLevels.get(r.nextInt(rightLevels.size()));
     }
 
     void collectGoal() {
@@ -116,11 +156,11 @@ public class GameField extends PApplet {
             Sprite collided = col_list.get(0);
             if (s.change_y > 0) {
                 s.setBottom(collided.getTop());
-                stopAtObstacle();
+               // stopAtObstacle();
 
             } else if (s.change_y < 0) {
                 s.setTop(collided.getBottom());
-                stopAtObstacle();
+               // stopAtObstacle();
 
             }
             s.change_y = 0;
@@ -132,10 +172,10 @@ public class GameField extends PApplet {
             Sprite collided = col_list.get(0);
             if (s.change_x > 0) {
                 s.setRight(collided.getLeft());
-                stopAtObstacle();
+              //  stopAtObstacle();
             } else if (s.change_x < 0) {
                 s.setLeft(collided.getRight());
-                stopAtObstacle();
+              //  stopAtObstacle();
             }
 
             s.change_x = 0;
@@ -282,13 +322,13 @@ public class GameField extends PApplet {
         }
     }
 
-    public void stopAtObstacle() {
-        if (player.hitObstacle) {
-
-            player.change_x = 0;
-            player.change_y = 0;
-
-        }
-    }
+//    public void stopAtObstacle() {
+//        if (player.hitObstacle) {
+//
+//            player.change_x = 0;
+//            player.change_y = 0;
+//
+//        }
+//    }
 
 }
