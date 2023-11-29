@@ -1,8 +1,11 @@
 package roomba;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Random;
 
 import processing.core.PImage;
 import roomba.view.PhysicalScanner;
@@ -22,6 +25,8 @@ public class GameField extends PApplet {
     List<Sprite> obstacles;
     List<Sprite> goal;
     Player player;
+    int difficulty = 0;
+    String levelPath = "../../resources/files/";
     PImage ball, toy, pillow, plushie, chargingStation;
 
     float view_x = 0;
@@ -129,7 +134,30 @@ public class GameField extends PApplet {
         toy = loadImage("../../resources/img/snow.png");
         plushie = loadImage("../../resources/img/snow.png");
 
-        createPlatforms("../../resources/files/map.csv");
+        createPlatforms(getNextLevel());
+    }
+
+    //selects a level, currently random within difficulty tier
+    public String getNextLevel(){
+        File[] listOfFiles = new File[0];
+        //resets difficulty after 3
+        difficulty++;
+        if (difficulty == 4){
+            difficulty = 1;
+        }
+        String p = System.getProperty("user.dir") + "\\src\\main\\resources\\files\\level";
+        File folder = new File(p);
+        listOfFiles = folder.listFiles();
+        ArrayList<String> rightLevels = new ArrayList<String>();
+
+        //loads levels with correct difficulty in list
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].getName().substring(0, listOfFiles[i].getName().indexOf("_")).equals("" + difficulty)){
+                rightLevels.add(listOfFiles[i].getName());
+            }
+        }
+        Random r = new Random();
+        return "../../resources/files/level/" + rightLevels.get(r.nextInt(rightLevels.size()));
     }
 
     void collectGoal() {
