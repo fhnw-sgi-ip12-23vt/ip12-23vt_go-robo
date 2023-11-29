@@ -26,7 +26,7 @@ public class GameField extends PApplet {
     }
 
     public void draw() {
-        background(255);
+        background(loadImage("../../resources/img/Room-Floor.png"));
 
         displayAll();
 
