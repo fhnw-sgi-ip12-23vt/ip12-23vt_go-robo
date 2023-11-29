@@ -22,11 +22,13 @@ public class GameField extends PApplet {
 
     @Override
     public void settings() {
-        size(Xsize, Ysize);
+        fullScreen();
+        // size(Xsize, Ysize);
     }
 
     public void draw() {
-        background(255);
+
+        background(0);
 
         displayAll();
 
@@ -68,7 +70,6 @@ public class GameField extends PApplet {
     }
 
     public void setup() {
-
         imageMode(CENTER);
         PImage p = loadImage("../../resources/img/roomba2-pixel-dark.png");
         player = new Player(this, p, 0.3f);
@@ -103,11 +104,8 @@ public class GameField extends PApplet {
     }
 
     public boolean isHitObstacles(Sprite s, List<Sprite> walls) {
-        s.center_y += 5;
-        s.center_x += 5;
+
         ArrayList<Sprite> col_list = checkCollisionList(s, walls);
-        s.center_y -= 5;
-        s.center_x -= 5;
         return !col_list.isEmpty();
     }
 
@@ -140,8 +138,9 @@ public class GameField extends PApplet {
                 stopAtObstacle();
             }
 
-            s.change_x =0;
+            s.change_x = 0;
         }
+
     }
 
     boolean checkCollision(Sprite s1, Sprite s2) {
@@ -208,74 +207,74 @@ public class GameField extends PApplet {
         if (nextLevel) {
             setup();
         } else if (((keyCode == RIGHT || key == 'd') && player.inPlace)) {
-            if (player.direction == Constants.RIGHT_FACING){ //right
+            if (player.direction == Constants.RIGHT_FACING) { // right
                 player.change_y = Constants.MOVE_SPEED;
                 player.change_x = 0;
             }
-            if (player.direction == Constants.LEFT_FACING){ //left
+            if (player.direction == Constants.LEFT_FACING) { // left
                 player.change_y = -Constants.MOVE_SPEED;
                 player.change_x = 0;
             }
-            if (player.direction == Constants.UP_FACING){ //up
+            if (player.direction == Constants.UP_FACING) { // up
                 player.change_y = 0;
                 player.change_x = -Constants.MOVE_SPEED;
             }
-            if (player.direction == Constants.DOWN_FACING || player.direction == Constants.NEUTRAL_FACING){ //down
+            if (player.direction == Constants.DOWN_FACING || player.direction == Constants.NEUTRAL_FACING) { // down
                 player.change_y = 0;
                 player.change_x = Constants.MOVE_SPEED;
             }
 
         } else if (((keyCode == LEFT || key == 'a') || player.direction == Constants.NEUTRAL_FACING)
                 && player.inPlace) {
-            if (player.direction == Constants.RIGHT_FACING){
+            if (player.direction == Constants.RIGHT_FACING) {
                 player.change_y = -Constants.MOVE_SPEED;
                 player.change_x = 0;
             }
-            if (player.direction == Constants.LEFT_FACING){
+            if (player.direction == Constants.LEFT_FACING) {
                 player.change_y = Constants.MOVE_SPEED;
                 player.change_x = 0;
             }
-            if (player.direction == Constants.UP_FACING){
+            if (player.direction == Constants.UP_FACING) {
                 player.change_y = 0;
                 player.change_x = Constants.MOVE_SPEED;
             }
-            if (player.direction == Constants.DOWN_FACING || player.direction == Constants.NEUTRAL_FACING){ //down
+            if (player.direction == Constants.DOWN_FACING || player.direction == Constants.NEUTRAL_FACING) { // down
                 player.change_y = 0;
                 player.change_x = -Constants.MOVE_SPEED;
             }
 
         } else if (((keyCode == DOWN || key == 's') || player.direction == Constants.NEUTRAL_FACING)
                 && player.inPlace) {
-            if (player.direction == Constants.RIGHT_FACING || player.direction == Constants.NEUTRAL_FACING){ //right
+            if (player.direction == Constants.RIGHT_FACING || player.direction == Constants.NEUTRAL_FACING) { // right
                 player.change_x = -Constants.MOVE_SPEED;
                 player.change_y = 0;
             }
-            if (player.direction == Constants.LEFT_FACING){ //left
+            if (player.direction == Constants.LEFT_FACING) { // left
                 player.change_x = Constants.MOVE_SPEED;
                 player.change_y = 0;
             }
-            if (player.direction == Constants.UP_FACING){ //up
+            if (player.direction == Constants.UP_FACING) { // up
                 player.change_x = 0;
                 player.change_y = -Constants.MOVE_SPEED;
             }
-            if (player.direction == Constants.DOWN_FACING){ //down
+            if (player.direction == Constants.DOWN_FACING) { // down
                 player.change_x = 0;
                 player.change_y = Constants.MOVE_SPEED;
             }
         } else if (((keyCode == UP || key == 'w') || player.direction == Constants.NEUTRAL_FACING) && player.inPlace) {
-            if (player.direction == Constants.RIGHT_FACING){ //right
+            if (player.direction == Constants.RIGHT_FACING) { // right
                 player.change_y = 0;
                 player.change_x = Constants.MOVE_SPEED;
             }
-            if (player.direction == Constants.LEFT_FACING){ //left
+            if (player.direction == Constants.LEFT_FACING) { // left
                 player.change_y = 0;
                 player.change_x = -Constants.MOVE_SPEED;
             }
-            if (player.direction == Constants.UP_FACING){ //up
+            if (player.direction == Constants.UP_FACING) { // up
                 player.change_y = Constants.MOVE_SPEED;
                 player.change_x = 0;
             }
-            if (player.direction == Constants.DOWN_FACING || player.direction == Constants.NEUTRAL_FACING){ //down
+            if (player.direction == Constants.DOWN_FACING || player.direction == Constants.NEUTRAL_FACING) { // down
                 player.change_y = -Constants.MOVE_SPEED;
                 player.change_x = 0;
             }
@@ -285,8 +284,10 @@ public class GameField extends PApplet {
 
     public void stopAtObstacle() {
         if (player.hitObstacle) {
+
             player.change_x = 0;
             player.change_y = 0;
+
         }
     }
 

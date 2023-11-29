@@ -19,7 +19,6 @@ public class Player extends AnimatedSprite {
 		hitObstacle = false;
 		inPlace = true;
 
-		//TODO Change resource img
 		FaceLeft = new PImage[1];
 		FaceLeft[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-green-left.png");
 		FaceRight = new PImage[1];
