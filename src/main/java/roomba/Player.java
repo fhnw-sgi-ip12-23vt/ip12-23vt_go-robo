@@ -15,7 +15,7 @@ public class Player extends AnimatedSprite {
 		super(gamefield, img, scale);
 		this.gamefield = gamefield;
 		levelName = "";
-		direction = Constants.NEUTRAL_FACING;
+		direction = Constants.RIGHT_FACING;
 		hitObstacle = false;
 		inPlace = true;
 

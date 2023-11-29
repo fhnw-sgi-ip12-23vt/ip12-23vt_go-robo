@@ -22,8 +22,8 @@ public class GameField extends PApplet {
 
     @Override
     public void settings() {
-        fullScreen();
-        // size(Xsize, Ysize);
+        // fullScreen();
+        size(Xsize, Ysize);
     }
 
     public void draw() {
@@ -80,10 +80,10 @@ public class GameField extends PApplet {
 
         chargingStation = loadImage("../../resources/img/gold1.png");
 
-        ball = loadImage("../../resources/img/red_brick.png");
-        pillow = loadImage("../../resources/img/spider_walk_right1.png");
-        toy = loadImage("../../resources/img/red_brick.png");
-        plushie = loadImage("../../resources/img/brown_brick.png");
+        ball = loadImage("../../resources/img/snow.png");
+        pillow = loadImage("../../resources/img/snow.png");
+        toy = loadImage("../../resources/img/snow.png");
+        plushie = loadImage("../../resources/img/snow.png");
 
         createPlatforms("../../resources/files/map.csv");
     }
@@ -219,13 +219,14 @@ public class GameField extends PApplet {
                 player.change_y = 0;
                 player.change_x = -Constants.MOVE_SPEED;
             }
-            if (player.direction == Constants.DOWN_FACING || player.direction == Constants.NEUTRAL_FACING) { // down
+            if (player.direction == Constants.DOWN_FACING) { // down
                 player.change_y = 0;
                 player.change_x = Constants.MOVE_SPEED;
             }
 
-        } else if (((keyCode == LEFT || key == 'a') || player.direction == Constants.NEUTRAL_FACING)
+        } else if (((keyCode == LEFT || key == 'a'))
                 && player.inPlace) {
+                    System.out.println(player.direction);
             if (player.direction == Constants.RIGHT_FACING) {
                 player.change_y = -Constants.MOVE_SPEED;
                 player.change_x = 0;
@@ -238,14 +239,14 @@ public class GameField extends PApplet {
                 player.change_y = 0;
                 player.change_x = Constants.MOVE_SPEED;
             }
-            if (player.direction == Constants.DOWN_FACING || player.direction == Constants.NEUTRAL_FACING) { // down
+            if (player.direction == Constants.DOWN_FACING) { // down
                 player.change_y = 0;
                 player.change_x = -Constants.MOVE_SPEED;
             }
 
-        } else if (((keyCode == DOWN || key == 's') || player.direction == Constants.NEUTRAL_FACING)
+        } else if (((keyCode == DOWN || key == 's'))
                 && player.inPlace) {
-            if (player.direction == Constants.RIGHT_FACING || player.direction == Constants.NEUTRAL_FACING) { // right
+            if (player.direction == Constants.RIGHT_FACING) { // right
                 player.change_x = -Constants.MOVE_SPEED;
                 player.change_y = 0;
             }
@@ -261,7 +262,7 @@ public class GameField extends PApplet {
                 player.change_x = 0;
                 player.change_y = Constants.MOVE_SPEED;
             }
-        } else if (((keyCode == UP || key == 'w') || player.direction == Constants.NEUTRAL_FACING) && player.inPlace) {
+        } else if (((keyCode == UP || key == 'w')) && player.inPlace) {
             if (player.direction == Constants.RIGHT_FACING) { // right
                 player.change_y = 0;
                 player.change_x = Constants.MOVE_SPEED;
@@ -274,7 +275,7 @@ public class GameField extends PApplet {
                 player.change_y = Constants.MOVE_SPEED;
                 player.change_x = 0;
             }
-            if (player.direction == Constants.DOWN_FACING || player.direction == Constants.NEUTRAL_FACING) { // down
+            if (player.direction == Constants.DOWN_FACING) { // down
                 player.change_y = -Constants.MOVE_SPEED;
                 player.change_x = 0;
             }
