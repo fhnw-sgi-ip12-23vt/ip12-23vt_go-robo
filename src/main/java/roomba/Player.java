@@ -25,9 +25,9 @@ public class Player extends AnimatedSprite {
 		FaceRight = new PImage[1];
 		FaceRight[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-green-right.png");
 		FaceDown = new PImage[1];
-		FaceDown[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-green-bottom.png");
+		FaceDown[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-green-down.png");
 		FaceUp = new PImage[1];
-		FaceUp[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-green-top.png");
+		FaceUp[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-green-up.png");
 
 		moveLeft = new PImage[2];
 		moveLeft[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-orange-left.png");
@@ -36,10 +36,10 @@ public class Player extends AnimatedSprite {
 		moveRight[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-orange-right.png");
 		moveRight[1] = pApplet.loadImage("../../resources/img/roomba2-pixel-dark.png");
 		moveUp = new PImage[2];
-		moveUp[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-orange-top.png");
+		moveUp[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-orange-up.png");
 		moveUp[1] = pApplet.loadImage("../../resources/img/roomba2-pixel-dark.png");
 		moveDown = new PImage[2];
-		moveDown[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-orange-bottom.png");
+		moveDown[0] = pApplet.loadImage("../../resources/img/roomba2-pixel-orange-down.png");
 		moveDown[1] = pApplet.loadImage("../../resources/img/roomba2-pixel-dark.png");
 		currentImages = FaceRight;
 	}
