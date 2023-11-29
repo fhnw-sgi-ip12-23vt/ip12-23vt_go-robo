@@ -78,14 +78,14 @@ public class Player extends AnimatedSprite {
 				currentImages = moveLeft;
 		} else if (direction == Constants.UP_FACING) {
 			if (inPlace)
-				currentImages = FaceUp;
-			else
-				currentImages = moveUp;
-		} else if (direction == Constants.DOWN_FACING) {
-			if (inPlace)
 				currentImages = FaceDown;
 			else
 				currentImages = moveDown;
+		} else if (direction == Constants.DOWN_FACING) {
+			if (inPlace)
+				currentImages = FaceUp;
+			else
+				currentImages = moveUp;
 		}
 	}
 }
