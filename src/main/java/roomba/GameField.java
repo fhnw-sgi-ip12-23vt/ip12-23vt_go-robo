@@ -2,11 +2,18 @@ package roomba;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 import processing.core.PImage;
+import roomba.view.PhysicalScanner;
 import processing.core.PApplet;
 
 public class GameField extends PApplet {
+    PhysicalScanner pui;
+
+    public GameField(PhysicalScanner pui) {
+        this.pui = pui;
+    }
 
     private final int Xsize = 800;
     private final int Ysize = 600;
@@ -24,6 +31,43 @@ public class GameField extends PApplet {
     public void settings() {
         // fullScreen();
         size(Xsize, Ysize);
+    }
+
+    public void PInputLogic() {
+        pui.controller.subscribeToQueueChanges((oldValue, newValue) -> {
+            // Handle queue changes
+            System.out.println("Queue changed: " + newValue);
+            handleInput(newValue);
+        });
+    }
+
+    void handleInput(Queue<String> inputQueue) {
+        while (!inputQueue.isEmpty()) {
+            String input = pui.controller.dequeue();
+            switch (input) {
+                case "RIGHT":
+                    // Handle movement to the right
+                    player.change_y = 0;
+                    player.change_x = Constants.MOVE_SPEED;
+                    break;
+                case "LEFT":
+                    // Handle movement to the left
+                    player.change_y = 0;
+                    player.change_x = -Constants.MOVE_SPEED;
+                    break;
+                case "UP":
+                    // Handle movement upwards
+                    player.change_y = -Constants.MOVE_SPEED;
+                    player.change_x = 0;
+                    break;
+                case "DOWN":
+                    // Handle movement downwards
+                    player.change_y = Constants.MOVE_SPEED;
+                    player.change_x = 0;
+                    break;
+                // Add more cases for other directions if needed
+            }
+        }
     }
 
     public void draw() {
@@ -226,7 +270,7 @@ public class GameField extends PApplet {
 
         } else if (((keyCode == LEFT || key == 'a'))
                 && player.inPlace) {
-                    System.out.println(player.direction);
+            System.out.println(player.direction);
             if (player.direction == Constants.RIGHT_FACING) {
                 player.change_y = -Constants.MOVE_SPEED;
                 player.change_x = 0;

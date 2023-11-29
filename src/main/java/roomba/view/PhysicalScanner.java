@@ -12,9 +12,11 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
 
     //TODO IMPLEMENT RFID CHIP LOGIC into SimpleRFID
     protected SimpleRFID rfid;
+    public PhysicalController controller;
 
     public PhysicalScanner(PhysicalController controller, Context pi4J) {
         super(controller, pi4J);
+        this.controller = controller;
     }
 
     @Override
@@ -26,21 +28,10 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
 
     @Override
     public void setupUiToActionBindings(PhysicalController controller) {
-        rfid.onDown(() -> controller.addInputToQueue("PLACEHOLDER"));
+        rfid.onScan(() -> controller.enqueue("PLACEHOLDER"));
+
+        
     }
-
-    // @Override
-    // public void setupModelToUiBindings(PhysicalModel model) {
-    //     onChangeOf(model.inputQueue)
-    //             .execute((oldValue, newValue) -> {
-    //                 if (newValue) {
-    //                     led.on();
-    //                 } else {
-    //                     led.off();
-    //                 }
-    //             });
-    // }
-
 
     // TODO
     // RFID read

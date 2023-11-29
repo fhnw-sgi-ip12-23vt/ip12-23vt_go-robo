@@ -1,36 +1,59 @@
 package roomba.catalog.components;
 
-import com.pi4j.context.Context;
-import com.pi4j.io.gpio.digital.DigitalOutput;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-import roomba.catalog.components.base.DigitalActuator;
+import roomba.catalog.components.base.DigitalSensor;
 import roomba.catalog.components.base.PIN;
+import com.pi4j.context.Context;
+import com.pi4j.io.gpio.digital.DigitalInput;
+import com.pi4j.io.gpio.digital.DigitalState;
+import com.pi4j.io.gpio.digital.PullResistance;
 
-public class SimpleRFID extends DigitalActuator {
-//TODO IMPLEMENT RFID CHIP LOGIC
+import java.time.Duration;
+import static com.pi4j.io.gpio.digital.DigitalInput.DEFAULT_DEBOUNCE;
 
 
-    /**
-     * Creates a new SimpleLed component with a custom BCM pin.
-     *
-     * @param pi4j    Pi4J context
-     * @param address Custom BCM pin address
-     */
+public class SimpleRFID extends DigitalSensor {
+    private final ExecutorService executor;
+    private Runnable onScan;
+
     public SimpleRFID(Context pi4j, PIN address) {
+        this(pi4j, address, Duration.ofMillis(500));
+    }
+
+    public SimpleRFID(Context pi4j, PIN address, Duration debounce) {
         super(pi4j,
-              DigitalOutput.newConfigBuilder(pi4j)
-                      .id("BCM" + address)
-                      .name("LED #" + address)
-                      .address(address.getPin())
-                      .build());
-        logDebug("Created new SimpleLed component");
+                DigitalInput.newConfigBuilder(pi4j)
+                        .id("BCM" + address)
+                        .name("RFID Scanner #" + address)
+                        .address(address.getPin())
+                        .debounce(debounce.toMillis() * 1000) // Convert duration to microseconds
+                        .pull(PullResistance.PULL_DOWN)
+                        .build());
+
+        executor = Executors.newSingleThreadExecutor();
+
+        digitalInput.addListener(digitalStateChangeEvent -> {
+            if (onScan != null && getState() == DigitalState.HIGH) {
+                executor.submit(onScan);
+            }
+        });
     }
 
-
-    public void onDown(Runnable task) {
-        onDown = task;
+    public void onScan(Runnable task) {
+        onScan = task;
     }
 
-    private Runnable onDown;
+    private DigitalState getState() {
+        return digitalInput.state();
+    }
 
+    @Override
+    public void reset() {
+        onScan = null;
+        if (executor != null) {
+            executor.shutdown();
+        }
+    }
 }
