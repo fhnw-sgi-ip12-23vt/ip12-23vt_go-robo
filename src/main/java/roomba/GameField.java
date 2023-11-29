@@ -2,6 +2,7 @@ package roomba;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -145,8 +146,11 @@ public class GameField extends PApplet {
         if (difficulty == 4){
             difficulty = 1;
         }
-        String p = System.getProperty("user.dir") + "\\src\\main\\resources\\files\\level";
-        File folder = new File(p);
+
+        //load directory and needs to be like that cause java file objects are weird with directories
+        String relativePath = "src/main/resources/files/level";
+        Path fullPath = Paths.get(System.getProperty("user.dir"), relativePath);
+        File folder = new File(fullPath.toString());
         listOfFiles = folder.listFiles();
         ArrayList<String> rightLevels = new ArrayList<String>();
 
