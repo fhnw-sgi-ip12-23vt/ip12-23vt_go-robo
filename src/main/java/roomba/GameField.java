@@ -1,7 +1,9 @@
 package roomba;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import processing.core.PImage;
 import processing.core.PApplet;
@@ -15,7 +17,7 @@ public class GameField extends PApplet {
     List<Sprite> obstacles;
     List<Sprite> goal;
     Player player;
-    PImage ball, toy, pillow, plushie, chargingStation;
+    PImage wall, ball, toy, pillow, plushie, plant1, plant2, computer, paper, chargingStation;
 
     float view_x = 0;
     float view_y = 0;
@@ -26,7 +28,7 @@ public class GameField extends PApplet {
     }
 
     public void draw() {
-        background(loadImage("../../resources/img/Room-Floor.png"));
+        background(loadImage("../../resources/img/Room-Floor2.png"));
 
         displayAll();
 
@@ -77,12 +79,17 @@ public class GameField extends PApplet {
         obstacles = new ArrayList<Sprite>();
         goal = new ArrayList<Sprite>();
 
-        chargingStation = loadImage("../../resources/img/gold1.png");
+        chargingStation = loadImage("../../resources/img/charger.png");
 
-        ball = loadImage("../../resources/img/red_brick.png");
-        pillow = loadImage("../../resources/img/spider_walk_right1.png");
-        toy = loadImage("../../resources/img/red_brick.png");
-        plushie = loadImage("../../resources/img/brown_brick.png");
+        wall = loadImage("../../resources/img/red_brick.png");
+        ball = loadImage("../../resources/img/obstacles/ball.png");
+        pillow = loadImage("../../resources/img/obstacles/pillow.png");
+        toy = loadImage("../../resources/img/obstacles/bookshelf.png");
+        plushie = loadImage("../../resources/img/obstacles/Teddy.png");
+        plant1 = loadImage("../../resources/img/obstacles/plant1.png");
+        plant2 = loadImage("../../resources/img/obstacles/plant2.png");
+        computer = loadImage("../../resources/img/obstacles/computer.png");
+        paper = loadImage("../../resources/img/obstacles/paper.png");
 
         createPlatforms("../../resources/files/map.csv");
     }
@@ -174,25 +181,17 @@ public class GameField extends PApplet {
                         goal.add(goal_);
                     }
                     case "2" -> {
-                        Sprite s = new Sprite(this, ball, Constants.SPRITE_SCALE);
+                        Sprite s = new Sprite(this, wall, Constants.SPRITE_SCALE);
                         s.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
                         s.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
                         obstacles.add(s);
                     }
                     case "3" -> {
-                        Sprite s = new Sprite(this, toy, Constants.SPRITE_SCALE);
-                        s.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
-                        s.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
-                        obstacles.add(s);
-                    }
-                    case "4" -> {
-                        Sprite s = new Sprite(this, pillow, Constants.SPRITE_SCALE);
-                        s.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
-                        s.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
-                        obstacles.add(s);
-                    }
-                    case "5" -> {
-                        Sprite s = new Sprite(this, plushie, Constants.SPRITE_SCALE);
+                        PImage[] allObstacleImages = new PImage[]{ball,pillow,toy,plushie, plant1, plant2, computer, paper};
+                        Random random = new Random();
+                        int i = random.nextInt(allObstacleImages.length);
+
+                        Sprite s = new Sprite(this, allObstacleImages[i], Constants.SPRITE_SCALE);
                         s.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
                         s.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
                         obstacles.add(s);
