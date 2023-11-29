@@ -91,7 +91,6 @@ public class GameField extends PApplet {
         plushie = loadImage("../../resources/img/brown_brick.png");
 
         createPlatforms(getNextLevel());
-        System.out.println("Resultat: " + getNextLevel());
     }
 
     //selects a level, currently random within difficulty tier
@@ -102,24 +101,13 @@ public class GameField extends PApplet {
         if (difficulty == 4){
             difficulty = 1;
         }
-        String p = "C:\\Users\\Svenj\\IdeaProjects\\lost-roomba\\src\\main\\resources\\files\\level";
-        //String p = "../../resources/files/level";
+        String p = System.getProperty("user.dir") + "\\src\\main\\resources\\files\\level";
         File folder = new File(p);
-        //Path folder = new Path(p);
-        //is Directory
-//        System.out.println(folder.isDirectory());
-        //exists
-//        System.out.println(folder.exists());
-        if (folder.exists() && folder.isDirectory()) {
-            listOfFiles = folder.listFiles();
-        }
-
-       // Path folderPath = new Path("../../")
+        listOfFiles = folder.listFiles();
         ArrayList<String> rightLevels = new ArrayList<String>();
 
+        //loads levels with correct difficulty in list
         for (int i = 0; i < listOfFiles.length; i++) {
-            System.out.println("Level first Part: " + listOfFiles[i].getName().substring(0, listOfFiles[i].getName().indexOf("_")));
-            System.out.println("Difficulty: " + difficulty);
             if (listOfFiles[i].getName().substring(0, listOfFiles[i].getName().indexOf("_")).equals("" + difficulty)){
                 rightLevels.add(listOfFiles[i].getName());
             }
