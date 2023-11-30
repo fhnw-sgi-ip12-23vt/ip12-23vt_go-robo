@@ -78,11 +78,11 @@ public class GameField extends PApplet {
         if (Constants.FULLSCREEN) {
 
             // TODO fix lag
-            PImage backgroundImage = loadImage("../../resources/img/Room-Floor-HD.png");
+            PImage backgroundImage = ImageLoader.loadImage(this, "img/Room-Floor-HD.png");
             backgroundImage.resize(width, height);
             background(backgroundImage);
         } else {
-            background(loadImage("../../resources/img/Room-Floor2.png"));
+            background(ImageLoader.loadImage(this, "img/Room-Floor2.png"));
         }
 
         displayAll();
@@ -123,23 +123,23 @@ public class GameField extends PApplet {
 
     public void setup() {
         imageMode(CENTER);
-        PImage p = loadImage("../../resources/img/roomba2-pixel-dark.png");
+        PImage p = ImageLoader.loadImage(this, "img/roomba2-pixel-dark.png");
         player = new Player(this, p, 0.3f);
         player.center_x = 100;
         player.change_y = 550;
         obstacles = new ArrayList<Sprite>();
         goal = new ArrayList<Sprite>();
 
-        chargingStation = loadImage("../../resources/img/charger.png");
-        wall = loadImage("../../resources/img/red_brick.png");
-        ball = loadImage("../../resources/img/obstacles/ball.png");
-        pillow = loadImage("../../resources/img/obstacles/pillow.png");
-        toy = loadImage("../../resources/img/obstacles/bookshelf.png");
-        plushie = loadImage("../../resources/img/obstacles/Teddy.png");
-        plant1 = loadImage("../../resources/img/obstacles/plant1.png");
-        plant2 = loadImage("../../resources/img/obstacles/plant2.png");
-        computer = loadImage("../../resources/img/obstacles/computer.png");
-        paper = loadImage("../../resources/img/obstacles/paper.png");
+        chargingStation = ImageLoader.loadImage(this, "img/charger.png");
+        wall = ImageLoader.loadImage(this, "img/red_brick.png");
+        ball = ImageLoader.loadImage(this, "img/obstacles/ball.png");
+        pillow = ImageLoader.loadImage(this, "img/obstacles/pillow.png");
+        toy = ImageLoader.loadImage(this, "img/obstacles/bookshelf.png");
+        plushie = ImageLoader.loadImage(this, "img/obstacles/Teddy.png");
+        plant1 = ImageLoader.loadImage(this, "img/obstacles/plant1.png");
+        plant2 = ImageLoader.loadImage(this, "img/obstacles/plant2.png");
+        computer = ImageLoader.loadImage(this, "img/obstacles/computer.png");
+        paper = ImageLoader.loadImage(this, "img/obstacles/paper.png");
 
         levelManager = new LevelManager(); // Instantiate LevelManager
         levelManager.setDifficulty(difficulty);
