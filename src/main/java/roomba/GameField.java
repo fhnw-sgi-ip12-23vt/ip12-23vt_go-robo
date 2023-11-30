@@ -128,7 +128,7 @@ public class GameField extends PApplet {
         obstacles = new ArrayList<Sprite>();
         goal = new ArrayList<Sprite>();
 
-        chargingStation = loadImage("../../resources/img/gold1.png");
+        chargingStation = loadImage("../../resources/img/charger.png");
 
         wall = loadImage("../../resources/img/red_brick.png");
         ball = loadImage("../../resources/img/obstacles/ball.png");
