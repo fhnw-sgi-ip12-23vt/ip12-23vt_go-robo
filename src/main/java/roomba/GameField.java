@@ -28,7 +28,7 @@ public class GameField extends PApplet {
     Player player;
     int difficulty = 0;
     String levelPath = "../../resources/files/";
-    PImage ball, toy, pillow, plushie, chargingStation;
+    PImage wall, ball, toy, pillow, plushie, plant1, plant2, computer, paper, chargingStation;
 
     float view_x = 0;
     float view_y = 0;
@@ -77,8 +77,7 @@ public class GameField extends PApplet {
     }
 
     public void draw() {
-
-        background(0);
+        background(loadImage("../../resources/img/Room-Floor2.png"));
 
         displayAll();
 
@@ -120,6 +119,7 @@ public class GameField extends PApplet {
     }
 
     public void setup() {
+
         imageMode(CENTER);
         PImage p = loadImage("../../resources/img/roomba2-pixel-dark.png");
         player = new Player(this, p, 0.3f);
@@ -130,10 +130,15 @@ public class GameField extends PApplet {
 
         chargingStation = loadImage("../../resources/img/gold1.png");
 
-        ball = loadImage("../../resources/img/snow.png");
-        pillow = loadImage("../../resources/img/snow.png");
-        toy = loadImage("../../resources/img/snow.png");
-        plushie = loadImage("../../resources/img/snow.png");
+        wall = loadImage("../../resources/img/red_brick.png");
+        ball = loadImage("../../resources/img/obstacles/ball.png");
+        pillow = loadImage("../../resources/img/obstacles/pillow.png");
+        toy = loadImage("../../resources/img/obstacles/bookshelf.png");
+        plushie = loadImage("../../resources/img/obstacles/Teddy.png");
+        plant1 = loadImage("../../resources/img/obstacles/plant1.png");
+        plant2 = loadImage("../../resources/img/obstacles/plant2.png");
+        computer = loadImage("../../resources/img/obstacles/computer.png");
+        paper = loadImage("../../resources/img/obstacles/paper.png");
 
         createPlatforms(getNextLevel());
     }
@@ -255,19 +260,11 @@ public class GameField extends PApplet {
                         obstacles.add(s);
                     }
                     case "3" -> {
-                        Sprite s = new Sprite(this, toy, Constants.SPRITE_SCALE);
-                        s.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
-                        s.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
-                        obstacles.add(s);
-                    }
-                    case "4" -> {
-                        Sprite s = new Sprite(this, pillow, Constants.SPRITE_SCALE);
-                        s.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
-                        s.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
-                        obstacles.add(s);
-                    }
-                    case "5" -> {
-                        Sprite s = new Sprite(this, plushie, Constants.SPRITE_SCALE);
+                        PImage[] allObstacleImages = new PImage[]{ball,pillow,toy,plushie, plant1, plant2, computer, paper};
+                        Random random = new Random();
+                        int i = random.nextInt(allObstacleImages.length);
+
+                        Sprite s = new Sprite(this, allObstacleImages[i], Constants.SPRITE_SCALE);
                         s.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
                         s.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
                         obstacles.add(s);
