@@ -9,8 +9,8 @@ import processing.core.PApplet;
 
 public class GameField extends PApplet {
     private PhysicalScanner pui;
-    private static LevelManager levelManager;
-    private static CollisionHandler collisionHandler;
+    private LevelManager levelManager;
+    private CollisionHandler collisionHandler;
 
     public boolean nextLevel = false;
     public List<Sprite> obstacles;
@@ -39,6 +39,7 @@ public class GameField extends PApplet {
     }
 
     public void draw() {
+        clear();
 
         background(backgroundImage);
 
