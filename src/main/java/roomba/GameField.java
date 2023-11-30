@@ -20,6 +20,8 @@ public class GameField extends PApplet {
     private Player player;
     private float view_x = 0;
     private float view_y = 0;
+    private PImage backgroundImage;
+    private static boolean init = true;
 
     public GameField(PhysicalScanner pui) {
         this.pui = pui;
@@ -37,15 +39,8 @@ public class GameField extends PApplet {
     }
 
     public void draw() {
-        if (Constants.FULLSCREEN) {
 
-            // TODO fix lag
-            PImage backgroundImage = ImageLoader.loadImage(this, "img/Room-Floor-HD.png");
-            backgroundImage.resize(width, height);
-            background(backgroundImage);
-        } else {
-            background(ImageLoader.loadImage(this, "img/Room-Floor2.png"));
-        }
+        background(backgroundImage);
 
         displayAll();
         if (!nextLevel) {
@@ -83,8 +78,6 @@ public class GameField extends PApplet {
         // }
     }
 
-    boolean init = true;
-
     public void setup() {
         imageMode(CENTER);
         // just load once
@@ -117,6 +110,14 @@ public class GameField extends PApplet {
         plant2 = ImageLoader.loadImage(this, "img/obstacles/plant2.png");
         computer = ImageLoader.loadImage(this, "img/obstacles/computer.png");
         paper = ImageLoader.loadImage(this, "img/obstacles/paper.png");
+
+        if (Constants.FULLSCREEN) {
+            backgroundImage = ImageLoader.loadImage(this, "img/Room-Floor-HD.png");
+            backgroundImage.resize(width, height);
+        } else {
+            backgroundImage = ImageLoader.loadImage(this, "img/Room-Floor2.png");
+        }
+
         return p;
 
     }
