@@ -19,9 +19,6 @@ public class GameField extends PApplet {
         this.pui = pui;
     }
 
-    private final int Xsize = 800;
-    private final int Ysize = 600;
-
     private boolean nextLevel = false;
     List<Sprite> obstacles;
     List<Sprite> goal;
@@ -35,8 +32,11 @@ public class GameField extends PApplet {
 
     @Override
     public void settings() {
-        // fullScreen();
-        size(Xsize, Ysize);
+        if (Constants.FULLSCREEN) {
+            fullScreen();
+        } else {
+            size(Constants.WIDTH, Constants.HEIGHT);
+        }
     }
 
     public void PInputLogic() {
@@ -77,7 +77,13 @@ public class GameField extends PApplet {
     }
 
     public void draw() {
-        background(loadImage("../../resources/img/Room-Floor2.png"));
+        if (Constants.FULLSCREEN) {
+            // background(loadImage("../../resources/img/Room-Floor2_FullScreen.png"));
+            background(0);
+        } else {
+            background(loadImage("../../resources/img/Room-Floor2.png"));
+
+        }
 
         displayAll();
 
@@ -143,25 +149,26 @@ public class GameField extends PApplet {
         createPlatforms(getNextLevel());
     }
 
-    //selects a level, currently random within difficulty tier
-    public String getNextLevel(){
+    // selects a level, currently random within difficulty tier
+    public String getNextLevel() {
         File[] listOfFiles = new File[0];
-        //resets difficulty after 3
+        // resets difficulty after 3
         difficulty++;
-        if (difficulty == 4){
+        if (difficulty == 4) {
             difficulty = 1;
         }
 
-        //load directory and needs to be like that cause java file objects are weird with directories
+        // load directory and needs to be like that cause java file objects are weird
+        // with directories
         String relativePath = "src/main/resources/files/level";
         Path fullPath = Paths.get(System.getProperty("user.dir"), relativePath);
         File folder = new File(fullPath.toString());
         listOfFiles = folder.listFiles();
         ArrayList<String> rightLevels = new ArrayList<String>();
 
-        //loads levels with correct difficulty in list
+        // loads levels with correct difficulty in list
         for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].getName().substring(0, listOfFiles[i].getName().indexOf("_")).equals("" + difficulty)){
+            if (listOfFiles[i].getName().substring(0, listOfFiles[i].getName().indexOf("_")).equals("" + difficulty)) {
                 rightLevels.add(listOfFiles[i].getName());
             }
         }
@@ -260,7 +267,8 @@ public class GameField extends PApplet {
                         obstacles.add(s);
                     }
                     case "3" -> {
-                        PImage[] allObstacleImages = new PImage[]{ball,pillow,toy,plushie, plant1, plant2, computer, paper};
+                        PImage[] allObstacleImages = new PImage[] { ball, pillow, toy, plushie, plant1, plant2,
+                                computer, paper };
                         Random random = new Random();
                         int i = random.nextInt(allObstacleImages.length);
 
