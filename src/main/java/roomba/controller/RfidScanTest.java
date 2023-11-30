@@ -1,6 +1,5 @@
 package roomba.controller;
 
-import com.pi4j.Pi4J;
 import com.pi4j.crowpi.components.RfidComponent;
 import roomba.util.Pi4JContext;
 
