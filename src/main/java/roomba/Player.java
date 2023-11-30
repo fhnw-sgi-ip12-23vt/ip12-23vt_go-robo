@@ -5,7 +5,7 @@ import processing.core.PImage;
 public class Player extends AnimatedSprite {
 	GameField gamefield;
 	String levelName;
-	boolean hitObstacle, inPlace;
+	boolean inPlace;
 	PImage[] FaceLeft;
 	PImage[] FaceRight;
 	PImage[] FaceDown;
@@ -16,7 +16,6 @@ public class Player extends AnimatedSprite {
 		this.gamefield = gamefield;
 		levelName = "";
 		direction = Constants.RIGHT_FACING;
-		hitObstacle = false;
 		inPlace = true;
 
 		FaceLeft = new PImage[1];
@@ -46,7 +45,6 @@ public class Player extends AnimatedSprite {
 
 	@Override
 	public void updateAnimation() {
-		hitObstacle = gamefield.isHitObstacles(this, gamefield.obstacles);
 		inPlace = change_x == 0 && change_y == 0;
 		super.updateAnimation();
 	}
