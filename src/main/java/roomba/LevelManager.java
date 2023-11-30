@@ -52,7 +52,7 @@ public class LevelManager {
 
         String[] lines = gameField.loadStrings(filename);
         for (int row = 0; row < lines.length; row++) {
-            String[] values = gameField.split(lines[row], ",");
+            String[] values = GameField.split(lines[row], ",");
             for (int col = 0; col < values.length; col++) {
                 switch (values[col]) {
                     case "1" -> {

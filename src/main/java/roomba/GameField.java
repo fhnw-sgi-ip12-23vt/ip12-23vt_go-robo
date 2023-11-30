@@ -1,13 +1,8 @@
 package roomba;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Random;
-
 import processing.core.PImage;
 import roomba.view.PhysicalScanner;
 import processing.core.PApplet;
@@ -83,27 +78,21 @@ public class GameField extends PApplet {
             // TODO fix lag
             PImage backgroundImage = loadImage("../../resources/img/Room-Floor-HD.png");
             backgroundImage.resize(width, height);
-
             background(backgroundImage);
-
         } else {
             background(loadImage("../../resources/img/Room-Floor2.png"));
-
         }
 
         displayAll();
-
         if (!nextLevel) {
             updateAll();
             collectGoal();
         }
-
     }
 
     void updateAll() {
         player.updateAnimation();
         resolveObstaclesCollisions(player, obstacles);
-
     }
 
     void displayAll() {
@@ -114,8 +103,8 @@ public class GameField extends PApplet {
             g.display();
             ((AnimatedSprite) g).updateAnimation();
         }
-        player.display();
 
+        player.display();
         fill(255, 0, 0);
         textSize(32);
         text("Level: " + player.levelName, view_x + 50, view_y + 100);
@@ -140,7 +129,6 @@ public class GameField extends PApplet {
         goal = new ArrayList<Sprite>();
 
         chargingStation = loadImage("../../resources/img/charger.png");
-
         wall = loadImage("../../resources/img/red_brick.png");
         ball = loadImage("../../resources/img/obstacles/ball.png");
         pillow = loadImage("../../resources/img/obstacles/pillow.png");
@@ -168,12 +156,8 @@ public class GameField extends PApplet {
             for (Sprite g : goal_list) {
                 goal.remove(g);
             }
-        }
-        if (goal.isEmpty()) {
+        } else {
             nextLevel = true;
-            // TODO
-            // Call next leve
-
         }
     }
 
@@ -315,12 +299,12 @@ public class GameField extends PApplet {
     }
 
     public void stopAtObstacle() {
-        if (player.hitObstacle) {
+        // if (player.hitObstacle) {
 
-            player.change_x = 0;
-            player.change_y = 0;
+        //     player.change_x = 0;
+        //     player.change_y = 0;
 
-        }
+        // }
     }
 
 }
