@@ -8,25 +8,24 @@ import roomba.view.PhysicalScanner;
 import processing.core.PApplet;
 
 public class GameField extends PApplet {
-    PhysicalScanner pui;
-    LevelManager levelManager;
-    CollisionHandler collisionHandler;
+    private PhysicalScanner pui;
+    private static LevelManager levelManager;
+    private static CollisionHandler collisionHandler;
+
+    public boolean nextLevel = false;
+    public List<Sprite> obstacles;
+    public List<Sprite> goal;
+    public PImage wall, ball, toy, pillow, plushie, plant1, plant2, computer, paper, chargingStation;
+    private int difficulty = 0;
+    private Player player;
+    private float view_x = 0;
+    private float view_y = 0;
 
     public GameField(PhysicalScanner pui) {
         this.pui = pui;
+        levelManager = new LevelManager();
         collisionHandler = new CollisionHandler();
     }
-
-    private int difficulty = 0;
-    public boolean nextLevel = false;
-    List<Sprite> obstacles;
-    List<Sprite> goal;
-    Player player;
-    String levelPath = "../../resources/files/";
-    PImage wall, ball, toy, pillow, plushie, plant1, plant2, computer, paper, chargingStation;
-
-    float view_x = 0;
-    float view_y = 0;
 
     @Override
     public void settings() {
@@ -34,43 +33,6 @@ public class GameField extends PApplet {
             fullScreen();
         } else {
             size(Constants.WIDTH, Constants.HEIGHT);
-        }
-    }
-
-    public void PInputLogic() {
-        pui.controller.subscribeToQueueChanges((oldValue, newValue) -> {
-            // Handle queue changes
-            System.out.println("Queue changed: " + newValue);
-            handleInput(newValue);
-        });
-    }
-
-    void handleInput(Queue<String> inputQueue) {
-        while (!inputQueue.isEmpty()) {
-            String input = pui.controller.dequeue();
-            switch (input) {
-                case "RIGHT":
-                    // Handle movement to the right
-                    player.change_y = 0;
-                    player.change_x = Constants.MOVE_SPEED;
-                    break;
-                case "LEFT":
-                    // Handle movement to the left
-                    player.change_y = 0;
-                    player.change_x = -Constants.MOVE_SPEED;
-                    break;
-                case "UP":
-                    // Handle movement upwards
-                    player.change_y = -Constants.MOVE_SPEED;
-                    player.change_x = 0;
-                    break;
-                case "DOWN":
-                    // Handle movement downwards
-                    player.change_y = Constants.MOVE_SPEED;
-                    player.change_x = 0;
-                    break;
-                // Add more cases for other directions if needed
-            }
         }
     }
 
@@ -121,15 +83,30 @@ public class GameField extends PApplet {
         // }
     }
 
+    boolean init = true;
+
     public void setup() {
         imageMode(CENTER);
-        PImage p = ImageLoader.loadImage(this, "img/roomba2-pixel-dark.png");
-        player = new Player(this, p, 0.3f);
+        // just load once
+        if (init) {
+            PImage playerImage = loadImages();
+            player = new Player(this, playerImage, 0.3f);
+            obstacles = new ArrayList<Sprite>();
+            goal = new ArrayList<Sprite>();
+        }
+
         player.center_x = 100;
         player.change_y = 550;
-        obstacles = new ArrayList<Sprite>();
-        goal = new ArrayList<Sprite>();
 
+        levelManager.setDifficulty(difficulty);
+        createPlatforms(levelManager.getNextLevel()); // Use LevelManager to get the next level
+        difficulty = levelManager.getDifficulty();
+
+    }
+
+    private PImage loadImages() {
+
+        PImage p = ImageLoader.loadImage(this, "img/roomba2-pixel-dark.png");
         chargingStation = ImageLoader.loadImage(this, "img/goal/battery-frame0.png");
         wall = ImageLoader.loadImage(this, "img/red_brick.png");
         ball = ImageLoader.loadImage(this, "img/obstacles/ball.png");
@@ -140,19 +117,15 @@ public class GameField extends PApplet {
         plant2 = ImageLoader.loadImage(this, "img/obstacles/plant2.png");
         computer = ImageLoader.loadImage(this, "img/obstacles/computer.png");
         paper = ImageLoader.loadImage(this, "img/obstacles/paper.png");
-
-        levelManager = new LevelManager(); // Instantiate LevelManager
-        levelManager.setDifficulty(difficulty);
-        createPlatforms(levelManager.getNextLevel()); // Use LevelManager to get the next level
-        difficulty = levelManager.getDifficulty();
+        return p;
 
     }
 
-    void createPlatforms(String filename) {
+    private void createPlatforms(String filename) {
         levelManager.createPlatforms(this, filename); // Use LevelManager to create platforms
     }
 
-    void collectGoal() {
+    private void collectGoal() {
         ArrayList<Sprite> goal_list = collisionHandler.checkCollisionList(player, goal);
         if (!goal.isEmpty()) {
             for (Sprite g : goal_list) {
@@ -163,7 +136,99 @@ public class GameField extends PApplet {
         }
     }
 
-    // called whenever a key is pressed.
+    public void PInputLogic() {
+        pui.controller.subscribeToQueueChanges((oldValue, newValue) -> {
+            // Handle queue changes
+            System.out.println("Queue changed: " + newValue);
+            handleInput(newValue);
+        });
+    }
+
+    private void handleInput(Queue<String> inputQueue) {
+        while (!inputQueue.isEmpty()) {
+            String input = pui.controller.dequeue();
+            if (nextLevel) {
+                setup();
+            } else {
+                switch (input) {
+                    case "RIGHT":
+                        if (player.direction == Constants.RIGHT_FACING) { // right
+                            player.change_y = Constants.MOVE_SPEED;
+                            player.change_x = 0;
+                        }
+                        if (player.direction == Constants.LEFT_FACING) { // left
+                            player.change_y = -Constants.MOVE_SPEED;
+                            player.change_x = 0;
+                        }
+                        if (player.direction == Constants.UP_FACING) { // up
+                            player.change_y = 0;
+                            player.change_x = -Constants.MOVE_SPEED;
+                        }
+                        if (player.direction == Constants.DOWN_FACING) { // down
+                            player.change_y = 0;
+                            player.change_x = Constants.MOVE_SPEED;
+                        }
+                        break;
+                    case "LEFT":
+                        if (player.direction == Constants.RIGHT_FACING) {
+                            player.change_y = -Constants.MOVE_SPEED;
+                            player.change_x = 0;
+                        }
+                        if (player.direction == Constants.LEFT_FACING) {
+                            player.change_y = Constants.MOVE_SPEED;
+                            player.change_x = 0;
+                        }
+                        if (player.direction == Constants.UP_FACING) {
+                            player.change_y = 0;
+                            player.change_x = Constants.MOVE_SPEED;
+                        }
+                        if (player.direction == Constants.DOWN_FACING) { // down
+                            player.change_y = 0;
+                            player.change_x = -Constants.MOVE_SPEED;
+                        }
+                        break;
+                    case "UP":
+                        if (player.direction == Constants.RIGHT_FACING) { // right
+                            player.change_y = 0;
+                            player.change_x = Constants.MOVE_SPEED;
+                        }
+                        if (player.direction == Constants.LEFT_FACING) { // left
+                            player.change_y = 0;
+                            player.change_x = -Constants.MOVE_SPEED;
+                        }
+                        if (player.direction == Constants.UP_FACING) { // up
+                            player.change_y = Constants.MOVE_SPEED;
+                            player.change_x = 0;
+                        }
+                        if (player.direction == Constants.DOWN_FACING) { // down
+                            player.change_y = -Constants.MOVE_SPEED;
+                            player.change_x = 0;
+                        }
+                        break;
+                    case "DOWN":
+                        if (player.direction == Constants.RIGHT_FACING) { // right
+                            player.change_x = -Constants.MOVE_SPEED;
+                            player.change_y = 0;
+                        }
+                        if (player.direction == Constants.LEFT_FACING) { // left
+                            player.change_x = Constants.MOVE_SPEED;
+                            player.change_y = 0;
+                        }
+                        if (player.direction == Constants.UP_FACING) { // up
+                            player.change_x = 0;
+                            player.change_y = -Constants.MOVE_SPEED;
+                        }
+                        if (player.direction == Constants.DOWN_FACING) { // down
+                            player.change_x = 0;
+                            player.change_y = Constants.MOVE_SPEED;
+                        }
+                        break;
+                }
+            }
+        }
+    }
+
+    // called whenever a key is pressed, will be deleted later on
     public void keyPressed() {
 
         if (nextLevel) {
@@ -188,7 +253,6 @@ public class GameField extends PApplet {
 
         } else if (((keyCode == LEFT || key == 'a'))
                 && player.inPlace) {
-            System.out.println(player.direction);
             if (player.direction == Constants.RIGHT_FACING) {
                 player.change_y = -Constants.MOVE_SPEED;
                 player.change_x = 0;

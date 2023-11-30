@@ -18,7 +18,7 @@ public class Player extends AnimatedSprite {
 		direction = Constants.RIGHT_FACING;
 		inPlace = true;
 
-				FaceLeft = new PImage[1];
+		FaceLeft = new PImage[1];
 		FaceLeft[0] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-green-left.png");
 		FaceRight = new PImage[1];
 		FaceRight[0] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-green-right.png");
@@ -41,7 +41,6 @@ public class Player extends AnimatedSprite {
 		moveDown[1] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-dark.png");
 		currentImages = FaceRight;
 	}
-
 
 	@Override
 	public void updateAnimation() {
