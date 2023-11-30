@@ -1,25 +1,32 @@
 package roomba;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Random;
+
 import processing.core.PImage;
 import roomba.view.PhysicalScanner;
 import processing.core.PApplet;
 
 public class GameField extends PApplet {
     PhysicalScanner pui;
-    LevelManager levelManager;
 
     public GameField(PhysicalScanner pui) {
         this.pui = pui;
     }
 
-    private int difficulty = 0;
-    public boolean nextLevel = false;
+    private final int Xsize = 800;
+    private final int Ysize = 600;
+
+    private boolean nextLevel = false;
     List<Sprite> obstacles;
     List<Sprite> goal;
     Player player;
+    int difficulty = 0;
     String levelPath = "../../resources/files/";
     PImage wall, ball, toy, pillow, plushie, plant1, plant2, computer, paper, chargingStation;
 
@@ -28,11 +35,8 @@ public class GameField extends PApplet {
 
     @Override
     public void settings() {
-        if (Constants.FULLSCREEN) {
-            fullScreen();
-        } else {
-            size(Constants.WIDTH, Constants.HEIGHT);
-        }
+        // fullScreen();
+        size(Xsize, Ysize);
     }
 
     public void PInputLogic() {
@@ -73,26 +77,21 @@ public class GameField extends PApplet {
     }
 
     public void draw() {
-        if (Constants.FULLSCREEN) {
-
-            // TODO fix lag
-            PImage backgroundImage = loadImage("../../resources/img/Room-Floor-HD.png");
-            backgroundImage.resize(width, height);
-            background(backgroundImage);
-        } else {
-            background(loadImage("../../resources/img/Room-Floor2.png"));
-        }
+        background(loadImage("../../resources/img/Room-Floor2.png"));
 
         displayAll();
+
         if (!nextLevel) {
             updateAll();
             collectGoal();
         }
+
     }
 
     void updateAll() {
         player.updateAnimation();
         resolveObstaclesCollisions(player, obstacles);
+
     }
 
     void displayAll() {
@@ -103,8 +102,8 @@ public class GameField extends PApplet {
             g.display();
             ((AnimatedSprite) g).updateAnimation();
         }
-
         player.display();
+
         fill(255, 0, 0);
         textSize(32);
         text("Level: " + player.levelName, view_x + 50, view_y + 100);
@@ -120,6 +119,7 @@ public class GameField extends PApplet {
     }
 
     public void setup() {
+
         imageMode(CENTER);
         PImage p = loadImage("../../resources/img/roomba2-pixel-dark.png");
         player = new Player(this, p, 0.3f);
@@ -128,7 +128,8 @@ public class GameField extends PApplet {
         obstacles = new ArrayList<Sprite>();
         goal = new ArrayList<Sprite>();
 
-        chargingStation = loadImage("../../resources/img/charger.png");
+        chargingStation = loadImage("../../resources/img/goal/battery-frame0.png");
+
         wall = loadImage("../../resources/img/red_brick.png");
         ball = loadImage("../../resources/img/obstacles/ball.png");
         pillow = loadImage("../../resources/img/obstacles/pillow.png");
@@ -139,15 +140,33 @@ public class GameField extends PApplet {
         computer = loadImage("../../resources/img/obstacles/computer.png");
         paper = loadImage("../../resources/img/obstacles/paper.png");
 
-        levelManager = new LevelManager(); // Instantiate LevelManager
-        levelManager.setDifficulty(difficulty);
-        createPlatforms(levelManager.getNextLevel()); // Use LevelManager to get the next level
-        difficulty = levelManager.getDifficulty();
-
+        createPlatforms(getNextLevel());
     }
 
-    void createPlatforms(String filename) {
-        levelManager.createPlatforms(this, filename); // Use LevelManager to create platforms
+    //selects a level, currently random within difficulty tier
+    public String getNextLevel(){
+        File[] listOfFiles = new File[0];
+        //resets difficulty after 3
+        difficulty++;
+        if (difficulty == 4){
+            difficulty = 1;
+        }
+
+        //load directory and needs to be like that cause java file objects are weird with directories
+        String relativePath = "src/main/resources/files/level";
+        Path fullPath = Paths.get(System.getProperty("user.dir"), relativePath);
+        File folder = new File(fullPath.toString());
+        listOfFiles = folder.listFiles();
+        ArrayList<String> rightLevels = new ArrayList<String>();
+
+        //loads levels with correct difficulty in list
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].getName().substring(0, listOfFiles[i].getName().indexOf("_")).equals("" + difficulty)){
+                rightLevels.add(listOfFiles[i].getName());
+            }
+        }
+        Random r = new Random();
+        return "../../resources/files/level/" + rightLevels.get(r.nextInt(rightLevels.size()));
     }
 
     void collectGoal() {
@@ -156,8 +175,12 @@ public class GameField extends PApplet {
             for (Sprite g : goal_list) {
                 goal.remove(g);
             }
-        } else {
+        }
+        if (goal.isEmpty()) {
             nextLevel = true;
+            // TODO
+            // Call next leve
+
         }
     }
 
@@ -214,6 +237,41 @@ public class GameField extends PApplet {
                 collision_list.add(p);
         }
         return collision_list;
+    }
+
+    void createPlatforms(String filename) {
+        nextLevel = false;
+
+        String[] lines = loadStrings(filename);
+        for (int row = 0; row < lines.length; row++) {
+            String[] values = split(lines[row], ",");
+            for (int col = 0; col < values.length; col++) {
+                switch (values[col]) {
+                    case "1" -> {
+                        Goal goal_ = new Goal(this, chargingStation, Constants.SPRITE_SCALE);
+                        goal_.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
+                        goal_.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
+                        goal.add(goal_);
+                    }
+                    case "2" -> {
+                        Sprite s = new Sprite(this, wall, Constants.SPRITE_SCALE);
+                        s.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
+                        s.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
+                        obstacles.add(s);
+                    }
+                    case "3" -> {
+                        PImage[] allObstacleImages = new PImage[]{ball,pillow,toy,plushie, plant1, plant2, computer, paper};
+                        Random random = new Random();
+                        int i = random.nextInt(allObstacleImages.length);
+
+                        Sprite s = new Sprite(this, allObstacleImages[i], Constants.SPRITE_SCALE);
+                        s.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
+                        s.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
+                        obstacles.add(s);
+                    }
+                }
+            }
+        }
     }
 
     // called whenever a key is pressed.
@@ -299,12 +357,12 @@ public class GameField extends PApplet {
     }
 
     public void stopAtObstacle() {
-        // if (player.hitObstacle) {
+        if (player.hitObstacle) {
 
-        //     player.change_x = 0;
-        //     player.change_y = 0;
+            player.change_x = 0;
+            player.change_y = 0;
 
-        // }
+        }
     }
 
 }
