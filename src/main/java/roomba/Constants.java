@@ -16,9 +16,6 @@ public class Constants {
     static int LEFT_FACING = 2;
     static int UP_FACING = 3;
     static int DOWN_FACING = 4;
-    static float RIGHT_MARGIN = 400;
-    static float LEFT_MARGIN = 60;
-    static float VERTICAL_MARGIN = 40;
     static boolean FULLSCREEN = true;
 
     static {
@@ -41,14 +38,11 @@ public class Constants {
             SPRITE_SIZE = Float.parseFloat(appProps.getProperty("SPRITE_SIZE"));
             HEIGHT = Integer.parseInt(appProps.getProperty("HEIGHT"));
             WIDTH = Integer.parseInt(appProps.getProperty("WIDTH"));
-            NEUTRAL_FACING = Integer.parseInt(appProps.getProperty("NEUTRAL_FACING"));
-            RIGHT_FACING = Integer.parseInt(appProps.getProperty("RIGHT_FACING"));
-            LEFT_FACING = Integer.parseInt(appProps.getProperty("LEFT_FACING"));
-            UP_FACING = Integer.parseInt(appProps.getProperty("UP_FACING"));
-            DOWN_FACING = Integer.parseInt(appProps.getProperty("DOWN_FACING"));
-            RIGHT_MARGIN = Float.parseFloat(appProps.getProperty("RIGHT_MARGIN"));
-            LEFT_MARGIN = Float.parseFloat(appProps.getProperty("LEFT_MARGIN"));
-            VERTICAL_MARGIN = Float.parseFloat(appProps.getProperty("VERTICAL_MARGIN"));
+            // NEUTRAL_FACING = Integer.parseInt(appProps.getProperty("NEUTRAL_FACING"));
+            // RIGHT_FACING = Integer.parseInt(appProps.getProperty("RIGHT_FACING"));
+            // LEFT_FACING = Integer.parseInt(appProps.getProperty("LEFT_FACING"));
+            // UP_FACING = Integer.parseInt(appProps.getProperty("UP_FACING"));
+            // DOWN_FACING = Integer.parseInt(appProps.getProperty("DOWN_FACING"));
             FULLSCREEN = Boolean.parseBoolean(appProps.getProperty("FULLSCREEN"));
 
         } catch (Exception e) {
