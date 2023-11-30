@@ -78,8 +78,13 @@ public class GameField extends PApplet {
 
     public void draw() {
         if (Constants.FULLSCREEN) {
-            // background(loadImage("../../resources/img/Room-Floor2_FullScreen.png"));
-            background(0);
+
+            //TODO fix lag
+            PImage  backgroundImage = loadImage("../../resources/img/Room-Floor-HD.png");
+            backgroundImage.resize(width, height);
+
+            background(backgroundImage);
+
         } else {
             background(loadImage("../../resources/img/Room-Floor2.png"));
 
