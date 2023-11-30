@@ -25,15 +25,14 @@ public class LevelManager {
         if (difficulty == 4) {
             difficulty = 1;
         }
-
-        // load directory and needs to be like that cause java file objects are weird
-        // with directories
-        String relativePath = "src/main/resources/files/level";
-        Path fullPath = Paths.get(System.getProperty("user.dir"), relativePath);
+    
+        // load directory using ImageLoader
+        String relativePath = "files/level";
+        Path fullPath = ImageLoader.getImagePath(relativePath);
         File folder = new File(fullPath.toString());
         listOfFiles = folder.listFiles();
         ArrayList<String> rightLevels = new ArrayList<String>();
-
+    
         // loads levels with correct difficulty in the list
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].getName().substring(0, listOfFiles[i].getName().indexOf("_"))
@@ -42,8 +41,9 @@ public class LevelManager {
             }
         }
         Random r = new Random();
-        return "../../resources/files/level/" + rightLevels.get(r.nextInt(rightLevels.size()));
+        return "files/level/" + rightLevels.get(r.nextInt(rightLevels.size()));
     }
+    
 
     public void createPlatforms(GameField gameField, String filename) {
         gameField.nextLevel = false;

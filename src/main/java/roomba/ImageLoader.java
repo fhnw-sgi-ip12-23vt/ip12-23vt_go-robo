@@ -12,7 +12,7 @@ public class ImageLoader {
         return applet.loadImage(imagePath.toString());
     }
 
-    private static Path getImagePath(String filename) {
+    public static Path getImagePath(String filename) {
         String os = System.getProperty("os.name").toLowerCase();
 
         if (os.contains("win")) {
