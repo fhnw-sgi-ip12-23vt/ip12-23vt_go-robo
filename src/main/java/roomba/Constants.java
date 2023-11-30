@@ -1,6 +1,8 @@
 package roomba;
 
 import java.io.FileInputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public class Constants {
@@ -25,11 +27,14 @@ public class Constants {
 
     private static void initConfigs() {
         try {
-            String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-            String appConfigPath = rootPath + "app.properties";
+            // String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+            // String appConfigPath = rootPath + "app.properties";
+
+            String relativePath = "src/main/java/app.properties";
+            Path fullPath = Paths.get(System.getProperty("user.dir"), relativePath);
 
             Properties appProps = new Properties();
-            appProps.load(new FileInputStream(appConfigPath));
+            appProps.load(new FileInputStream(fullPath.toString()));
 
             MOVE_SPEED = Float.parseFloat(appProps.getProperty("MOVE_SPEED"));
             SPRITE_SCALE = Float.parseFloat(appProps.getProperty("SPRITE_SCALE"));
