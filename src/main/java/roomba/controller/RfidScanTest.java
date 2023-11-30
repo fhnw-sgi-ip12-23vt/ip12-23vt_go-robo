@@ -2,6 +2,7 @@ package roomba.controller;
 
 import com.pi4j.Pi4J;
 import com.pi4j.crowpi.components.RfidComponent;
+import roomba.util.Pi4JContext;
 
 import java.time.Duration;
 import java.util.logging.Logger;
@@ -10,7 +11,7 @@ public class RfidScanTest {
     public static void main(String[] args) {
         Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-        final var pi4j = Pi4J.newAutoContext();
+        final var pi4j = Pi4JContext.createContext();
 
         // Initialize RFID component
         final var rfid = new RfidComponent(pi4j);
