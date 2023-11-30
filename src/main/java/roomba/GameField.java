@@ -254,7 +254,7 @@ public class GameField extends PApplet {
                         goal.add(goal_);
                     }
                     case "2" -> {
-                        Sprite s = new Sprite(this, ball, Constants.SPRITE_SCALE);
+                        Sprite s = new Sprite(this, wall, Constants.SPRITE_SCALE);
                         s.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
                         s.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
                         obstacles.add(s);
