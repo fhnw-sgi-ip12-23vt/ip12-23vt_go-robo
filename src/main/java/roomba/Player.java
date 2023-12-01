@@ -9,12 +9,15 @@ import processing.core.PImage;
  * the player.
  */
 public class Player extends AnimatedSprite {
-	boolean inPlace;
-	PImage[] FaceLeft;
-	PImage[] FaceRight;
-	PImage[] FaceDown;
-	PImage[] FaceUp;
+	private boolean inPlace;
+	private PImage[] FaceLeft;
+	private PImage[] FaceRight;
+	private PImage[] FaceDown;
+	private PImage[] FaceUp;
 
+	public boolean isInPlace() {
+		return inPlace;
+	}
 	/**
 	 * Constructs a new Player instance.
 	 *

@@ -7,15 +7,15 @@ import processing.core.PImage;
  * Represents an animated sprite with various movement directions.
  */
 public class AnimatedSprite extends Sprite {
-    PImage[] currentImages;
-    PImage[] standNeutral;
-    PImage[] moveLeft;
-    PImage[] moveRight;
-    PImage[] moveUp;
-    PImage[] moveDown;
-    int direction;
-    int index;
-    int frame;
+    protected PImage[] currentImages;
+    protected PImage[] standNeutral;
+    protected PImage[] moveLeft;
+    protected PImage[] moveRight;
+    protected PImage[] moveUp;
+    protected PImage[] moveDown;
+    protected int direction;
+    protected int index;
+    protected int frame;
 
     /**
      * Constructs an animated sprite.

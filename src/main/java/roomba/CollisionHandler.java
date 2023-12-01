@@ -47,7 +47,7 @@ public class CollisionHandler {
      * @param s2 The second sprite.
      * @return True if there is a collision, false otherwise.
      */
-    boolean checkCollision(Sprite s1, Sprite s2) {
+    private boolean checkCollision(Sprite s1, Sprite s2) {
         boolean noXOverlap = s1.getRight() <= s2.getLeft() || s1.getLeft() >= s2.getRight();
         boolean noYOverlap = s1.getBottom() <= s2.getTop() || s1.getTop() >= s2.getBottom();
         return !noXOverlap && !noYOverlap;

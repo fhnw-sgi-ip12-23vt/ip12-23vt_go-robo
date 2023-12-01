@@ -7,11 +7,11 @@ import processing.core.PImage;
  * The Sprite class represents a basic game sprite with position, size, and movement properties.
  */
 public class Sprite {
-    PApplet pApplet;
-    PImage image;
-    float center_x, center_y;
-    float change_x, change_y;
-    float w, h;
+    protected PApplet pApplet;
+    protected PImage image;
+    protected float center_x, center_y;
+    protected float change_x, change_y;
+    protected float w, h;
 
     /**
      * Constructs a Sprite object with the specified image file, scale, and initial position.
