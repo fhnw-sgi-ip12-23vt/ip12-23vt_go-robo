@@ -1,11 +1,11 @@
 # Content Table
-[Quick_Overview](#Quick_Overview)
+[Quick_Overview](#quick-overview)
 
 [Roomba Game Code Documentation](#roomba-game-code-documentation)
 
-[Source_Code_Qualität_Anforderungen](#Source_Code_Qualität_Anforderungen)
+[Source Code Qualität Anforderungen](#source-code-qualität-anforderungen)
 
-# Quick_Overview
+# Quick Overview
 The `RoombaInTrouble.java` class initializes the Physical MVC, which handles RFID card inputs. `GameField` contains the entire game logic. It loads images once at the start and uses them throughout the application's lifetime. The game is displayed using the Processing draw method. When one level is completed, the `LevelManager` loads the next level.
 
 ## Starter
@@ -193,7 +193,7 @@ Sets the callback function to be executed when a card is scanned.
 
 
 
-# Source_Code_Qualität_Anforderungen
+# Source Code Qualität Anforderungen
 
 
 ## Einführung
