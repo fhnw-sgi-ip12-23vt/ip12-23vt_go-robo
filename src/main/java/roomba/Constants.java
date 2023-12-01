@@ -5,8 +5,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
+/**
+ * Represents constants used in the "Roomba in Trouble" game.
+ */
 public class Constants {
-    
+
     static float MOVE_SPEED = 4;
     static float SPRITE_SCALE = (float) (50.0 / 128);
     static float SPRITE_SIZE = 50;
@@ -23,11 +26,11 @@ public class Constants {
         initConfigs();
     }
 
+    /**
+     * Initializes the game configuration from the app.properties file.
+     */
     private static void initConfigs() {
         try {
-            // String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-            // String appConfigPath = rootPath + "app.properties";
-
             String relativePath = "src/main/java/app.properties";
             Path fullPath = Paths.get(System.getProperty("user.dir"), relativePath);
 
@@ -39,11 +42,6 @@ public class Constants {
             SPRITE_SIZE = Float.parseFloat(appProps.getProperty("SPRITE_SIZE"));
             HEIGHT = Integer.parseInt(appProps.getProperty("HEIGHT"));
             WIDTH = Integer.parseInt(appProps.getProperty("WIDTH"));
-            // NEUTRAL_FACING = Integer.parseInt(appProps.getProperty("NEUTRAL_FACING"));
-            // RIGHT_FACING = Integer.parseInt(appProps.getProperty("RIGHT_FACING"));
-            // LEFT_FACING = Integer.parseInt(appProps.getProperty("LEFT_FACING"));
-            // UP_FACING = Integer.parseInt(appProps.getProperty("UP_FACING"));
-            // DOWN_FACING = Integer.parseInt(appProps.getProperty("DOWN_FACING"));
             FULLSCREEN = Boolean.parseBoolean(appProps.getProperty("FULLSCREEN"));
 
         } catch (Exception e) {

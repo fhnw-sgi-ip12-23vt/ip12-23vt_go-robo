@@ -3,77 +3,149 @@ package roomba;
 import processing.core.PApplet;
 import processing.core.PImage;
 
+/**
+ * The Sprite class represents a basic game sprite with position, size, and movement properties.
+ */
 public class Sprite {
-	PApplet pApplet;
-	PImage image;
-	float center_x, center_y;
-	float change_x, change_y;
-	float w, h;
+    PApplet pApplet;
+    PImage image;
+    float center_x, center_y;
+    float change_x, change_y;
+    float w, h;
 
-	public Sprite(PApplet pApplet, String filename, float scale, float x, float y) {
-		this.pApplet = pApplet;
-		image = pApplet.loadImage(filename);
-		w = image.width * scale;
-		h = image.height * scale;
-		center_x = x;
-		center_y = y;
-		change_x = 0;
-		change_y = 0;
-	}
+    /**
+     * Constructs a Sprite object with the specified image file, scale, and initial position.
+     *
+     * @param pApplet   The PApplet instance associated with the sprite.
+     * @param filename  The filename of the image.
+     * @param scale     The scale factor for the image.
+     * @param x         The initial x-coordinate of the sprite's center.
+     * @param y         The initial y-coordinate of the sprite's center.
+     */
+    public Sprite(PApplet pApplet, String filename, float scale, float x, float y) {
+        this.pApplet = pApplet;
+        image = pApplet.loadImage(filename);
+        w = image.width * scale;
+        h = image.height * scale;
+        center_x = x;
+        center_y = y;
+        change_x = 0;
+        change_y = 0;
+    }
 
-	public Sprite(PApplet pApplet, String filename, float scale) {
-		this(pApplet, filename, scale, 0, 0);
-	}
+    /**
+     * Constructs a Sprite object with the specified image file and scale, with the initial position at (0,0).
+     *
+     * @param pApplet   The PApplet instance associated with the sprite.
+     * @param filename  The filename of the image.
+     * @param scale     The scale factor for the image.
+     */
+    public Sprite(PApplet pApplet, String filename, float scale) {
+        this(pApplet, filename, scale, 0, 0);
+    }
 
-	public Sprite(PApplet pApplet, PImage img, float scale) {
-		this.pApplet = pApplet;
-		image = img;
-		w = image.width * scale;
-		h = image.height * scale;
-		center_x = 0;
-		center_y = 0;
-		change_x = 0;
-		change_y = 0;
-	}
+    /**
+     * Constructs a Sprite object with the specified PImage and scale, with the initial position at (0,0).
+     *
+     * @param pApplet   The PApplet instance associated with the sprite.
+     * @param img       The PImage representing the sprite.
+     * @param scale     The scale factor for the image.
+     */
+    public Sprite(PApplet pApplet, PImage img, float scale) {
+        this.pApplet = pApplet;
+        image = img;
+        w = image.width * scale;
+        h = image.height * scale;
+        center_x = 0;
+        center_y = 0;
+        change_x = 0;
+        change_y = 0;
+    }
 
-	public void display() {
-		pApplet.image(image, center_x, center_y, w, h);
-	}
+    /**
+     * Displays the sprite on the PApplet canvas.
+     */
+    public void display() {
+        pApplet.image(image, center_x, center_y, w, h);
+    }
 
-	public void update() {
-		center_x += change_x;
-		center_y += change_y;
-	}
+    /**
+     * Updates the sprite's position based on its current velocity.
+     */
+    public void update() {
+        center_x += change_x;
+        center_y += change_y;
+    }
 
-	void setLeft(float left) {
-		center_x = left + w / 2;
-	}
+    /**
+     * Sets the left edge of the sprite to the specified x-coordinate.
+     *
+     * @param left The x-coordinate of the left edge.
+     */
+    void setLeft(float left) {
+        center_x = left + w / 2;
+    }
 
-	float getLeft() {
-		return center_x - w / 2;
-	}
+    /**
+     * Returns the x-coordinate of the left edge of the sprite.
+     *
+     * @return The x-coordinate of the left edge.
+     */
+    float getLeft() {
+        return center_x - w / 2;
+    }
 
-	void setRight(float right) {
-		center_x = right - w / 2;
-	}
+    /**
+     * Sets the right edge of the sprite to the specified x-coordinate.
+     *
+     * @param right The x-coordinate of the right edge.
+     */
+    void setRight(float right) {
+        center_x = right - w / 2;
+    }
 
-	float getRight() {
-		return center_x + w / 2;
-	}
+    /**
+     * Returns the x-coordinate of the right edge of the sprite.
+     *
+     * @return The x-coordinate of the right edge.
+     */
+    float getRight() {
+        return center_x + w / 2;
+    }
 
-	void setTop(float top) {
-		center_y = top + h / 2;
-	}
+    /**
+     * Sets the top edge of the sprite to the specified y-coordinate.
+     *
+     * @param top The y-coordinate of the top edge.
+     */
+    void setTop(float top) {
+        center_y = top + h / 2;
+    }
 
-	float getTop() {
-		return center_y - h / 2;
-	}
+    /**
+     * Returns the y-coordinate of the top edge of the sprite.
+     *
+     * @return The y-coordinate of the top edge.
+     */
+    float getTop() {
+        return center_y - h / 2;
+    }
 
-	void setBottom(float bottom) {
-		center_y = bottom - h / 2;
-	}
+    /**
+     * Sets the bottom edge of the sprite to the specified y-coordinate.
+     *
+     * @param bottom The y-coordinate of the bottom edge.
+     */
+    void setBottom(float bottom) {
+        center_y = bottom - h / 2;
+    }
 
-	float getBottom() {
-		return center_y + h / 2;
-	}
+    /**
+     * Returns the y-coordinate of the bottom edge of the sprite.
+     *
+     * @return The y-coordinate of the bottom edge.
+     */
+    float getBottom() {
+        return center_y + h / 2;
+    }
 }

@@ -2,6 +2,12 @@ package roomba;
 
 import processing.core.PImage;
 
+/**
+ * The Player class represents the player character in the "Roomba in Trouble"
+ * game.
+ * It extends the AnimatedSprite class and provides functionalities specific to
+ * the player.
+ */
 public class Player extends AnimatedSprite {
 	boolean inPlace;
 	PImage[] FaceLeft;
@@ -9,11 +15,19 @@ public class Player extends AnimatedSprite {
 	PImage[] FaceDown;
 	PImage[] FaceUp;
 
+	/**
+	 * Constructs a new Player instance.
+	 *
+	 * @param gamefield The game field associated with the player.
+	 * @param img       The image representing the player.
+	 * @param scale     The scale factor for the player image.
+	 */
 	public Player(GameField gamefield, PImage img, float scale) {
 		super(gamefield, img, scale);
 		direction = Constants.RIGHT_FACING;
 		inPlace = true;
 
+		// Loading images for different directions and animations
 		FaceLeft = new PImage[1];
 		FaceLeft[0] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-green-left.png");
 		FaceRight = new PImage[1];
@@ -35,15 +49,22 @@ public class Player extends AnimatedSprite {
 		moveDown = new PImage[2];
 		moveDown[0] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-orange-down.png");
 		moveDown[1] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-dark.png");
-		currentImages = FaceRight;
+		currentImages = FaceRight; // Initial direction
 	}
 
+	/**
+	 * Updates the animation and inPlace status of the player.
+	 */
 	@Override
 	public void updateAnimation() {
 		inPlace = change_x == 0 && change_y == 0;
 		super.updateAnimation();
 	}
 
+	/**
+	 * Selects the current direction of the player based on the change in
+	 * coordinates.
+	 */
 	@Override
 	public void selectDirection() {
 		if (change_x > 0)
@@ -56,6 +77,10 @@ public class Player extends AnimatedSprite {
 			direction = Constants.UP_FACING;
 	}
 
+	/**
+	 * Selects the current set of images based on the player's direction and
+	 * movement status.
+	 */
 	@Override
 	public void selectCurrentImages() {
 		if (direction == Constants.RIGHT_FACING) {

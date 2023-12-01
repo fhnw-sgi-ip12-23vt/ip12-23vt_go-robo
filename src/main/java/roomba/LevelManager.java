@@ -7,39 +7,61 @@ import java.util.Random;
 
 import processing.core.PImage;
 
+/**
+ * Manages the levels in the "Roomba in Trouble" game.
+ */
 public class LevelManager {
     private String levelName;
-
     private int difficulty = 0;
 
+    /**
+     * Gets the name of the current level.
+     *
+     * @return The name of the current level.
+     */
     public String getLevelName() {
         return levelName;
     }
 
+    /**
+     * Gets the current difficulty level.
+     *
+     * @return The current difficulty level.
+     */
     public int getDifficulty() {
         return difficulty;
     }
 
+    /**
+     * Sets the difficulty level.
+     *
+     * @param difficulty The new difficulty level.
+     */
     public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
     }
 
+    /**
+     * Gets the next level file path based on the difficulty.
+     *
+     * @return The file path of the next level.
+     */
     public String getNextLevel() {
         File[] listOfFiles = new File[0];
-        // resets difficulty after 3
+        // Resets difficulty after 3
         difficulty++;
         if (difficulty == 4) {
             difficulty = 1;
         }
 
-        // load directory using ImageLoader
+        // Load directory using ImageLoader
         String relativePath = "files/level";
         Path fullPath = ImageLoader.getImagePath(relativePath);
         File folder = new File(fullPath.toString());
         listOfFiles = folder.listFiles();
         ArrayList<String> rightLevels = new ArrayList<String>();
 
-        // loads levels with correct difficulty in the list
+        // Loads levels with correct difficulty in the list
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].getName().substring(0, listOfFiles[i].getName().indexOf("_"))
                     .equals("" + difficulty)) {
@@ -51,6 +73,12 @@ public class LevelManager {
         return "files/level/" + rightLevels.get(r.nextInt(rightLevels.size()));
     }
 
+    /**
+     * Creates platforms and obstacles for the specified game field based on the level file.
+     *
+     * @param gameField The game field to create platforms for.
+     * @param filename  The name of the level file.
+     */
     public void createPlatforms(GameField gameField, String filename) {
         gameField.nextLevel = false;
         gameField.obstacles = new ArrayList<Sprite>();

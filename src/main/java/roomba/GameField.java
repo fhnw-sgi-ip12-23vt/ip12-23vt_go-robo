@@ -3,10 +3,14 @@ package roomba;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+
 import processing.core.PImage;
 import roomba.view.PhysicalScanner;
 import processing.core.PApplet;
 
+/**
+ * Represents the game field where the Roomba moves and interacts with obstacles and goals.
+ */
 public class GameField extends PApplet {
     private PhysicalScanner pui;
     private LevelManager levelManager;
@@ -24,6 +28,11 @@ public class GameField extends PApplet {
     private static boolean init = true;
     private boolean winCondition = false;
 
+    /**
+     * Constructs a GameField instance.
+     *
+     * @param pui The physical scanner.
+     */
     public GameField(PhysicalScanner pui) {
         this.pui = pui;
         levelManager = new LevelManager();
@@ -39,9 +48,11 @@ public class GameField extends PApplet {
         }
     }
 
+    /**
+     * Draws the game field, including obstacles, goals, and the player.
+     */
     public void draw() {
         clear();
-
         background(backgroundImage);
 
         displayAll();
@@ -51,11 +62,17 @@ public class GameField extends PApplet {
         }
     }
 
+    /**
+     * Updates the animation and handles collisions for all game elements.
+     */
     void updateAll() {
         player.updateAnimation();
         collisionHandler.resolveObstaclesCollisions(player, obstacles);
     }
 
+    /**
+     * Displays all game elements on the screen.
+     */
     void displayAll() {
         for (Sprite ob : obstacles) {
             ob.display();
@@ -72,12 +89,14 @@ public class GameField extends PApplet {
 
         if (winCondition) {
             fill(0, 0, 255);
-            text("Du hast es geschaft!", (float) (view_x + width / 2.0 - 100), (float) (view_y +
-                    height / 2.0 + 50));
+            text("Du hast es geschafft!", (float) (view_x + width / 2.0 - 100), (float) (view_y + height / 2.0 + 50));
         }
     }
 
-        private void collectGoal() {
+    /**
+     * Handles the collection of goals and checks for win conditions.
+     */
+    private void collectGoal() {
         ArrayList<Sprite> goal_list = collisionHandler.checkCollisionList(player, goal);
         if (!goal.isEmpty()) {
             for (Sprite g : goal_list) {
@@ -85,16 +104,16 @@ public class GameField extends PApplet {
             }
         } else {
             nextLevel = true;
-
-          winCondition =  (nextLevel && (difficulty ==3)) ?  true : false;
-            
+            winCondition = (nextLevel && (difficulty == 3));
         }
     }
 
+    /**
+     * Sets up the initial game state.
+     */
     public void setup() {
         winCondition = false;
         imageMode(CENTER);
-        // just load once
         if (init) {
             PImage playerImage = loadImages();
             player = new Player(this, playerImage, 0.3f);
@@ -106,13 +125,16 @@ public class GameField extends PApplet {
         player.change_y = 550;
 
         levelManager.setDifficulty(difficulty);
-        createPlatforms(levelManager.getNextLevel()); // Use LevelManager to get the next level
+        createPlatforms(levelManager.getNextLevel());
         difficulty = levelManager.getDifficulty();
-
     }
 
+    /**
+     * Loads images for the game elements.
+     *
+     * @return The image for the player.
+     */
     private PImage loadImages() {
-
         PImage p = ImageLoader.loadImage(this, "img/roomba2-pixel-dark.png");
         chargingStation = ImageLoader.loadImage(this, "img/goal/battery-frame0.png");
         wall = ImageLoader.loadImage(this, "img/red_brick.png");
@@ -135,13 +157,20 @@ public class GameField extends PApplet {
         return p;
     }
 
+    /**
+     * Creates platforms based on the given level file.
+     *
+     * @param filename The filename of the level file.
+     */
     private void createPlatforms(String filename) {
-        levelManager.createPlatforms(this, filename); // Use LevelManager to create platforms
+        levelManager.createPlatforms(this, filename);
     }
 
+    /**
+     * Handles physical input logic from the scanner.
+     */
     public void PInputLogic() {
         pui.controller.subscribeToQueueChanges((oldValue, newValue) -> {
-            // Handle queue changes
             System.out.println("Queue changed: " + newValue);
             handleInput(newValue);
         });
@@ -312,5 +341,4 @@ public class GameField extends PApplet {
 
         }
     }
-
 }
