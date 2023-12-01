@@ -7,17 +7,24 @@ import java.util.function.Consumer;
 import com.pi4j.context.Context;
 import com.pi4j.crowpi.components.RfidComponent;
 import java.util.logging.Logger;
-import java.time.Duration;
 
+/**
+ * The SimpleRFID class provides a simple interface for interacting with RFID components.
+ */
 public class SimpleRFID {
     private final ExecutorService executor;
     private final RfidComponent rfid;
     private Consumer<String> onScan;
     private Logger logger;
 
+    /**
+     * Constructs a SimpleRFID instance.
+     *
+     * @param pi4j The Pi4J context.
+     */
     public SimpleRFID(Context pi4j) {
         rfid = new RfidComponent(pi4j);
-       // logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+        // logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
         executor = Executors.newSingleThreadExecutor();
 
@@ -32,6 +39,11 @@ public class SimpleRFID {
         });
     }
 
+    /**
+     * Sets the callback to be executed on RFID card scan.
+     *
+     * @param scanCallback The callback function taking a string parameter representing the card's serial number.
+     */
     public void onScan(Consumer<String> scanCallback) {
         this.onScan = scanCallback;
     }
