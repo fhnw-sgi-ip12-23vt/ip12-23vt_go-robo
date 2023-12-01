@@ -2,58 +2,38 @@ package roomba.catalog.components;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
-import roomba.catalog.components.base.DigitalSensor;
-import roomba.catalog.components.base.PIN;
 import com.pi4j.context.Context;
-import com.pi4j.io.gpio.digital.DigitalInput;
-import com.pi4j.io.gpio.digital.DigitalState;
-import com.pi4j.io.gpio.digital.PullResistance;
-
+import com.pi4j.crowpi.components.RfidComponent;
+import java.util.logging.Logger;
 import java.time.Duration;
-import static com.pi4j.io.gpio.digital.DigitalInput.DEFAULT_DEBOUNCE;
 
-
-public class SimpleRFID extends DigitalSensor {
+public class SimpleRFID {
     private final ExecutorService executor;
-    private Runnable onScan;
+    private final RfidComponent rfid;
+    private Consumer<String> onScan;
+    private Logger logger;
 
-    public SimpleRFID(Context pi4j, PIN address) {
-        this(pi4j, address, Duration.ofMillis(500));
-    }
-
-    public SimpleRFID(Context pi4j, PIN address, Duration debounce) {
-        super(pi4j,
-                DigitalInput.newConfigBuilder(pi4j)
-                        .id("BCM" + address)
-                        .name("RFID Scanner #" + address)
-                        .address(address.getPin())
-                        .debounce(debounce.toMillis() * 1000) // Convert duration to microseconds
-                        .pull(PullResistance.PULL_DOWN)
-                        .build());
+    public SimpleRFID(Context pi4j) {
+        rfid = new RfidComponent(pi4j);
+       // logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
         executor = Executors.newSingleThreadExecutor();
 
-        digitalInput.addListener(digitalStateChangeEvent -> {
-            if (onScan != null && getState() == DigitalState.HIGH) {
-                executor.submit(onScan);
-            }
+        rfid.onCardDetected(card -> {
+            // Print serial number and capacity of approached card
+            logger.info("Detected");
+            System.out.println("Detected card with serial " + card.getSerial() + " and capacity of "
+                    + card.getCapacity() + " bytes");
+
+            executor.submit(() -> onScan.accept(card.getSerial()));
+
         });
     }
 
-    public void onScan(Runnable task) {
-        onScan = task;
+    public void onScan(Consumer<String> scanCallback) {
+        this.onScan = scanCallback;
     }
 
-    private DigitalState getState() {
-        return digitalInput.state();
-    }
-
-    @Override
-    public void reset() {
-        onScan = null;
-        if (executor != null) {
-            executor.shutdown();
-        }
-    }
 }

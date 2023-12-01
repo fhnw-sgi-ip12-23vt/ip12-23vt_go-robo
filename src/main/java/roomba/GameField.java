@@ -148,6 +148,7 @@ public class GameField extends PApplet {
         });
     }
 
+    //TODO replace directions with card ids
     private void handleInput(Queue<String> inputQueue) {
         while (!inputQueue.isEmpty()) {
             String input = pui.controller.dequeue();
