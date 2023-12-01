@@ -20,6 +20,15 @@ public class LevelManager {
      * @return The name of the current level.
      */
     public String getLevelName() {
+        if (levelName.substring(0, levelName.indexOf("_")).equals("1")){
+            return "Tutorial: " + levelName.substring(levelName.indexOf("_") + 1);
+        }
+        if (levelName.substring(0, levelName.indexOf("_")).equals("2")){
+            return "Normal: " + levelName.substring(levelName.indexOf("_") + 1);
+        }
+        if (levelName.substring(0, levelName.indexOf("_")).equals("3")){
+            return "Schwer: " + levelName.substring(levelName.indexOf("_") + 1);
+        }
         return levelName;
     }
 
@@ -47,7 +56,7 @@ public class LevelManager {
      * @return The file path of the next level.
      */
     public String getNextLevel() {
-        File[] listOfFiles = new File[0];
+        File[] listOfFiles;
         // Resets difficulty after 3
         difficulty++;
         if (difficulty == 4) {

@@ -22,9 +22,9 @@ public class RoombaInTrouble {
     public static void main(String[] args) {
         PhysicalModel model = new PhysicalModel();
 
-        controller = new PhysicalController(model);
-
-        pui = new PhysicalScanner(controller, Pi4JContext.createContext());
+        //TODO one of them spams console
+        //controller = new PhysicalController(model);
+        //pui = new PhysicalScanner(controller, Pi4JContext.createContext());
 
         GameField gameField = new GameField(pui);
         PApplet.runSketch(new String[] { "Game Field" }, gameField);

@@ -72,9 +72,9 @@ public class Player extends AnimatedSprite {
 		else if (change_x < 0)
 			direction = Constants.LEFT_FACING;
 		else if (change_y < 0)
-			direction = Constants.DOWN_FACING;
-		else if (change_y > 0)
 			direction = Constants.UP_FACING;
+		else if (change_y > 0)
+			direction = Constants.DOWN_FACING;
 	}
 
 	/**
@@ -95,14 +95,14 @@ public class Player extends AnimatedSprite {
 				currentImages = moveLeft;
 		} else if (direction == Constants.UP_FACING) {
 			if (inPlace)
-				currentImages = FaceDown;
-			else
-				currentImages = moveDown;
-		} else if (direction == Constants.DOWN_FACING) {
-			if (inPlace)
 				currentImages = FaceUp;
 			else
 				currentImages = moveUp;
+		} else if (direction == Constants.DOWN_FACING) {
+			if (inPlace)
+				currentImages = FaceDown;
+			else
+				currentImages = moveDown;
 		}
 	}
 }

@@ -15,6 +15,7 @@ public class GameField extends PApplet {
     private PhysicalScanner pui;
     private LevelManager levelManager;
     private CollisionHandler collisionHandler;
+    private PlayerMovement playerMovement = new PlayerMovement();
 
     public boolean nextLevel = false;
     public List<Sprite> obstacles;
@@ -180,165 +181,24 @@ public class GameField extends PApplet {
     private void handleInput(Queue<String> inputQueue) {
         while (!inputQueue.isEmpty()) {
             String input = pui.controller.dequeue();
-            if (nextLevel) {
-                setup();
-            } else {
-                switch (input) {
-                    case "RIGHT":
-                        if (player.direction == Constants.RIGHT_FACING) { // right
-                            player.change_y = Constants.MOVE_SPEED;
-                            player.change_x = 0;
-                        }
-                        if (player.direction == Constants.LEFT_FACING) { // left
-                            player.change_y = -Constants.MOVE_SPEED;
-                            player.change_x = 0;
-                        }
-                        if (player.direction == Constants.UP_FACING) { // up
-                            player.change_y = 0;
-                            player.change_x = -Constants.MOVE_SPEED;
-                        }
-                        if (player.direction == Constants.DOWN_FACING) { // down
-                            player.change_y = 0;
-                            player.change_x = Constants.MOVE_SPEED;
-                        }
-                        break;
-                    case "LEFT":
-                        if (player.direction == Constants.RIGHT_FACING) {
-                            player.change_y = -Constants.MOVE_SPEED;
-                            player.change_x = 0;
-                        }
-                        if (player.direction == Constants.LEFT_FACING) {
-                            player.change_y = Constants.MOVE_SPEED;
-                            player.change_x = 0;
-                        }
-                        if (player.direction == Constants.UP_FACING) {
-                            player.change_y = 0;
-                            player.change_x = Constants.MOVE_SPEED;
-                        }
-                        if (player.direction == Constants.DOWN_FACING) { // down
-                            player.change_y = 0;
-                            player.change_x = -Constants.MOVE_SPEED;
-                        }
-                        break;
-                    case "UP":
-                        if (player.direction == Constants.RIGHT_FACING) { // right
-                            player.change_y = 0;
-                            player.change_x = Constants.MOVE_SPEED;
-                        }
-                        if (player.direction == Constants.LEFT_FACING) { // left
-                            player.change_y = 0;
-                            player.change_x = -Constants.MOVE_SPEED;
-                        }
-                        if (player.direction == Constants.UP_FACING) { // up
-                            player.change_y = Constants.MOVE_SPEED;
-                            player.change_x = 0;
-                        }
-                        if (player.direction == Constants.DOWN_FACING) { // down
-                            player.change_y = -Constants.MOVE_SPEED;
-                            player.change_x = 0;
-                        }
-                        break;
-                    case "DOWN":
-                        if (player.direction == Constants.RIGHT_FACING) { // right
-                            player.change_x = -Constants.MOVE_SPEED;
-                            player.change_y = 0;
-                        }
-                        if (player.direction == Constants.LEFT_FACING) { // left
-                            player.change_x = Constants.MOVE_SPEED;
-                            player.change_y = 0;
-                        }
-                        if (player.direction == Constants.UP_FACING) { // up
-                            player.change_x = 0;
-                            player.change_y = -Constants.MOVE_SPEED;
-                        }
-                        if (player.direction == Constants.DOWN_FACING) { // down
-                            player.change_x = 0;
-                            player.change_y = Constants.MOVE_SPEED;
-                        }
-                        break;
-                }
+            if (nextLevel) {setup();}
+            else if (player.inPlace){
+                if (input.equals(Constants.RFID_RIGHT)){playerMovement.movePlayer(player, Constants.RIGHT_FACING);}
+                if (input.equals(Constants.RFID_LEFT)){playerMovement.movePlayer(player, Constants.LEFT_FACING);}
+                if (input.equals(Constants.RFID_UP)){playerMovement.movePlayer(player, Constants.UP_FACING);}
+                if (input.equals(Constants.RFID_DOWN)){playerMovement.movePlayer(player, Constants.DOWN_FACING);}
             }
         }
     }
 
     // called whenever a key is pressed, will be deleted later on if the handleInput functions
     public void keyPressed() {
-
-        if (nextLevel) {
-            setup();
-        } else if (((keyCode == RIGHT || key == 'd') && player.inPlace)) {
-            if (player.direction == Constants.RIGHT_FACING) { // right
-                player.change_y = Constants.MOVE_SPEED;
-                player.change_x = 0;
-            }
-            if (player.direction == Constants.LEFT_FACING) { // left
-                player.change_y = -Constants.MOVE_SPEED;
-                player.change_x = 0;
-            }
-            if (player.direction == Constants.UP_FACING) { // up
-                player.change_y = 0;
-                player.change_x = -Constants.MOVE_SPEED;
-            }
-            if (player.direction == Constants.DOWN_FACING) { // down
-                player.change_y = 0;
-                player.change_x = Constants.MOVE_SPEED;
-            }
-
-        } else if (((keyCode == LEFT || key == 'a'))
-                && player.inPlace) {
-            if (player.direction == Constants.RIGHT_FACING) {
-                player.change_y = -Constants.MOVE_SPEED;
-                player.change_x = 0;
-            }
-            if (player.direction == Constants.LEFT_FACING) {
-                player.change_y = Constants.MOVE_SPEED;
-                player.change_x = 0;
-            }
-            if (player.direction == Constants.UP_FACING) {
-                player.change_y = 0;
-                player.change_x = Constants.MOVE_SPEED;
-            }
-            if (player.direction == Constants.DOWN_FACING) { // down
-                player.change_y = 0;
-                player.change_x = -Constants.MOVE_SPEED;
-            }
-
-        } else if (((keyCode == DOWN || key == 's'))
-                && player.inPlace) {
-            if (player.direction == Constants.RIGHT_FACING) { // right
-                player.change_x = -Constants.MOVE_SPEED;
-                player.change_y = 0;
-            }
-            if (player.direction == Constants.LEFT_FACING) { // left
-                player.change_x = Constants.MOVE_SPEED;
-                player.change_y = 0;
-            }
-            if (player.direction == Constants.UP_FACING) { // up
-                player.change_x = 0;
-                player.change_y = -Constants.MOVE_SPEED;
-            }
-            if (player.direction == Constants.DOWN_FACING) { // down
-                player.change_x = 0;
-                player.change_y = Constants.MOVE_SPEED;
-            }
-        } else if (((keyCode == UP || key == 'w')) && player.inPlace) {
-            if (player.direction == Constants.RIGHT_FACING) { // right
-                player.change_y = 0;
-                player.change_x = Constants.MOVE_SPEED;
-            }
-            if (player.direction == Constants.LEFT_FACING) { // left
-                player.change_y = 0;
-                player.change_x = -Constants.MOVE_SPEED;
-            }
-            if (player.direction == Constants.UP_FACING) { // up
-                player.change_y = Constants.MOVE_SPEED;
-                player.change_x = 0;
-            }
-            if (player.direction == Constants.DOWN_FACING) { // down
-                player.change_y = -Constants.MOVE_SPEED;
-                player.change_x = 0;
-            }
-
+        if (nextLevel) {setup();}
+        else if (player.inPlace){
+            if (((keyCode == RIGHT || key == 'd'))) {playerMovement.movePlayer(player, Constants.RIGHT_FACING);}
+            if (((keyCode == LEFT || key == 'a'))) {playerMovement.movePlayer(player, Constants.LEFT_FACING);}
+            if (((keyCode == UP || key == 'w'))) {playerMovement.movePlayer(player, Constants.UP_FACING);}
+            if (((keyCode == DOWN || key == 's'))) {playerMovement.movePlayer(player, Constants.DOWN_FACING);}
         }
     }
 }

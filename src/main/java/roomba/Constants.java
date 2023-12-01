@@ -15,12 +15,18 @@ public class Constants {
     static float SPRITE_SIZE = 50;
     static int HEIGHT = (int) (SPRITE_SIZE * 12);
     static int WIDTH = (int) (SPRITE_SIZE * 16);
-    static int NEUTRAL_FACING = 0;
-    static int RIGHT_FACING = 1;
-    static int LEFT_FACING = 2;
-    static int UP_FACING = 3;
-    static int DOWN_FACING = 4;
+    static final int NEUTRAL_FACING = 0;
+    static final int RIGHT_FACING = 1;
+    static final int LEFT_FACING = 2;
+    static final int UP_FACING = 3;
+    static final int DOWN_FACING = 4;
     static boolean FULLSCREEN = true;
+    static String RFID_RIGHT = "";
+    static String RFID_LEFT = "";
+    static String RFID_UP = "";
+    static String RFID_DOWN = "";
+    static String RFID_RESET = "";
+    static String RFID_NEXT = "";
 
     static {
         initConfigs();
@@ -43,6 +49,13 @@ public class Constants {
             HEIGHT = Integer.parseInt(appProps.getProperty("HEIGHT"));
             WIDTH = Integer.parseInt(appProps.getProperty("WIDTH"));
             FULLSCREEN = Boolean.parseBoolean(appProps.getProperty("FULLSCREEN"));
+            //RFID
+            RFID_RIGHT = appProps.getProperty("RFID_RIGHT");
+            RFID_LEFT = appProps.getProperty("RFID_LEFT");
+            RFID_UP = appProps.getProperty("RFID_UP");
+            RFID_DOWN = appProps.getProperty("RFID_DOWN");
+            RFID_RESET = appProps.getProperty("RFID_RESET");
+            RFID_NEXT = appProps.getProperty("RFID_NEXT");
 
         } catch (Exception e) {
             System.err.println("Error reading config file: " + e.getMessage());
