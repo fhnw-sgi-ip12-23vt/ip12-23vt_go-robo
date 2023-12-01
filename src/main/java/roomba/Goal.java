@@ -4,6 +4,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Goal extends AnimatedSprite {
+	
 	public Goal(PApplet pApplet, PImage img, float scale) {
 		super(pApplet, img, scale);
 		standNeutral = new PImage[4];

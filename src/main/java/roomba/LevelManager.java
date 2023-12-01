@@ -8,11 +8,18 @@ import java.util.Random;
 import processing.core.PImage;
 
 public class LevelManager {
+    private String levelName;
+
     private int difficulty = 0;
+
+    public String getLevelName() {
+        return levelName;
+    }
 
     public int getDifficulty() {
         return difficulty;
     }
+
     public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
     }
@@ -24,14 +31,14 @@ public class LevelManager {
         if (difficulty == 4) {
             difficulty = 1;
         }
-    
+
         // load directory using ImageLoader
         String relativePath = "files/level";
         Path fullPath = ImageLoader.getImagePath(relativePath);
         File folder = new File(fullPath.toString());
         listOfFiles = folder.listFiles();
         ArrayList<String> rightLevels = new ArrayList<String>();
-    
+
         // loads levels with correct difficulty in the list
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].getName().substring(0, listOfFiles[i].getName().indexOf("_"))
@@ -40,9 +47,9 @@ public class LevelManager {
             }
         }
         Random r = new Random();
+        levelName = rightLevels.get(r.nextInt(rightLevels.size())).replace(".csv", "");
         return "files/level/" + rightLevels.get(r.nextInt(rightLevels.size()));
     }
-    
 
     public void createPlatforms(GameField gameField, String filename) {
         gameField.nextLevel = false;

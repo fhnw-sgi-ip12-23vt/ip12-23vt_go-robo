@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 public class Constants {
+    
     static float MOVE_SPEED = 4;
     static float SPRITE_SCALE = (float) (50.0 / 128);
     static float SPRITE_SIZE = 50;

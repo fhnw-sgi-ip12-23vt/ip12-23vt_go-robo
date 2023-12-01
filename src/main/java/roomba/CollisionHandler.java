@@ -5,11 +5,6 @@ import java.util.List;
 
 public class CollisionHandler {
 
-    public boolean isHitObstacles(Sprite s, List<Sprite> walls) {
-        ArrayList<Sprite> col_list = checkCollisionList(s, walls);
-        return !col_list.isEmpty();
-    }
-
     public void resolveObstaclesCollisions(Sprite s, List<Sprite> walls) {
         s.center_y += s.change_y;
         ArrayList<Sprite> col_list = checkCollisionList(s, walls);

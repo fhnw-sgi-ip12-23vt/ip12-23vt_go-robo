@@ -3,7 +3,6 @@ package roomba;
 import processing.core.PImage;
 
 public class Player extends AnimatedSprite {
-	String levelName;
 	boolean inPlace;
 	PImage[] FaceLeft;
 	PImage[] FaceRight;
@@ -12,7 +11,6 @@ public class Player extends AnimatedSprite {
 
 	public Player(GameField gamefield, PImage img, float scale) {
 		super(gamefield, img, scale);
-		levelName = "";
 		direction = Constants.RIGHT_FACING;
 		inPlace = true;
 

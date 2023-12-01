@@ -68,7 +68,7 @@ public class GameField extends PApplet {
         player.display();
         fill(255, 0, 0);
         textSize(32);
-        text("Level: " + player.levelName, view_x + 50, view_y + 100);
+        text("Level: " + levelManager.getLevelName(), view_x + 50, view_y + 100);
 
         if (winCondition) {
             fill(0, 0, 255);
@@ -90,7 +90,6 @@ public class GameField extends PApplet {
             
         }
     }
-
 
     public void setup() {
         winCondition = false;
@@ -233,7 +232,7 @@ public class GameField extends PApplet {
         }
     }
 
-    // called whenever a key is pressed, will be deleted later on
+    // called whenever a key is pressed, will be deleted later on if the handleInput functions
     public void keyPressed() {
 
         if (nextLevel) {
