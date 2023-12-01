@@ -22,6 +22,7 @@ public class GameField extends PApplet {
     private float view_y = 0;
     private PImage backgroundImage;
     private static boolean init = true;
+    private boolean winCondition = false;
 
     public GameField(PhysicalScanner pui) {
         this.pui = pui;
@@ -69,17 +70,30 @@ public class GameField extends PApplet {
         textSize(32);
         text("Level: " + player.levelName, view_x + 50, view_y + 100);
 
-        // if (winCondition) {
-        // fill(0, 0, 255);
-        // text("Du hast es geschaft!", (float) (view_x + width / 2.0 - 100), (float)
-        // (view_y +
-        // height / 2.0 + 50));
-
-        // //nach 5s rufe setup methode auf ...
-        // }
+        if (winCondition) {
+            fill(0, 0, 255);
+            text("Du hast es geschaft!", (float) (view_x + width / 2.0 - 100), (float) (view_y +
+                    height / 2.0 + 50));
+        }
     }
 
+        private void collectGoal() {
+        ArrayList<Sprite> goal_list = collisionHandler.checkCollisionList(player, goal);
+        if (!goal.isEmpty()) {
+            for (Sprite g : goal_list) {
+                goal.remove(g);
+            }
+        } else {
+            nextLevel = true;
+
+          winCondition =  (nextLevel && (difficulty ==3)) ?  true : false;
+            
+        }
+    }
+
+
     public void setup() {
+        winCondition = false;
         imageMode(CENTER);
         // just load once
         if (init) {
@@ -125,17 +139,6 @@ public class GameField extends PApplet {
 
     private void createPlatforms(String filename) {
         levelManager.createPlatforms(this, filename); // Use LevelManager to create platforms
-    }
-
-    private void collectGoal() {
-        ArrayList<Sprite> goal_list = collisionHandler.checkCollisionList(player, goal);
-        if (!goal.isEmpty()) {
-            for (Sprite g : goal_list) {
-                goal.remove(g);
-            }
-        } else {
-            nextLevel = true;
-        }
     }
 
     public void PInputLogic() {
