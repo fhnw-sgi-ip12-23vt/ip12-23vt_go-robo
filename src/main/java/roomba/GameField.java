@@ -134,7 +134,6 @@ public class GameField extends PApplet {
         }
 
         return p;
-
     }
 
     private void createPlatforms(String filename) {
