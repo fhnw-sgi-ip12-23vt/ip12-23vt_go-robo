@@ -37,8 +37,10 @@ public class Constants {
      */
     private static void initConfigs() {
         try {
-            String relativePath = "src/main/java/app.properties";
-            Path fullPath = Paths.get(System.getProperty("user.dir"), relativePath);
+            // String relativePath = "src/main/java/app.properties";
+            // Path fullPath = Paths.get(System.getProperty("user.dir"), relativePath);
+
+           Path fullPath = ImageLoader.loadFile("app.properties");
 
             Properties appProps = new Properties();
             appProps.load(new FileInputStream(fullPath.toString()));
@@ -49,7 +51,7 @@ public class Constants {
             HEIGHT = Integer.parseInt(appProps.getProperty("HEIGHT"));
             WIDTH = Integer.parseInt(appProps.getProperty("WIDTH"));
             FULLSCREEN = Boolean.parseBoolean(appProps.getProperty("FULLSCREEN"));
-            //RFID
+            // RFID
             RFID_RIGHT = appProps.getProperty("RFID_RIGHT");
             RFID_LEFT = appProps.getProperty("RFID_LEFT");
             RFID_UP = appProps.getProperty("RFID_UP");

@@ -64,8 +64,10 @@ public class LevelManager {
         }
 
         // Load directory using ImageLoader
-        String relativePath = "files/level";
-        Path fullPath = ImageLoader.getImagePath(relativePath);
+        // String relativePath = "files/level";
+        // Path fullPath = ImageLoader.getImagePath(relativePath);
+        Path fullPath = ImageLoader.loadFile("files/level");
+
         File folder = new File(fullPath.toString());
         listOfFiles = folder.listFiles();
         ArrayList<String> rightLevels = new ArrayList<String>();
