@@ -24,7 +24,6 @@ public class SimpleRFID {
      */
     public SimpleRFID(Context pi4j) {
         rfid = new RfidComponent(pi4j);
-        // logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
         executor = Executors.newSingleThreadExecutor();
 
