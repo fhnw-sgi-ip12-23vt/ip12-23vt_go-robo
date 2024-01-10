@@ -3,15 +3,19 @@ package roomba;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import processing.core.PImage;
 import roomba.view.PhysicalScanner;
 import processing.core.PApplet;
 
 /**
- * Represents the game field where the Roomba moves and interacts with obstacles and goals.
+ * Represents the game field where the Roomba moves and interacts with obstacles
+ * and goals.
  */
 public class GameField extends PApplet {
+    private static final Logger logger = Logger.getLogger(ImageLoader.class.getName());
     private PhysicalScanner pui;
     private LevelManager levelManager;
     private CollisionHandler collisionHandler;
@@ -38,6 +42,7 @@ public class GameField extends PApplet {
         this.pui = pui;
         levelManager = new LevelManager();
         collisionHandler = new CollisionHandler();
+        PInputLogic();
     }
 
     @Override
@@ -171,34 +176,54 @@ public class GameField extends PApplet {
      * Handles physical input logic from the scanner.
      */
     public void PInputLogic() {
+        logger.log(Level.FINE, "Init PinputLogic");
         pui.controller.subscribeToQueueChanges((oldValue, newValue) -> {
             System.out.println("Queue changed: " + newValue);
             handleInput(newValue);
         });
     }
 
-    //TODO replace directions with card ids
+    // TODO replace directions with card ids
     private void handleInput(Queue<String> inputQueue) {
         while (!inputQueue.isEmpty()) {
             String input = pui.controller.dequeue();
-            if (nextLevel) {setup();}
-            else if (player.isInPlace()){
-                if (input.equals(Constants.RFID_RIGHT)){playerMovement.movePlayer(player, Constants.RIGHT_FACING);}
-                if (input.equals(Constants.RFID_LEFT)){playerMovement.movePlayer(player, Constants.LEFT_FACING);}
-                if (input.equals(Constants.RFID_UP)){playerMovement.movePlayer(player, Constants.UP_FACING);}
-                if (input.equals(Constants.RFID_DOWN)){playerMovement.movePlayer(player, Constants.DOWN_FACING);}
+            if (nextLevel) {
+                setup();
+            } else if (player.isInPlace()) {
+                if (input.equals(Constants.RFID_RIGHT)) {
+                    playerMovement.movePlayer(player, Constants.RIGHT_FACING);
+                }
+                if (input.equals(Constants.RFID_LEFT)) {
+                    playerMovement.movePlayer(player, Constants.LEFT_FACING);
+                }
+                if (input.equals(Constants.RFID_UP)) {
+                    playerMovement.movePlayer(player, Constants.UP_FACING);
+                }
+                if (input.equals(Constants.RFID_DOWN)) {
+                    playerMovement.movePlayer(player, Constants.DOWN_FACING);
+                }
             }
         }
     }
 
-    // called whenever a key is pressed, will be deleted later on if the handleInput functions
+    // called whenever a key is pressed, will be deleted later on if the handleInput
+    // functions
     public void keyPressed() {
-        if (nextLevel) {setup();}
-        else if (player.isInPlace()){
-            if (((keyCode == RIGHT || key == 'd'))) {playerMovement.movePlayer(player, Constants.RIGHT_FACING);}
-            if (((keyCode == LEFT || key == 'a'))) {playerMovement.movePlayer(player, Constants.LEFT_FACING);}
-            if (((keyCode == UP || key == 'w'))) {playerMovement.movePlayer(player, Constants.UP_FACING);}
-            if (((keyCode == DOWN || key == 's'))) {playerMovement.movePlayer(player, Constants.DOWN_FACING);}
+        if (nextLevel) {
+            setup();
+        } else if (player.isInPlace()) {
+            if (((keyCode == RIGHT || key == 'd'))) {
+                playerMovement.movePlayer(player, Constants.RIGHT_FACING);
+            }
+            if (((keyCode == LEFT || key == 'a'))) {
+                playerMovement.movePlayer(player, Constants.LEFT_FACING);
+            }
+            if (((keyCode == UP || key == 'w'))) {
+                playerMovement.movePlayer(player, Constants.UP_FACING);
+            }
+            if (((keyCode == DOWN || key == 's'))) {
+                playerMovement.movePlayer(player, Constants.DOWN_FACING);
+            }
         }
     }
 }

@@ -22,16 +22,17 @@ public class RoombaInTrouble {
     public static void main(String[] args) {
         PhysicalModel model = new PhysicalModel();
 
-        //TODO one of them spams console
-        //controller = new PhysicalController(model);
-       // pui = new PhysicalScanner(controller, Pi4JContext.createContext());
+        // TODO one of them spams console
+        controller = new PhysicalController(model);
+        pui = new PhysicalScanner(controller, Pi4JContext.createContext());
 
         GameField gameField = new GameField(pui);
         PApplet.runSketch(new String[] { "Game Field" }, gameField);
     }
 
     /**
-     * Stops the application by shutting down the controller and physical user interface.
+     * Stops the application by shutting down the controller and physical user
+     * interface.
      */
     public void stop() {
         controller.shutdown();
