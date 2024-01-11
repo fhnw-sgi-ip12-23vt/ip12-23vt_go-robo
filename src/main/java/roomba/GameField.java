@@ -15,7 +15,7 @@ import processing.core.PApplet;
  * and goals.
  */
 public class GameField extends PApplet {
-    private static final Logger logger = Logger.getLogger(ImageLoader.class.getName());
+    private static final Logger logger = Logger.getLogger(GameField.class.getName());
     private PhysicalScanner pui;
     private LevelManager levelManager;
     private CollisionHandler collisionHandler;
@@ -178,7 +178,7 @@ public class GameField extends PApplet {
     public void PInputLogic() {
         logger.log(Level.FINE, "Init PinputLogic");
         pui.controller.subscribeToQueueChanges((oldValue, newValue) -> {
-            System.out.println("Queue changed: " + newValue);
+            logger.log(Level.INFO, "Queue changed: " + newValue);
             handleInput(newValue);
         });
     }

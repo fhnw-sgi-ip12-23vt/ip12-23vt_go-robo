@@ -60,13 +60,4 @@ public class PlayerMovement {
         player.change_x = 0;
     }
 
-    //test Methode
-    private void printPlayerDirection(){
-        switch (player.direction){
-            case Constants.RIGHT_FACING -> System.out.println("Facing right");
-            case Constants.LEFT_FACING -> System.out.println("Facing left");
-            case Constants.UP_FACING -> System.out.println("Facing up");
-            case Constants.DOWN_FACING -> System.out.println("Facing down");
-        }
-    }
 }
