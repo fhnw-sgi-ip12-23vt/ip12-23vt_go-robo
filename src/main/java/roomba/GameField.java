@@ -226,4 +226,16 @@ public class GameField extends PApplet {
             }
         }
     }
+
+    /**
+     * Stops the application by shutting down the controller and physical user
+     * interface.
+     */
+    @Override
+    public void exit() {
+        logger.log(Level.WARNING, "Shutdown");
+        pui.controller.shutdown();
+        pui.shutdown();
+        super.exit();
+    }
 }

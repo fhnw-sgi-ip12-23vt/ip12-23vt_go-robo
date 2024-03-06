@@ -34,12 +34,4 @@ public class RoombaInTrouble {
         PApplet.runSketch(new String[] { "Game Field" }, gameField);
     }
 
-    /**
-     * Stops the application by shutting down the controller and physical user
-     * interface.
-     */
-    public void stop() {
-        controller.shutdown();
-        pui.shutdown();
-    }
 }
