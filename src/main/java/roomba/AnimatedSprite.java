@@ -43,6 +43,16 @@ public class AnimatedSprite extends Sprite {
         }
     }
 
+
+    public void updateAnimationPlayer1Frame() {
+        frame++;
+
+        selectDirection();
+        selectCurrentImages();
+        advanceToNextImage();
+
+    }
+
     /**
      * Selects the direction of the sprite based on its movement.
      */

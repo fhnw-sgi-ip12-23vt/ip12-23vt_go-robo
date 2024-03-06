@@ -6,6 +6,8 @@ import java.util.function.Consumer;
 
 import com.pi4j.context.Context;
 import com.pi4j.crowpi.components.RfidComponent;
+
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -32,8 +34,9 @@ public class SimpleRFID {
         rfid.onCardDetected(card -> {
             // Print serial number and capacity of approached card
             logger.info("Detected");
-            System.out.println("Detected card with serial " + card.getSerial() + " and capacity of "
-                    + card.getCapacity() + " bytes");
+
+            logger.log(Level.INFO, "Detected card with serial " + card.getSerial() + " and capacity of "
+                + card.getCapacity() + " bytes");
 
             executor.submit(() -> onScan.accept(card.getSerial()));
 

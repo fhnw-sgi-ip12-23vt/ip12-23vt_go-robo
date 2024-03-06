@@ -63,6 +63,13 @@ public class Player extends AnimatedSprite {
 		inPlace = change_x == 0 && change_y == 0;
 		super.updateAnimation();
 	}
+	/**
+	 * Updates the animation for 1 Frame and inPlace status of the player.
+	 */
+	public void updateAnimationFrame1() {
+		inPlace = change_x == 0 && change_y == 0;
+		super.updateAnimationPlayer1Frame();
+	}
 
 	/**
 	 * Selects the current direction of the player based on the change in
