@@ -161,7 +161,7 @@
         <!-- <launcher.class>com.pi4j.mvc/com.pi4j.setup.MinimalPi4J</launcher.class> -->
         <!-- <launcher.class>com.pi4j.mvc/com.pi4j.mvc.templateapp.AppStarter</launcher.class> -->
         <!-- <launcher.class>com.pi4j.mvc/com.pi4j.mvc.templatepuiapp.AppStarter</launcher.class> -->
-        <launcher.class>ProcessingTemplate/roomba.controller.RfidScanTest</launcher.class>
+        <launcher.class>ProcessingTemplate/roomba.RoombaInTrouble</launcher.class>
 
         <!-- Setup for the RaspPi -->
         <pi.hostname>pi4j</pi.hostname>
@@ -321,7 +321,45 @@
                                                  suppresssystemerr="true" suppresssystemout="true"
                                                  command="sudo killall -9 java"/>
 
-                                        <!-- Run JFX application on Raspberry Pi -->
+                                        <!-- copy libraries -->
+                                        <scp trust="true"
+                                             todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}"
+                                             port="${pi.port}">
+                                            <fileset dir="${project.basedir}/src/main/resources/lib">
+                                            </fileset>
+                                        </scp>
+
+                                        <!-- copy target -->
+                                        <scp trust="true"
+                                             todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}"
+                                             port="${pi.port}">
+                                            <fileset dir="${project.basedir}/src/main/resources/lib">
+                                            </fileset>
+                                        </scp>
+
+                                        <!-- create target dir -->
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}"
+                                                 username="${pi.username}" password="${pi.password}" trust="true"
+                                                 failonerror="false" usepty="true" useSystemIn="false"
+                                                 suppresssystemerr="true" suppresssystemout="true"
+                                                 command="mkdir /home/pi/target"/>
+
+                                        <!-- copy target dir-->
+                                        <scp trust="true"
+                                             todir="${pi.username}:${pi.password}@${pi.ipnumber}:/home/pi/target"
+                                             port="${pi.port}">
+                                            <fileset dir="${project.basedir}/target">
+                                            </fileset>
+                                        </scp>
+
+                                        <!-- move some target files -->
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}"
+                                                 username="${pi.username}" password="${pi.password}" trust="true"
+                                                 failonerror="false" usepty="true" useSystemIn="false"
+                                                 suppresssystemerr="true" suppresssystemout="true"
+                                                 command="cp /home/pi/target/classes/files /home/pi/ -r"/>
+
+                                        <!-- execute RoombaInTrouble-->
                                         <sshexec host="${pi.ipnumber}" port="${pi.port}"
                                                  username="${pi.username}" password="${pi.password}" trust="true"
                                                  failonerror="false" usepty="true" useSystemIn="true"
