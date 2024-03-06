@@ -24,9 +24,9 @@ public class GameField extends PApplet {
     public boolean nextLevel = false;
     public List<Sprite> obstacles;
     public List<Sprite> goal;
-    public PImage wall, ball, toy, pillow, plushie, plant1, plant2, computer, paper, chargingStation;
+    public PImage wall, ball, toy, pillow, plushie, plant1, plant2, computer, paper, chargingStation, playerImage;
     private int difficulty = 0;
-    private Player player;
+    public Player player;
     private float view_x = 0;
     private float view_y = 0;
     private PImage backgroundImage;
@@ -121,14 +121,8 @@ public class GameField extends PApplet {
         winCondition = false;
         imageMode(CENTER);
         if (init) {
-            PImage playerImage = loadImages();
-            player = new Player(this, playerImage, 0.3f);
-            obstacles = new ArrayList<Sprite>();
-            goal = new ArrayList<Sprite>();
+            loadImages();
         }
-
-        player.center_x = 100;
-        player.change_y = 550;
 
         levelManager.setDifficulty(difficulty);
         createPlatforms(levelManager.getNextLevel());
@@ -140,8 +134,8 @@ public class GameField extends PApplet {
      *
      * @return The image for the player.
      */
-    private PImage loadImages() {
-        PImage p = ImageLoader.loadImage(this, "img/roomba2-pixel-dark.png");
+    private void loadImages() {
+        playerImage = ImageLoader.loadImage(this, "img/roomba2-pixel-dark.png");
         chargingStation = ImageLoader.loadImage(this, "img/goal/battery-frame0.png");
         wall = ImageLoader.loadImage(this, "img/red_brick.png");
         ball = ImageLoader.loadImage(this, "img/obstacles/ball.png");
@@ -160,7 +154,6 @@ public class GameField extends PApplet {
             backgroundImage = ImageLoader.loadImage(this, "img/Room-Floor2.png");
         }
 
-        return p;
     }
 
     /**

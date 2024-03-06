@@ -75,7 +75,7 @@ public class LevelManager {
         // Loads levels with correct difficulty in the list
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].getName().substring(0, listOfFiles[i].getName().indexOf("_"))
-                    .equals("" + difficulty)) {
+                .equals("" + difficulty)) {
                 rightLevels.add(listOfFiles[i].getName());
             }
         }
@@ -100,30 +100,36 @@ public class LevelManager {
             String[] values = GameField.split(lines[row], ",");
             for (int col = 0; col < values.length; col++) {
                 switch (values[col]) {
-                    case "1" -> {
-                        Goal goal_ = new Goal(gameField, gameField.chargingStation, Constants.SPRITE_SCALE);
-                        goal_.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
-                        goal_.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
-                        gameField.goal.add(goal_);
-                    }
-                    case "2" -> {
-                        Sprite s = new Sprite(gameField, gameField.wall, Constants.SPRITE_SCALE);
-                        s.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
-                        s.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
-                        gameField.obstacles.add(s);
-                    }
-                    case "3" -> {
-                        PImage[] allObstacleImages = new PImage[] { gameField.ball, gameField.pillow, gameField.toy,
-                                gameField.plushie, gameField.plant1, gameField.plant2, gameField.computer,
-                                gameField.paper };
-                        Random random = new Random();
-                        int i = random.nextInt(allObstacleImages.length);
+                case "1" -> {
+                    Goal goal_ = new Goal(gameField, gameField.chargingStation, Constants.SPRITE_SCALE);
+                    goal_.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
+                    goal_.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
+                    gameField.goal.add(goal_);
+                }
+                case "2" -> {
+                    Sprite s = new Sprite(gameField, gameField.wall, Constants.SPRITE_SCALE);
+                    s.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
+                    s.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
+                    gameField.obstacles.add(s);
+                }
+                case "3" -> {
+                    PImage[] allObstacleImages = new PImage[] { gameField.ball, gameField.pillow, gameField.toy,
+                        gameField.plushie, gameField.plant1, gameField.plant2, gameField.computer,
+                        gameField.paper };
+                    Random random = new Random();
+                    int i = random.nextInt(allObstacleImages.length);
 
-                        Sprite s = new Sprite(gameField, allObstacleImages[i], Constants.SPRITE_SCALE);
-                        s.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
-                        s.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
-                        gameField.obstacles.add(s);
-                    }
+                    Sprite s = new Sprite(gameField, allObstacleImages[i], Constants.SPRITE_SCALE);
+                    s.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
+                    s.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
+                    gameField.obstacles.add(s);
+                }
+                case "4" -> {
+                    Player  player = new Player(gameField, gameField.playerImage, 0.3f);
+                    player.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
+                    player.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
+                    gameField.player = player;
+                }
                 }
             }
         }
