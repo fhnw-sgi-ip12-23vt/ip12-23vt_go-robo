@@ -16,10 +16,10 @@ import processing.core.PApplet;
  */
 public class GameField extends PApplet {
     private static final Logger logger = Logger.getLogger(GameField.class.getName());
-    private PhysicalScanner pui;
-    private LevelManager levelManager;
-    private CollisionHandler collisionHandler;
-    private PlayerMovement playerMovement = new PlayerMovement();
+    private final PhysicalScanner pui;
+    private final LevelManager levelManager;
+    private final CollisionHandler collisionHandler;
+    private final PlayerMovement playerMovement = new PlayerMovement();
 
     public boolean nextLevel = false;
     public List<Sprite> obstacles;
