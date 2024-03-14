@@ -42,7 +42,7 @@ public class GameField extends PApplet {
     public GameField(PhysicalScanner pui) {
         this.pui = pui;
         levelManager = new LevelManager();
-        collisionHandler = new CollisionHandler();
+        collisionHandler = new CollisionHandler(Constants.HEIGHT, Constants.WIDTH);
         PInputLogic();
     }
 

@@ -7,6 +7,13 @@ import java.util.List;
  * Handles collision detection and resolution for sprites.
  */
 public class CollisionHandler {
+    private final int height;
+    private final int width;
+
+    public CollisionHandler(int height, int width) {
+        this.height = height;
+        this.width = width;
+    }
 
     /**
      * Resolves collisions between the given sprite and a list of walls.
@@ -25,6 +32,15 @@ public class CollisionHandler {
                 s.setTop(collided.getBottom());
             }
             s.change_y = 0;
+        } else {
+            // Check if sprite is colliding with window borders vertically
+            if (s.getTop() < 0) {
+                s.setTop(0);
+                s.change_y = 0;
+            } else if (s.getBottom() > height) {
+                s.setBottom(height);
+                s.change_y = 0;
+            }
         }
 
         // Horizontal collisions
@@ -38,6 +54,15 @@ public class CollisionHandler {
                 s.setLeft(collided.getRight());
             }
             s.change_x = 0;
+        } else {
+            // Check if sprite is colliding with window borders horizontally
+            if (s.getLeft() < 0) {
+                s.setLeft(0);
+                s.change_x = 0;
+            } else if (s.getRight() > width) {
+                s.setRight(width);
+                s.change_x = 0;
+            }
         }
     }
 
@@ -51,6 +76,10 @@ public class CollisionHandler {
         boolean noXOverlap = s1.getRight() <= s2.getLeft() || s1.getLeft() >= s2.getRight();
         boolean noYOverlap = s1.getBottom() <= s2.getTop() || s1.getTop() >= s2.getBottom();
         return !noXOverlap && !noYOverlap;
+    }
+
+    private boolean checkBorderCollision(Sprite s){
+        return s.center_x <= 0 || s.center_y <= 0 || s.center_x + width >= width || s.center_y + height >= height;
     }
 
     /**

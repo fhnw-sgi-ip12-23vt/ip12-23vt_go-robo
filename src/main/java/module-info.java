@@ -10,5 +10,6 @@ module ProcessingTemplate {
     requires com.pi4j.crowpi;
     requires org.slf4j;
     requires org.junit.jupiter.api;
+    requires java.desktop;
 
 }

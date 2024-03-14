@@ -1,5 +1,6 @@
 package roomba;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.nio.file.Path;
 import java.util.Properties;
@@ -19,7 +20,7 @@ public class Constants {
     static final int LEFT_FACING = 2;
     static final int UP_FACING = 3;
     static final int DOWN_FACING = 4;
-    static boolean FULLSCREEN = true;
+    static boolean FULLSCREEN = false;
     static String RFID_RIGHT = "";
     static String RFID_LEFT = "";
     static String RFID_UP = "";
@@ -47,9 +48,16 @@ public class Constants {
             MOVE_SPEED = Float.parseFloat(appProps.getProperty("MOVE_SPEED"));
             SPRITE_SCALE = Float.parseFloat(appProps.getProperty("SPRITE_SCALE"));
             SPRITE_SIZE = Float.parseFloat(appProps.getProperty("SPRITE_SIZE"));
-            HEIGHT = Integer.parseInt(appProps.getProperty("HEIGHT"));
-            WIDTH = Integer.parseInt(appProps.getProperty("WIDTH"));
             FULLSCREEN = Boolean.parseBoolean(appProps.getProperty("FULLSCREEN"));
+            if (FULLSCREEN){
+                GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+                HEIGHT = Integer.parseInt(String.valueOf(gd.getDisplayMode().getWidth()));
+                WIDTH = Integer.parseInt(String.valueOf(gd.getDisplayMode().getHeight()));
+
+            } else {
+                HEIGHT = Integer.parseInt(appProps.getProperty("HEIGHT"));
+                WIDTH = Integer.parseInt(appProps.getProperty("WIDTH"));
+            }
             // RFID
             RFID_RIGHT = appProps.getProperty("RFID_RIGHT");
             RFID_LEFT = appProps.getProperty("RFID_LEFT");
