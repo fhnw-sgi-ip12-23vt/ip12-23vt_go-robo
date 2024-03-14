@@ -7,12 +7,14 @@ import java.util.List;
  * Handles collision detection and resolution for sprites.
  */
 public class CollisionHandler {
-    private final int height;
-    private final int width;
+    private final float height;
+    private final float width;
+    private final float headerSize;
 
-    public CollisionHandler(int height, int width) {
+    public CollisionHandler(float height, float width, float headerSize) {
         this.height = height;
         this.width = width;
+        this.headerSize = headerSize;
     }
 
     /**
@@ -34,8 +36,8 @@ public class CollisionHandler {
             s.change_y = 0;
         } else {
             // Check if sprite is colliding with window borders vertically
-            if (s.getTop() < 0) {
-                s.setTop(0);
+            if (s.getTop() < headerSize) {
+                s.setTop(headerSize);
                 s.change_y = 0;
             } else if (s.getBottom() > height) {
                 s.setBottom(height);

@@ -29,6 +29,7 @@ public class GameField extends PApplet {
     public Player player;
     private float view_x = 0;
     private float view_y = 0;
+    private float headerSize;
     private PImage backgroundImage;
     private static boolean init = true;
     private boolean winCondition = false;
@@ -42,7 +43,8 @@ public class GameField extends PApplet {
     public GameField(PhysicalScanner pui) {
         this.pui = pui;
         levelManager = new LevelManager();
-        collisionHandler = new CollisionHandler(Constants.HEIGHT, Constants.WIDTH);
+        this.headerSize = 100;
+        collisionHandler = new CollisionHandler(Constants.HEIGHT, Constants.WIDTH, headerSize);
         PInputLogic();
     }
 
@@ -61,7 +63,6 @@ public class GameField extends PApplet {
     public void draw() {
         clear();
         background(backgroundImage);
-
         displayAll();
         if (!nextLevel) {
             updateAll();
@@ -95,9 +96,13 @@ public class GameField extends PApplet {
         }
 
         player.display();
-        fill(255, 0, 0);
+
+        //Header
+        fill(0, 0, 0);
+        rect(0, 0, Constants.WIDTH, 100);
+        fill(0, 255, 0);
         textSize(32);
-        text("Level: " + levelManager.getLevelName(), view_x + 50, view_y + 100);
+        text("Level: " + levelManager.getLevelName(), view_x + 50, view_y + 50);
 
         if (winCondition) {
             fill(0, 0, 255);
