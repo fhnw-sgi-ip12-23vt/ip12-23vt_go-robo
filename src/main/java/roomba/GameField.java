@@ -1,5 +1,6 @@
 package roomba;
 
+import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -46,6 +47,17 @@ public class GameField extends PApplet {
         this.headerSize = 100;
         collisionHandler = new CollisionHandler(Constants.HEIGHT, Constants.WIDTH, headerSize);
         PInputLogic();
+    }
+
+    public GameField() {
+        this.pui = null;
+        levelManager = new LevelManager();
+        this.headerSize = 100;
+        if (Constants.FULLSCREEN){
+            collisionHandler = new CollisionHandler(Constants.HEIGHT - 230, Constants.WIDTH - 400, headerSize);
+        } else {
+            collisionHandler = new CollisionHandler(Constants.HEIGHT, Constants.WIDTH, headerSize);
+        }
     }
 
     @Override
@@ -187,7 +199,6 @@ public class GameField extends PApplet {
         });
     }
 
-    // TODO replace directions with card ids
     private void handleInput(Queue<String> inputQueue) {
         while (!inputQueue.isEmpty()) {
             String input = pui.controller.dequeue();
@@ -239,8 +250,10 @@ public class GameField extends PApplet {
     @Override
     public void exit() {
         logger.log(Level.WARNING, "Shutdown");
-        pui.controller.shutdown();
-        pui.shutdown();
+        if (pui != null){
+            pui.controller.shutdown();
+            pui.shutdown();
+        }
         super.exit();
     }
 }

@@ -40,7 +40,7 @@ public class Constants {
             // String relativePath = "src/main/java/app.properties";
             // Path fullPath = Paths.get(System.getProperty("user.dir"), relativePath);
 
-           Path fullPath = ImageLoader.loadFile("app.properties");
+           Path fullPath = ImageLoader.loadFile("/main/java/app.properties");
 
             Properties appProps = new Properties();
             appProps.load(new FileInputStream(fullPath.toString()));
@@ -51,8 +51,8 @@ public class Constants {
             FULLSCREEN = Boolean.parseBoolean(appProps.getProperty("FULLSCREEN"));
             if (FULLSCREEN){
                 GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-                HEIGHT = Integer.parseInt(String.valueOf(gd.getDisplayMode().getWidth()));
-                WIDTH = Integer.parseInt(String.valueOf(gd.getDisplayMode().getHeight()));
+                HEIGHT = Integer.parseInt(String.valueOf(gd.getDisplayMode().getHeight()));
+                WIDTH = Integer.parseInt(String.valueOf(gd.getDisplayMode().getWidth()));
 
             } else {
                 HEIGHT = Integer.parseInt(appProps.getProperty("HEIGHT"));

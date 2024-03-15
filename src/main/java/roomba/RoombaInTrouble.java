@@ -20,12 +20,13 @@ public class RoombaInTrouble {
      * @param args Command line arguments (not used).
      */
     public static void main(String[] args) {
-        PhysicalModel model = new PhysicalModel();
+        //PhysicalModel model = new PhysicalModel();
 
-        controller = new PhysicalController(model);
-        pui = new PhysicalScanner(controller, Pi4JContext.createContext());
+        //controller = new PhysicalController(model);
+        //pui = new PhysicalScanner(controller, Pi4JContext.createContext());
 
-        GameField gameField = new GameField(pui);
+        //GameField gameField = new GameField(pui);
+        GameField gameField = new GameField();
         PApplet.runSketch(new String[] { "Game Field" }, gameField);
     }
 
