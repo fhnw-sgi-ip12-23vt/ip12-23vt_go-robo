@@ -7,6 +7,7 @@ import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import processing.core.PGraphics;
 import processing.core.PImage;
 import roomba.view.PhysicalScanner;
 import processing.core.PApplet;
@@ -34,7 +35,8 @@ public class GameField extends PApplet {
     private PImage backgroundImage;
     private static boolean init = true;
     private boolean winCondition = false;
-    private boolean isMov =false;
+    private boolean isMov = false;
+    private PGraphics pg;
 
     /**
      * Constructs a GameField instance.
