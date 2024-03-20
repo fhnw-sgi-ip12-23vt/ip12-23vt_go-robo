@@ -38,23 +38,23 @@ public class ImageLoader {
         String currentDirectory = System.getProperty("user.dir");
         logger.log(Level.FINE, "OS: " + os);
         logger.log(Level.FINE, "FilePath: "
-                + FileSystems.getDefault().getPath(currentDirectory, "target/classes", filename).toString());
+            + FileSystems.getDefault().getPath(currentDirectory, "target/classes", filename).toString());
 
         if (os.contains("win")) {
             // Windows path
-            logger.warning("Windows path");
+            logger.log(Level.FINE,"Windows path");
             return FileSystems.getDefault().getPath(currentDirectory, "target/classes", filename);
         } else if (os.contains("mac")) {
             // MacOS path
-            logger.warning("MacOS path");
-            return FileSystems.getDefault().getPath("src/main/resources", filename);
+            logger.log(Level.FINE,"MacOS path");
+            return FileSystems.getDefault().getPath("target/classes", filename);
         } else if (os.contains("nix") || os.contains("nux")) {
             // Unix path (Maven project structure)
-            logger.warning("Unix path");
+            logger.log(Level.FINE,"Unix path");
             return FileSystems.getDefault().getPath(currentDirectory, "target/classes", filename);
         } else {
             // Default path
-            logger.warning("Default path");
+            logger.log(Level.FINE,"Default path");
             return FileSystems.getDefault().getPath("src/main/resources", filename);
         }
     }
@@ -73,9 +73,9 @@ public class ImageLoader {
     private static Path getFilePath(String filename) {
         String os = System.getProperty("os.name").toLowerCase();
         String currentDirectory = System.getProperty("user.dir");
-        logger.log(Level.INFO, "OS: " + os);
+        logger.log(Level.FINE, "OS: " + os);
         logger.log(Level.FINE, "FilePath: "
-                + FileSystems.getDefault().getPath(currentDirectory, "target/classes", filename).toString());
+            + FileSystems.getDefault().getPath(currentDirectory, "target/classes", filename).toString());
 
         if (os.contains("win")) {
             // Windows path

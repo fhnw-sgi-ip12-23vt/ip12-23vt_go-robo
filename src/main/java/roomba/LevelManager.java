@@ -4,6 +4,8 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import processing.core.PImage;
 
@@ -11,6 +13,8 @@ import processing.core.PImage;
  * Manages the levels in the "Roomba in Trouble" game.
  */
 public class LevelManager {
+    private static final Logger logger = Logger.getLogger(LevelManager.class.getName());
+
     private String levelName;
     private int difficulty = 0;
 
@@ -56,6 +60,8 @@ public class LevelManager {
      * @return The file path of the next level.
      */
     public String getNextLevel() {
+        logger.log(Level.FINE, "Next Level");
+
         File[] listOfFiles;
         // Resets difficulty after 3
         difficulty++;
@@ -91,6 +97,8 @@ public class LevelManager {
      * @param filename  The name of the level file.
      */
     public void createPlatforms(GameField gameField, String filename) {
+        logger.log(Level.FINE, "load from file game Objects");
+
         gameField.nextLevel = false;
         gameField.obstacles = new ArrayList<Sprite>();
         gameField.goal = new ArrayList<Sprite>();

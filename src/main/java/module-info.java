@@ -11,5 +11,6 @@ module ProcessingTemplate {
     requires org.slf4j;
     requires org.junit.jupiter.api;
     requires java.desktop;
+    requires logback.classic;
 
 }
