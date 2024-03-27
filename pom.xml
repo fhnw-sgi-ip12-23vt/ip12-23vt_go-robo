@@ -164,7 +164,7 @@
         <launcher.class>ProcessingTemplate/roomba.RoombaInTrouble</launcher.class>
 
         <!-- Setup for the RaspPi -->
-        <pi.hostname>pi4j</pi.hostname>
+        <pi.hostname>pi4j</pi.hostname> <!-- if ping to pi4j not possible replace to ip address and at <pi.ipnumber> remove .local-->
         <pi.ipnumber>${pi.hostname}.local</pi.ipnumber>  <!-- change to concrete ip-number if hostname is not unique in wlan -->
         <pi.port>22</pi.port>
         <pi.username>pi</pi.username>
@@ -236,7 +236,7 @@
             <scope>test</scope>
         </dependency>
 
-           <!-- Pi4J  -->
+        <!-- Pi4J  -->
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
@@ -386,5 +386,3 @@
     </profiles>
 
 </project>
-
-

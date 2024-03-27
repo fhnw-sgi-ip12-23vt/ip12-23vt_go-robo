@@ -1,16 +1,14 @@
 package roomba;
 
-import java.awt.Frame;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PImage;
 import roomba.view.PhysicalScanner;
-import processing.core.PApplet;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Represents the game field where the Roomba moves and interacts with obstacles
@@ -88,6 +86,7 @@ public class GameField extends PApplet {
      * Updates the animation and handles collisions for all game elements.
      */
     void updateAll() {
+        handleInput();
         if (isMov) {
             player.updateAnimationFrame1();
             isMov = false;
@@ -197,24 +196,28 @@ public class GameField extends PApplet {
         logger.log(Level.FINE, "Init PinputLogic");
         pui.controller.subscribeToQueueChanges((oldValue, newValue) -> {
             logger.log(Level.INFO, "Queue changed: " + newValue);
-            handleInput(newValue);
+            handleInput();
         });
     }
 
-    private void handleInput(Queue<String> inputQueue) {
-        while (!inputQueue.isEmpty()) {
+    private void handleInput() {
+        if (!pui.controller.getQueue().getValue().isEmpty()) {
             String input = pui.controller.dequeue();
+            logger.log(Level.FINE, "handleInput queue item !"+input + "!"  + "    nextLevel"+nextLevel+ "    player.isInPlace()"+player.isInPlace());
+
             if (nextLevel) {
                 setup();
             } else if (player.isInPlace()) {
+
                 if (input.equals(Constants.RFID_RIGHT)) {
+
                     playerMovement.movePlayer(player, Constants.RIGHT_FACING);
                 }
                 if (input.equals(Constants.RFID_LEFT)) {
-                    playerMovement.movePlayer(player, Constants.LEFT_FACING);
+                        playerMovement.movePlayer(player, Constants.LEFT_FACING);
                 }
                 if (input.equals(Constants.RFID_UP)) {
-                    playerMovement.movePlayer(player, Constants.UP_FACING);
+                        playerMovement.movePlayer(player, Constants.UP_FACING);
                 }
                 if (input.equals(Constants.RFID_DOWN)) {
                     playerMovement.movePlayer(player, Constants.DOWN_FACING);

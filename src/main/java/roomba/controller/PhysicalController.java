@@ -5,8 +5,12 @@ import roomba.util.mvcbase.ControllerBase;
 import roomba.util.mvcbase.ObservableValue.ValueChangeListener;
 
 import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PhysicalController extends ControllerBase<PhysicalModel> {
+
+    private static final Logger logger = Logger.getLogger(PhysicalController.class.getName());
 
     /**
      * Constructor for PhysicalController.
@@ -26,6 +30,10 @@ public class PhysicalController extends ControllerBase<PhysicalModel> {
         model.inputQueue.onChange(listener);
     }
 
+    public roomba.util.mvcbase.ObservableValue<Queue<String>> getQueue(){
+        return model.inputQueue;
+    }
+
     /**
      * Enqueue an item into the input queue.
      *
@@ -35,6 +43,8 @@ public class PhysicalController extends ControllerBase<PhysicalModel> {
         Queue<String> currentQueue = model.inputQueue.getValue();
         currentQueue.offer(item);
         setValue(model.inputQueue, currentQueue);
+        logger.log(Level.INFO, "Queued item "+item );
+        logger.log(Level.INFO, String.valueOf(model.inputQueue.getValue().size()));
     }
 
     /**
@@ -47,6 +57,8 @@ public class PhysicalController extends ControllerBase<PhysicalModel> {
         if (!currentQueue.isEmpty()) {
             String dequeuedItem = currentQueue.poll();
             setValue(model.inputQueue, currentQueue);
+            logger.log(Level.INFO, "Dequeued item "+dequeuedItem );
+
             return dequeuedItem;
         } else {
             return null;

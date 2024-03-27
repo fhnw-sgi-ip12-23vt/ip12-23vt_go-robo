@@ -2,15 +2,18 @@ package roomba.view;
 
 import com.pi4j.context.Context;
 
-import roomba.catalog.components.SimpleRFID;
+import com.pi4j.crowpi.components.RfidComponent;
 import roomba.controller.PhysicalController;
 import roomba.model.PhysicalModel;
 import roomba.util.mvcbase.PuiBase;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> {
+    private static final Logger logger = Logger.getLogger(PhysicalScanner.class.getName());
 
     // Instance variable representing the RFID scanner
-    protected SimpleRFID rfid;
+    protected RfidComponent rfid;
 
     // Reference to the associated controller
     public PhysicalController controller;
@@ -31,7 +34,7 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
      */
     @Override
     public void initializeParts() {
-        rfid = new SimpleRFID(pi4J);
+         rfid = new RfidComponent(pi4J);
     }
 
     /**
@@ -41,8 +44,13 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
      */
     @Override
     public void setupUiToActionBindings(PhysicalController controller) {
-        // Associates the RFID scan event with the enqueue method in the controller
-        rfid.onScan(serial -> controller.enqueue(serial));
-        // Alternatively, you can use a lambda expression: rfid.onScan(controller::enqueue);
+
+        rfid.onCardDetected(rfidCard -> {
+            logger.log(Level.INFO, "Card:  " + rfidCard);
+
+            controller.enqueue(rfidCard.getSerial());
+            }
+        );
+
     }
 }

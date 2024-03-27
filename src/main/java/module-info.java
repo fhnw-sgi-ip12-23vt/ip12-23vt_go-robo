@@ -9,7 +9,6 @@ module ProcessingTemplate {
     requires com.pi4j.plugin.raspberrypi;
     requires com.pi4j.crowpi;
     requires org.slf4j;
-    requires org.junit.jupiter.api;
     requires java.desktop;
     requires logback.classic;
 
