@@ -20,7 +20,7 @@ public class Constants {
     static final int LEFT_FACING = 2;
     static final int UP_FACING = 3;
     static final int DOWN_FACING = 4;
-    static boolean FULLSCREEN = false;
+    static boolean FULLSCREEN = true;
     static String RFID_RIGHT = "";
     static String RFID_LEFT = "";
     static String RFID_UP = "";
