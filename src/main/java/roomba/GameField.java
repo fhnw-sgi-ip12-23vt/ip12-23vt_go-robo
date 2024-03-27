@@ -45,7 +45,11 @@ public class GameField extends PApplet {
         this.pui = pui;
         levelManager = new LevelManager();
         this.headerSize = 100;
-        collisionHandler = new CollisionHandler(Constants.HEIGHT, Constants.WIDTH, headerSize);
+        if (Constants.FULLSCREEN){
+            collisionHandler = new CollisionHandler(Constants.HEIGHT - 230, Constants.WIDTH - 400, headerSize);
+        } else {
+            collisionHandler = new CollisionHandler(Constants.HEIGHT, Constants.WIDTH, headerSize);
+        }
         PInputLogic();
     }
 
