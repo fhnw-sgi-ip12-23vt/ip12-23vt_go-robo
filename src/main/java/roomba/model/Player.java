@@ -1,6 +1,10 @@
-package roomba;
+package roomba.model;
 
 import processing.core.PImage;
+import roomba.controller.ImageLoader;
+import roomba.model.AnimatedSprite;
+import roomba.model.Constants;
+import roomba.view.GameField;
 
 /**
  * The Player class represents the player character in the "Roomba in Trouble"

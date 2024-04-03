@@ -1,4 +1,4 @@
-package roomba;
+package roomba.model;
 
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -13,7 +13,7 @@ public class AnimatedSprite extends Sprite {
     protected PImage[] moveRight;
     protected PImage[] moveUp;
     protected PImage[] moveDown;
-    protected int direction;
+    public int direction;
     protected int index;
     protected int frame;
 

@@ -1,4 +1,6 @@
-package roomba;
+package roomba.controller;
+
+import roomba.model.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;

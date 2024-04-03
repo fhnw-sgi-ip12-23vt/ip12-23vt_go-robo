@@ -1,4 +1,4 @@
-package roomba;
+package roomba.controller;
 
 import java.nio.file.FileSystems;
 import java.nio.file.Path;

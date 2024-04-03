@@ -3,8 +3,8 @@
 //import ch.qos.logback.classic.Level;
 //import com.pi4j.plugin.mock.provider.spi.MockSpi;
 //import org.slf4j.LoggerFactory;
-//import roomba.GameField;
-//import roomba.Player;
+//import roomba.view.GameField;
+//import roomba.model.Player;
 //import roomba.controller.PhysicalController;
 //import roomba.model.PhysicalModel;
 //import roomba.util.Pi4JContext;

@@ -1,4 +1,6 @@
-package roomba;
+package roomba.model;
+
+import roomba.controller.ImageLoader;
 
 import java.awt.*;
 import java.io.FileInputStream;
@@ -10,23 +12,23 @@ import java.util.Properties;
  */
 public class Constants {
 
-    static float MOVE_SPEED = 4;
-    static float SPRITE_SCALE = (float) (50.0 / 128);
-    static float SPRITE_SIZE = 50;
-    static int HEIGHT = (int) (SPRITE_SIZE * 12);
-    static int WIDTH = (int) (SPRITE_SIZE * 16);
-    static final int NEUTRAL_FACING = 0;
-    static final int RIGHT_FACING = 1;
-    static final int LEFT_FACING = 2;
-    static final int UP_FACING = 3;
-    static final int DOWN_FACING = 4;
-    static boolean FULLSCREEN = true;
-    static String RFID_RIGHT = "";
-    static String RFID_LEFT = "";
-    static String RFID_UP = "";
-    static String RFID_DOWN = "";
-    static String RFID_RESET = "";
-    static String RFID_NEXT = "";
+ public   static float MOVE_SPEED = 4;
+ public   static float SPRITE_SCALE = (float) (50.0 / 128);
+ public   static float SPRITE_SIZE = 50;
+ public   static int HEIGHT = (int) (SPRITE_SIZE * 12);
+ public   static int WIDTH = (int) (SPRITE_SIZE * 16);
+ public   static final int NEUTRAL_FACING = 0;
+ public   static final int RIGHT_FACING = 1;
+ public   static final int LEFT_FACING = 2;
+ public   static final int UP_FACING = 3;
+ public   static final int DOWN_FACING = 4;
+ public   static boolean FULLSCREEN = true;
+ public   static String RFID_RIGHT = "";
+ public   static String RFID_LEFT = "";
+ public   static String RFID_UP = "";
+ public   static String RFID_DOWN = "";
+ public   static String RFID_RESET = "";
+ public   static String RFID_NEXT = "";
 
     static {
         initConfigs();

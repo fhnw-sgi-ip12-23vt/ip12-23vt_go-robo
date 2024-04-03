@@ -1,4 +1,4 @@
-package roomba;
+package roomba.controller;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -8,6 +8,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import processing.core.PImage;
+import roomba.model.Player;
+import roomba.model.Sprite;
+import roomba.model.Constants;
+import roomba.model.Goal;
+import roomba.view.GameField;
 
 /**
  * Manages the levels in the "Roomba in Trouble" game.
@@ -133,7 +138,7 @@ public class LevelManager {
                     gameField.obstacles.add(s);
                 }
                 case "4" -> {
-                    Player  player = new Player(gameField, gameField.playerImage, 0.3f);
+                    Player player = new Player(gameField, gameField.playerImage, 0.3f);
                     player.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
                     player.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
                     gameField.player = player;

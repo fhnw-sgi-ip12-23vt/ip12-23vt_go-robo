@@ -1,9 +1,16 @@
-package roomba;
+package roomba.view;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PImage;
-import roomba.view.PhysicalScanner;
+import roomba.controller.LevelManager;
+import roomba.model.Player;
+import roomba.controller.PlayerMovement;
+import roomba.model.Sprite;
+import roomba.controller.CollisionHandler;
+import roomba.controller.ImageLoader;
+import roomba.model.AnimatedSprite;
+import roomba.model.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +57,6 @@ public class GameField extends PApplet {
         } else {
             collisionHandler = new CollisionHandler(Constants.HEIGHT, Constants.WIDTH, headerSize);
         }
-        PInputLogic();
     }
 
     public GameField() {
@@ -193,16 +199,16 @@ public class GameField extends PApplet {
         levelManager.createPlatforms(this, filename);
     }
 
-    /**
-     * Handles physical input logic from the scanner.
-     */
-    public void PInputLogic() {
-        logger.log(Level.FINE, "Init PinputLogic");
-        pui.controller.subscribeToQueueChanges((oldValue, newValue) -> {
-            logger.log(Level.INFO, "Queue changed: " + newValue);
-            handleInput();
-        });
-    }
+//    /**
+//     * Handles physical input logic from the scanner.
+//     */
+//    public void PInputLogic() {
+//        logger.log(Level.FINE, "Init PinputLogic");
+//        pui.controller.subscribeToQueueChanges((oldValue, newValue) -> {
+//            logger.log(Level.INFO, "Queue changed: " + newValue);
+//            handleInput();
+//        });
+//    }
 
     private void handleInput() {
         if (!pui.controller.getQueue().getValue().isEmpty()) {
@@ -230,8 +236,6 @@ public class GameField extends PApplet {
         }
     }
 
-    // called whenever a key is pressed, will be deleted later on if the handleInput
-    // functions
     public void keyPressed() {
         isMov = true;
         if (nextLevel) {

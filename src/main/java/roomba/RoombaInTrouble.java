@@ -6,6 +6,7 @@ import processing.core.PApplet;
 import roomba.controller.PhysicalController;
 import roomba.model.PhysicalModel;
 import roomba.util.Pi4JContext;
+import roomba.view.GameField;
 import roomba.view.PhysicalScanner;
 
 import org.slf4j.LoggerFactory;

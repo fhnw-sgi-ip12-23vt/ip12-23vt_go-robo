@@ -1,4 +1,7 @@
-package roomba;
+package roomba.controller;
+
+import roomba.model.Constants;
+import roomba.model.Player;
 
 public class PlayerMovement {
     private Player player;

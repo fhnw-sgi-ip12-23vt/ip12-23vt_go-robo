@@ -1,7 +1,8 @@
-package roomba;
+package roomba.model;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+import roomba.controller.ImageLoader;
 
 /**
  * Represents a goal in the "Roomba in Trouble" game.

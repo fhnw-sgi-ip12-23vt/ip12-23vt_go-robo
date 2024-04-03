@@ -1,4 +1,4 @@
-package roomba;
+package roomba.model;
 
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -9,8 +9,10 @@ import processing.core.PImage;
 public class Sprite {
     protected PApplet pApplet;
     protected PImage image;
-    protected float center_x, center_y;
-    protected float change_x, change_y;
+    public float center_x;
+    public float center_y;
+    public float change_x;
+    public float change_y;
     protected float w, h;
 
     /**
@@ -82,7 +84,7 @@ public class Sprite {
      *
      * @param left The x-coordinate of the left edge.
      */
-    void setLeft(float left) {
+    public void setLeft(float left) {
         center_x = left + w / 2;
     }
 
@@ -91,7 +93,7 @@ public class Sprite {
      *
      * @return The x-coordinate of the left edge.
      */
-    float getLeft() {
+    public float getLeft() {
         return center_x - w / 2;
     }
 
@@ -100,7 +102,7 @@ public class Sprite {
      *
      * @param right The x-coordinate of the right edge.
      */
-    void setRight(float right) {
+    public void setRight(float right) {
         center_x = right - w / 2;
     }
 
@@ -109,7 +111,7 @@ public class Sprite {
      *
      * @return The x-coordinate of the right edge.
      */
-    float getRight() {
+    public float getRight() {
         return center_x + w / 2;
     }
 
@@ -118,7 +120,7 @@ public class Sprite {
      *
      * @param top The y-coordinate of the top edge.
      */
-    void setTop(float top) {
+    public void setTop(float top) {
         center_y = top + h / 2;
     }
 
@@ -127,7 +129,7 @@ public class Sprite {
      *
      * @return The y-coordinate of the top edge.
      */
-    float getTop() {
+    public float getTop() {
         return center_y - h / 2;
     }
 
@@ -136,7 +138,7 @@ public class Sprite {
      *
      * @param bottom The y-coordinate of the bottom edge.
      */
-    void setBottom(float bottom) {
+    public void setBottom(float bottom) {
         center_y = bottom - h / 2;
     }
 
@@ -145,7 +147,7 @@ public class Sprite {
      *
      * @return The y-coordinate of the bottom edge.
      */
-    float getBottom() {
+    public float getBottom() {
         return center_y + h / 2;
     }
 }
