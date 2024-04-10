@@ -84,10 +84,6 @@ public class CollisionHandler {
         return !noXOverlap && !noYOverlap;
     }
 
-    private boolean checkBorderCollision(Sprite s) {
-        return s.center_x <= 0 || s.center_y <= 0 || s.center_x + width >= width || s.center_y + height >= height;
-    }
-
     /**
      * Checks for collisions between a sprite and a list of sprites.
      *

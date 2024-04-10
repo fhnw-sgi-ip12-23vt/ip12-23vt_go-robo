@@ -72,14 +72,6 @@ public class Sprite {
     }
 
     /**
-     * Updates the sprite's position based on its current velocity.
-     */
-    public void update() {
-        center_x += change_x;
-        center_y += change_y;
-    }
-
-    /**
      * Returns the x-coordinate of the left edge of the sprite.
      *
      * @return The x-coordinate of the left edge.

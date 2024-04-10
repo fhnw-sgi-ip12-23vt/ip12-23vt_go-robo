@@ -60,8 +60,7 @@ public class ImageLoader {
     }
 
     public static Path loadFile(String filename) {
-        Path filePath = getFilePath(filename);
-        return filePath;
+        return getFilePath(filename);
     }
 
     /**

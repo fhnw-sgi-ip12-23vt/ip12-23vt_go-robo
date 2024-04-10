@@ -10,6 +10,7 @@ import roomba.view.GameField;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -81,10 +82,10 @@ public class LevelManager {
 
         File folder = new File(fullPath.toString());
         listOfFiles = folder.listFiles();
-        ArrayList<String> rightLevels = new ArrayList<String>();
+        ArrayList<String> rightLevels = new ArrayList<>();
 
         // Loads levels with correct difficulty in the list
-        for (int i = 0; i < listOfFiles.length; i++) {
+        for (int i = 0; i < Objects.requireNonNull(listOfFiles).length; i++) {
             if (listOfFiles[i].getName().substring(0, listOfFiles[i].getName().indexOf("_"))
                 .equals("" + difficulty)) {
                 rightLevels.add(listOfFiles[i].getName());
@@ -105,8 +106,8 @@ public class LevelManager {
         logger.log(Level.FINE, "load from file game Objects");
 
         gameField.nextLevel = false;
-        gameField.obstacles = new ArrayList<Sprite>();
-        gameField.goal = new ArrayList<Sprite>();
+        gameField.obstacles = new ArrayList<>();
+        gameField.goal = new ArrayList<>();
 
         String[] lines = gameField.loadStrings(filename);
         for (int row = 0; row < lines.length; row++) {

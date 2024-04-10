@@ -21,15 +21,6 @@ public class PhysicalController extends ControllerBase<PhysicalModel> {
         super(model);
     }
 
-    /**
-     * Subscribe to changes in the input queue.
-     *
-     * @param listener The listener to be notified when the input queue changes.
-     */
-    public void subscribeToQueueChanges(ValueChangeListener<Queue<String>> listener) {
-        model.inputQueue.onChange(listener);
-    }
-
     public roomba.util.mvcbase.ObservableValue<Queue<String>> getQueue() {
         return model.inputQueue;
     }
