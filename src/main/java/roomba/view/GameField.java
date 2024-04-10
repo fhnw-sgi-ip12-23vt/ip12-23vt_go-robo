@@ -1,7 +1,6 @@
 package roomba.view;
 
 import processing.core.PApplet;
-import processing.core.PGraphics;
 import processing.core.PImage;
 import roomba.controller.LevelManager;
 import roomba.model.Player;
@@ -36,7 +35,7 @@ public class GameField extends PApplet {
     public Player player;
     private float view_x = 0;
     private float view_y = 0;
-    private float headerSize;
+    private static float headerSize =113;
     private PImage backgroundImage;
     private static boolean init = true;
     private boolean winCondition = false;
@@ -50,7 +49,6 @@ public class GameField extends PApplet {
     public GameField(PhysicalScanner pui) {
         this.pui = pui;
         levelManager = new LevelManager();
-        this.headerSize = 100;
         if (Constants.FULLSCREEN){
             collisionHandler = new CollisionHandler(Constants.HEIGHT - 230, Constants.WIDTH - 400, headerSize);
         } else {
@@ -121,7 +119,7 @@ public class GameField extends PApplet {
 
         //Header
         fill(0, 0, 0);
-        rect(0, 0, Constants.WIDTH, 100);
+        rect(0, 0, Constants.WIDTH, headerSize);
         fill(0, 255, 0);
         textSize(32);
         text("Level: " + levelManager.getLevelName(), view_x + 50, view_y + 50);

@@ -12,23 +12,23 @@ import java.util.Properties;
  */
 public class Constants {
 
- public   static float MOVE_SPEED = 4;
- public   static float SPRITE_SCALE = (float) (50.0 / 128);
- public   static float SPRITE_SIZE = 50;
- public   static int HEIGHT = (int) (SPRITE_SIZE * 12);
- public   static int WIDTH = (int) (SPRITE_SIZE * 16);
- public   static final int NEUTRAL_FACING = 0;
- public   static final int RIGHT_FACING = 1;
- public   static final int LEFT_FACING = 2;
- public   static final int UP_FACING = 3;
- public   static final int DOWN_FACING = 4;
- public   static boolean FULLSCREEN = true;
- public   static String RFID_RIGHT = "";
- public   static String RFID_LEFT = "";
- public   static String RFID_UP = "";
- public   static String RFID_DOWN = "";
- public   static String RFID_RESET = "";
- public   static String RFID_NEXT = "";
+    public   static float MOVE_SPEED = 4;
+    public   static float SPRITE_SIZE = 50;
+    public   static float SPRITE_SCALE = (float) (SPRITE_SIZE / 128);
+    public   static int HEIGHT = (int) (SPRITE_SIZE * 12);
+    public   static int WIDTH = (int) (SPRITE_SIZE * 16);
+    public   static final int NEUTRAL_FACING = 0;
+    public   static final int RIGHT_FACING = 1;
+    public   static final int LEFT_FACING = 2;
+    public   static final int UP_FACING = 3;
+    public   static final int DOWN_FACING = 4;
+    public   static boolean FULLSCREEN = false;
+    public   static String RFID_RIGHT = "";
+    public   static String RFID_LEFT = "";
+    public   static String RFID_UP = "";
+    public   static String RFID_DOWN = "";
+    public   static String RFID_RESET = "";
+    public   static String RFID_NEXT = "";
 
     static {
         initConfigs();
@@ -42,14 +42,15 @@ public class Constants {
             // String relativePath = "src/main/java/app.properties";
             // Path fullPath = Paths.get(System.getProperty("user.dir"), relativePath);
 
-           Path fullPath = ImageLoader.loadFile("/main/java/app.properties");
+            Path fullPath = ImageLoader.loadFile("/main/java/app.properties");
 
             Properties appProps = new Properties();
             appProps.load(new FileInputStream(fullPath.toString()));
 
             MOVE_SPEED = Float.parseFloat(appProps.getProperty("MOVE_SPEED"));
-            SPRITE_SCALE = Float.parseFloat(appProps.getProperty("SPRITE_SCALE"));
+           // SPRITE_SCALE = Float.parseFloat(appProps.getProperty("SPRITE_SCALE"));
             SPRITE_SIZE = Float.parseFloat(appProps.getProperty("SPRITE_SIZE"));
+            SPRITE_SCALE =  (float) (SPRITE_SIZE / 128);
             FULLSCREEN = Boolean.parseBoolean(appProps.getProperty("FULLSCREEN"));
             if (FULLSCREEN){
                 GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
