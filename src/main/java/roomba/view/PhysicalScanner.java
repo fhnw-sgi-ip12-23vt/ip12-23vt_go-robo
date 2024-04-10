@@ -2,11 +2,12 @@ package roomba.view;
 
 import com.pi4j.context.Context;
 import com.pi4j.crowpi.components.RfidComponent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import roomba.controller.PhysicalController;
 import roomba.model.PhysicalModel;
 import roomba.util.mvcbase.PuiBase;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The PhysicalScanner class represents a physical scanner component used in the Roomba application.
@@ -14,8 +15,8 @@ import roomba.util.mvcbase.PuiBase;
  */
 public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> {
     private static final Logger logger = Logger.getLogger(PhysicalScanner.class.getName());
-    protected RfidComponent rfid;
     public PhysicalController controller;
+    protected RfidComponent rfid;
 
     /**
      * Constructor for PhysicalScanner.
@@ -33,7 +34,7 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
      */
     @Override
     public void initializeParts() {
-         rfid = new RfidComponent(pi4J);
+        rfid = new RfidComponent(pi4J);
     }
 
     /**
@@ -45,9 +46,9 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
     public void setupUiToActionBindings(PhysicalController controller) {
 
         rfid.onCardDetected(rfidCard -> {
-            logger.log(Level.INFO, "Card:  " + rfidCard);
+                logger.log(Level.INFO, "Card:  " + rfidCard);
 
-            controller.enqueue(rfidCard.getSerial());
+                controller.enqueue(rfidCard.getSerial());
             }
         );
 

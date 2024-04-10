@@ -1,13 +1,13 @@
 package roomba.controller;
 
+import processing.core.PApplet;
+import processing.core.PImage;
+
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import processing.core.PApplet;
-import processing.core.PImage;
 
 /**
  * Utility class for loading images in the "Roomba in Trouble" game.
@@ -38,23 +38,23 @@ public class ImageLoader {
         String currentDirectory = System.getProperty("user.dir");
         logger.log(Level.FINE, "OS: " + os);
         logger.log(Level.FINE, "FilePath: "
-            + FileSystems.getDefault().getPath(currentDirectory, "target/classes", filename).toString());
+            + FileSystems.getDefault().getPath(currentDirectory, "target/classes", filename));
 
         if (os.contains("win")) {
             // Windows path
-            logger.log(Level.FINE,"Windows path");
+            logger.log(Level.FINE, "Windows path");
             return FileSystems.getDefault().getPath(currentDirectory, "target/classes", filename);
         } else if (os.contains("mac")) {
             // MacOS path
-            logger.log(Level.FINE,"MacOS path");
+            logger.log(Level.FINE, "MacOS path");
             return FileSystems.getDefault().getPath("target/classes", filename);
         } else if (os.contains("nix") || os.contains("nux")) {
             // Unix path (Maven project structure)
-            logger.log(Level.FINE,"Unix path");
+            logger.log(Level.FINE, "Unix path");
             return FileSystems.getDefault().getPath(currentDirectory, "target/classes", filename);
         } else {
             // Default path
-            logger.log(Level.FINE,"Default path");
+            logger.log(Level.FINE, "Default path");
             return FileSystems.getDefault().getPath("src/main/resources", filename);
         }
     }
@@ -75,7 +75,7 @@ public class ImageLoader {
         String currentDirectory = System.getProperty("user.dir");
         logger.log(Level.FINE, "OS: " + os);
         logger.log(Level.FINE, "FilePath: "
-            + FileSystems.getDefault().getPath(currentDirectory, "target/classes", filename).toString());
+            + FileSystems.getDefault().getPath(currentDirectory, "target/classes", filename));
 
         if (os.contains("win")) {
             // Windows path

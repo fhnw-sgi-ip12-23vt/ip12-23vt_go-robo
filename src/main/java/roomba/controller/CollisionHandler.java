@@ -21,7 +21,8 @@ public class CollisionHandler {
 
     /**
      * Resolves collisions between the given sprite and a list of walls.
-     * @param s The sprite for which collisions need to be resolved.
+     *
+     * @param s     The sprite for which collisions need to be resolved.
      * @param walls The list of wall sprites.
      */
     public void resolveObstaclesCollisions(Sprite s, List<Sprite> walls) {
@@ -72,6 +73,7 @@ public class CollisionHandler {
 
     /**
      * Checks if two sprites have collided.
+     *
      * @param s1 The first sprite.
      * @param s2 The second sprite.
      * @return True if there is a collision, false otherwise.
@@ -82,21 +84,23 @@ public class CollisionHandler {
         return !noXOverlap && !noYOverlap;
     }
 
-    private boolean checkBorderCollision(Sprite s){
+    private boolean checkBorderCollision(Sprite s) {
         return s.center_x <= 0 || s.center_y <= 0 || s.center_x + width >= width || s.center_y + height >= height;
     }
 
     /**
      * Checks for collisions between a sprite and a list of sprites.
-     * @param s The sprite to check for collisions.
+     *
+     * @param s    The sprite to check for collisions.
      * @param list The list of sprites to check against.
      * @return A list of sprites with which a collision has occurred.
      */
     public ArrayList<Sprite> checkCollisionList(Sprite s, List<Sprite> list) {
         ArrayList<Sprite> collisionList = new ArrayList<>();
         for (Sprite p : list) {
-            if (checkCollision(s, p))
+            if (checkCollision(s, p)) {
                 collisionList.add(p);
+            }
         }
         return collisionList;
     }

@@ -1,9 +1,5 @@
 package roomba.view;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import processing.core.PApplet;
 import processing.core.PImage;
 import roomba.controller.CollisionHandler;
@@ -15,6 +11,11 @@ import roomba.model.Constants;
 import roomba.model.Player;
 import roomba.model.Sprite;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  * Represents the game field where the Roomba moves and interacts with obstacles
@@ -22,22 +23,18 @@ import roomba.model.Sprite;
  */
 public class GameField extends PApplet {
     private static final Logger logger = Logger.getLogger(GameField.class.getName());
+    private static final float headerSize = 113;
     private final PhysicalScanner pui;
     private final LevelManager levelManager;
     private final CollisionHandler collisionHandler;
     private final PlayerMovement playerMovement = new PlayerMovement();
-
     public boolean nextLevel = false;
     public List<Sprite> obstacles;
     public List<Sprite> goal;
-    public PImage wall, ball, toy, pillow, plushie, plant1, plant2, computer, paper, chargingStation, playerImage;
-    private int difficulty = 0;
+    public PImage wall, ball, toy, pillow, plushy, plant1, plant2, computer, paper, chargingStation, playerImage;
     public Player player;
-    private float view_x = 0;
-    private float view_y = 0;
-    private static float headerSize =113;
+    private int difficulty = 0;
     private PImage backgroundImage;
-    private static boolean init = true;
     private boolean winCondition = false;
     private boolean isMov = false;
 
@@ -49,7 +46,7 @@ public class GameField extends PApplet {
     public GameField(PhysicalScanner pui) {
         this.pui = pui;
         levelManager = new LevelManager();
-        if (Constants.FULLSCREEN){
+        if (Constants.FULLSCREEN) {
             collisionHandler = new CollisionHandler(Constants.HEIGHT - 230, Constants.WIDTH - 400, headerSize);
         } else {
             collisionHandler = new CollisionHandler(Constants.HEIGHT, Constants.WIDTH, headerSize);
@@ -59,8 +56,7 @@ public class GameField extends PApplet {
     public GameField() {
         this.pui = null;
         levelManager = new LevelManager();
-        this.headerSize = 100;
-        if (Constants.FULLSCREEN){
+        if (Constants.FULLSCREEN) {
             collisionHandler = new CollisionHandler(Constants.HEIGHT - 230, Constants.WIDTH - 400, headerSize);
         } else {
             collisionHandler = new CollisionHandler(Constants.HEIGHT, Constants.WIDTH, headerSize);
@@ -97,7 +93,7 @@ public class GameField extends PApplet {
         if (isMov) {
             player.updateAnimationFrame1();
             isMov = false;
-        }else {
+        } else {
             player.updateAnimation();
         }
         collisionHandler.resolveObstaclesCollisions(player, obstacles);
@@ -122,6 +118,8 @@ public class GameField extends PApplet {
         rect(0, 0, Constants.WIDTH, headerSize);
         fill(0, 255, 0);
         textSize(32);
+        float view_x = 0;
+        float view_y = 0;
         text("Level: " + levelManager.getLevelName(), view_x + 50, view_y + 50);
 
         if (winCondition) {
@@ -141,7 +139,7 @@ public class GameField extends PApplet {
             }
         } else {
             nextLevel = true;
-            winCondition = (nextLevel && (difficulty == 3));
+            winCondition = difficulty == 3;
         }
     }
 
@@ -151,9 +149,7 @@ public class GameField extends PApplet {
     public void setup() {
         winCondition = false;
         imageMode(CENTER);
-        if (init) {
-            loadImages();
-        }
+        loadImages();
 
         levelManager.setDifficulty(difficulty);
         createPlatforms(levelManager.getNextLevel());
@@ -162,8 +158,6 @@ public class GameField extends PApplet {
 
     /**
      * Loads images for the game elements.
-     *
-     * @return The image for the player.
      */
     private void loadImages() {
         playerImage = ImageLoader.loadImage(this, "img/roomba2-pixel-dark.png");
@@ -172,7 +166,7 @@ public class GameField extends PApplet {
         ball = ImageLoader.loadImage(this, "img/obstacles/ball.png");
         pillow = ImageLoader.loadImage(this, "img/obstacles/pillow.png");
         toy = ImageLoader.loadImage(this, "img/obstacles/bookshelf.png");
-        plushie = ImageLoader.loadImage(this, "img/obstacles/Teddy.png");
+        plushy = ImageLoader.loadImage(this, "img/obstacles/Teddy.png");
         plant1 = ImageLoader.loadImage(this, "img/obstacles/plant1.png");
         plant2 = ImageLoader.loadImage(this, "img/obstacles/plant2.png");
         computer = ImageLoader.loadImage(this, "img/obstacles/computer.png");
@@ -196,21 +190,13 @@ public class GameField extends PApplet {
         levelManager.createPlatforms(this, filename);
     }
 
-//    /**
-//     * Handles physical input logic from the scanner.
-//     */
-//    public void PInputLogic() {
-//        logger.log(Level.FINE, "Init PinputLogic");
-//        pui.controller.subscribeToQueueChanges((oldValue, newValue) -> {
-//            logger.log(Level.INFO, "Queue changed: " + newValue);
-//            handleInput();
-//        });
-//    }
-
     private void handleInput() {
+        assert pui != null;
         if (!pui.controller.getQueue().getValue().isEmpty()) {
             String input = pui.controller.dequeue();
-            logger.log(Level.FINE, "handleInput queue item !"+input + "!"  + "    nextLevel"+nextLevel+ "    player.isInPlace()"+player.isInPlace());
+            logger.log(Level.FINE,
+                "handleInput queue item !" + input + "!" + "    nextLevel" + nextLevel + "    player.isInPlace()" +
+                    player.isInPlace());
 
             if (nextLevel) {
                 setup();
@@ -221,10 +207,10 @@ public class GameField extends PApplet {
                     playerMovement.movePlayer(player, Constants.RIGHT_FACING);
                 }
                 if (input.equals(Constants.RFID_LEFT)) {
-                        playerMovement.movePlayer(player, Constants.LEFT_FACING);
+                    playerMovement.movePlayer(player, Constants.LEFT_FACING);
                 }
                 if (input.equals(Constants.RFID_UP)) {
-                        playerMovement.movePlayer(player, Constants.UP_FACING);
+                    playerMovement.movePlayer(player, Constants.UP_FACING);
                 }
                 if (input.equals(Constants.RFID_DOWN)) {
                     playerMovement.movePlayer(player, Constants.DOWN_FACING);
@@ -259,7 +245,7 @@ public class GameField extends PApplet {
     @Override
     public void exit() {
         logger.log(Level.WARNING, "Shutdown");
-        if (pui != null){
+        if (pui != null) {
             pui.controller.shutdown();
             pui.shutdown();
         }

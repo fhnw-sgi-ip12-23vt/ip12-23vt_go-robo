@@ -1,18 +1,18 @@
 package roomba.controller;
 
+import processing.core.PImage;
+import roomba.model.Constants;
+import roomba.model.Goal;
+import roomba.model.Player;
+import roomba.model.Sprite;
+import roomba.view.GameField;
+
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import processing.core.PImage;
-import roomba.model.Player;
-import roomba.model.Sprite;
-import roomba.model.Constants;
-import roomba.model.Goal;
-import roomba.view.GameField;
 
 /**
  * Manages the levels in the "Roomba in Trouble" game.
@@ -29,13 +29,13 @@ public class LevelManager {
      * @return The name of the current level.
      */
     public String getLevelName() {
-        if (levelName.substring(0, levelName.indexOf("_")).equals("1")){
+        if (levelName.substring(0, levelName.indexOf("_")).equals("1")) {
             return "Tutorial: " + levelName.substring(levelName.indexOf("_") + 1);
         }
-        if (levelName.substring(0, levelName.indexOf("_")).equals("2")){
+        if (levelName.substring(0, levelName.indexOf("_")).equals("2")) {
             return "Normal: " + levelName.substring(levelName.indexOf("_") + 1);
         }
-        if (levelName.substring(0, levelName.indexOf("_")).equals("3")){
+        if (levelName.substring(0, levelName.indexOf("_")).equals("3")) {
             return "Schwer: " + levelName.substring(levelName.indexOf("_") + 1);
         }
         return levelName;
@@ -114,7 +114,7 @@ public class LevelManager {
             for (int col = 0; col < values.length; col++) {
                 switch (values[col]) {
                 case "1" -> {
-                    Goal goal_ = new Goal(gameField, gameField.chargingStation, Constants.SPRITE_SIZE* 0.0055f);
+                    Goal goal_ = new Goal(gameField, gameField.chargingStation, Constants.SPRITE_SIZE * 0.0055f);
                     goal_.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
                     goal_.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
                     gameField.goal.add(goal_);
@@ -126,9 +126,9 @@ public class LevelManager {
                     gameField.obstacles.add(s);
                 }
                 case "3" -> {
-                    PImage[] allObstacleImages = new PImage[] { gameField.ball, gameField.pillow, gameField.toy,
-                        gameField.plushie, gameField.plant1, gameField.plant2, gameField.computer,
-                        gameField.paper };
+                    PImage[] allObstacleImages = new PImage[] {gameField.ball, gameField.pillow, gameField.toy,
+                        gameField.plushy, gameField.plant1, gameField.plant2, gameField.computer,
+                        gameField.paper};
                     Random random = new Random();
                     int i = random.nextInt(allObstacleImages.length);
 
@@ -138,7 +138,7 @@ public class LevelManager {
                     gameField.obstacles.add(s);
                 }
                 case "4" -> {
-                    Player player = new Player(gameField, gameField.playerImage, Constants.SPRITE_SIZE* 0.006f);
+                    Player player = new Player(gameField, gameField.playerImage, Constants.SPRITE_SIZE * 0.006f);
                     player.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
                     player.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
                     gameField.player = player;

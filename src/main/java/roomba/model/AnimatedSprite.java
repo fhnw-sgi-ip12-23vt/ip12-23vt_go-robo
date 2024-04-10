@@ -7,13 +7,13 @@ import processing.core.PImage;
  * Represents an animated sprite with various movement directions.
  */
 public class AnimatedSprite extends Sprite {
+    public int direction;
     protected PImage[] currentImages;
     protected PImage[] standNeutral;
     protected PImage[] moveLeft;
     protected PImage[] moveRight;
     protected PImage[] moveUp;
     protected PImage[] moveDown;
-    public int direction;
     protected int index;
     protected int frame;
 
@@ -57,32 +57,34 @@ public class AnimatedSprite extends Sprite {
      * Selects the direction of the sprite based on its movement.
      */
     public void selectDirection() {
-        if (change_x > 0)
+        if (change_x > 0) {
             direction = Constants.RIGHT_FACING;
-        else if (change_x < 0)
+        } else if (change_x < 0) {
             direction = Constants.LEFT_FACING;
-        else if (change_y < 0)
+        } else if (change_y < 0) {
             direction = Constants.DOWN_FACING;
-        else if (change_y > 0)
+        } else if (change_y > 0) {
             direction = Constants.UP_FACING;
-        else
+        } else {
             direction = Constants.NEUTRAL_FACING;
+        }
     }
 
     /**
      * Selects the current images based on the sprite's direction.
      */
     public void selectCurrentImages() {
-        if (direction == Constants.RIGHT_FACING)
+        if (direction == Constants.RIGHT_FACING) {
             currentImages = moveRight;
-        else if (direction == Constants.LEFT_FACING)
+        } else if (direction == Constants.LEFT_FACING) {
             currentImages = moveLeft;
-        else if (direction == Constants.UP_FACING)
+        } else if (direction == Constants.UP_FACING) {
             currentImages = moveUp;
-        else if (direction == Constants.DOWN_FACING)
+        } else if (direction == Constants.DOWN_FACING) {
             currentImages = moveDown;
-        else
+        } else {
             currentImages = standNeutral;
+        }
     }
 
     /**
@@ -90,8 +92,9 @@ public class AnimatedSprite extends Sprite {
      */
     public void advanceToNextImage() {
         index++;
-        if (index >= currentImages.length)
+        if (index >= currentImages.length) {
             index = 0;
+        }
         image = currentImages[index];
     }
 }

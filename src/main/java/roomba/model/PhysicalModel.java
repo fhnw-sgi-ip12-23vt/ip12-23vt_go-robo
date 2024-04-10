@@ -1,9 +1,9 @@
 package roomba.model;
 
+import roomba.util.mvcbase.ObservableValue;
+
 import java.util.LinkedList;
 import java.util.Queue;
-
-import roomba.util.mvcbase.ObservableValue;
 
 public class PhysicalModel {
 

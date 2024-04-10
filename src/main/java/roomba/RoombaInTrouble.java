@@ -34,7 +34,7 @@ public class RoombaInTrouble {
         PhysicalScanner pui = new PhysicalScanner(controller, Pi4JContext.createContext());
 
         GameField gameField = new GameField(pui);
-        PApplet.runSketch(new String[] { "Game Field" }, gameField);
+        PApplet.runSketch(new String[] {"Game Field"}, gameField);
     }
 
 }
