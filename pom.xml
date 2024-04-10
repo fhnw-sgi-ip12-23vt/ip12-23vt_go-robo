@@ -180,8 +180,6 @@
 
 
         <pi4j.version>2.4.0</pi4j.version>
-        <junit.version>5.10.0</junit.version>
-
 
 
         <!-- Maven Plugin Versions -->
@@ -229,12 +227,6 @@
             <scope>system</scope>
             <systemPath>${pom.basedir}/src/main/resources/lib/crowpi-examples-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.9.0</version>
-            <scope>test</scope>
-        </dependency>
 
         <!-- Pi4J  -->
         <dependency>
@@ -269,18 +261,6 @@
             <artifactId>pi4j-plugin-mock</artifactId>
             <version>${pi4j.version}</version>
             <!-- <scope>test</scope> -->
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
     <profiles>

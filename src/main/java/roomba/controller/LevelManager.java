@@ -115,7 +115,7 @@ public class LevelManager {
             for (int col = 0; col < values.length; col++) {
                 switch (values[col]) {
                 case "1" -> {
-                    Goal goal_ = new Goal(gameField, gameField.chargingStation, Constants.SPRITE_SIZE * 0.0055f);
+                    Goal goal_ = new Goal(gameField, gameField.chargingStation, Constants.SPRITE_SIZE * 0.005f);
                     goal_.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
                     goal_.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
                     gameField.goal.add(goal_);
