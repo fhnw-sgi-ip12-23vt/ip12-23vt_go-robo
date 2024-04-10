@@ -2,6 +2,7 @@ package roomba;
 
 import ch.qos.logback.classic.Level;
 import com.pi4j.plugin.mock.provider.spi.MockSpi;
+import org.slf4j.LoggerFactory;
 import processing.core.PApplet;
 import roomba.controller.PhysicalController;
 import roomba.model.PhysicalModel;
@@ -9,7 +10,6 @@ import roomba.util.Pi4JContext;
 import roomba.view.GameField;
 import roomba.view.PhysicalScanner;
 
-import org.slf4j.LoggerFactory;
 
 /**
  * The main class for the "Roomba in Trouble" Java application.
@@ -23,7 +23,6 @@ public class RoombaInTrouble {
      */
     public static void main(String[] args) {
 
-        // Get the logger for the MockSpi class and changed log level to Warning only (just for the MockSpi class)
         var mockSpiLogger = LoggerFactory.getLogger(MockSpi.class);
         var logbackLogger = (ch.qos.logback.classic.Logger) mockSpiLogger;
         logbackLogger.setLevel(Level.WARN);

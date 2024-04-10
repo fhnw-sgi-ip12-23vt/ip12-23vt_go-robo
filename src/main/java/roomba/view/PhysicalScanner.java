@@ -1,21 +1,20 @@
 package roomba.view;
 
 import com.pi4j.context.Context;
-
 import com.pi4j.crowpi.components.RfidComponent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import roomba.controller.PhysicalController;
 import roomba.model.PhysicalModel;
 import roomba.util.mvcbase.PuiBase;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+/**
+ * The PhysicalScanner class represents a physical scanner component used in the Roomba application.
+ * It is responsible for initializing and managing interactions with the RFID scanner component.
+ */
 public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> {
     private static final Logger logger = Logger.getLogger(PhysicalScanner.class.getName());
-
-    // Instance variable representing the RFID scanner
     protected RfidComponent rfid;
-
-    // Reference to the associated controller
     public PhysicalController controller;
 
     /**

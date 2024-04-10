@@ -220,11 +220,8 @@ Der Code muss ausreichend kommentiert werden, um seine Funktion und seinen Zweck
 
 ## Code-Testabdeckung
 
-Der Quellcode muss einer ausreichenden Testabdeckung unterzogen werden, um sicherzustellen, dass er fehlerfrei ist. Es sollten mindestens folgende Tests durchgeführt werden:
 
-- Unittests zur Überprüfung der Funktionen von Klassen und Methoden.
-- Integrationstests zur Überprüfung der Interaktion zwischen verschiedenen Teilen des Codes.
-- Systemtests zur Überprüfung der Funktion des Gesamtsystems.
+- Handlich die wichtigsten Schnittstellen getestet
 
 ## Code-Dokumentation
 
