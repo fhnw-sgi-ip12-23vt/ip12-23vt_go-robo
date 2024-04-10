@@ -1,7 +1,6 @@
 package roomba.model;
 
 import roomba.controller.ImageLoader;
-
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.FileInputStream;
@@ -40,17 +39,15 @@ public class Constants {
      */
     private static void initConfigs() {
         try {
-
             Path fullPath = ImageLoader.loadFile("/main/java/app.properties");
-
             Properties appProps = new Properties();
             appProps.load(new FileInputStream(fullPath.toString()));
 
             MOVE_SPEED = Float.parseFloat(appProps.getProperty("MOVE_SPEED"));
-            // SPRITE_SCALE = Float.parseFloat(appProps.getProperty("SPRITE_SCALE"));
             SPRITE_SIZE = Float.parseFloat(appProps.getProperty("SPRITE_SIZE"));
             SPRITE_SCALE = SPRITE_SIZE / 128;
             FULLSCREEN = Boolean.parseBoolean(appProps.getProperty("FULLSCREEN"));
+
             if (FULLSCREEN) {
                 GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
                 HEIGHT = Integer.parseInt(String.valueOf(gd.getDisplayMode().getHeight()));
@@ -60,7 +57,7 @@ public class Constants {
                 HEIGHT = Integer.parseInt(appProps.getProperty("HEIGHT"));
                 WIDTH = Integer.parseInt(appProps.getProperty("WIDTH"));
             }
-            // RFID
+
             RFID_RIGHT = appProps.getProperty("RFID_RIGHT");
             RFID_LEFT = appProps.getProperty("RFID_LEFT");
             RFID_UP = appProps.getProperty("RFID_UP");

@@ -6,7 +6,6 @@ import roomba.model.Goal;
 import roomba.model.Player;
 import roomba.model.Sprite;
 import roomba.view.GameField;
-
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;

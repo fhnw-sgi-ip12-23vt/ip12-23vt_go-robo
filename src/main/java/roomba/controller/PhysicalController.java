@@ -2,11 +2,14 @@ package roomba.controller;
 
 import roomba.model.PhysicalModel;
 import roomba.util.mvcbase.ControllerBase;
-
 import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The PhysicalController class represents the controller component for managing physical interactions in the Roomba application.
+ * It is responsible for enqueueing and dequeueing items in the input queue.
+ */
 public class PhysicalController extends ControllerBase<PhysicalModel> {
 
     private static final Logger logger = Logger.getLogger(PhysicalController.class.getName());

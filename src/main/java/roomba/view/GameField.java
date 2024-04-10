@@ -10,7 +10,6 @@ import roomba.model.AnimatedSprite;
 import roomba.model.Constants;
 import roomba.model.Player;
 import roomba.model.Sprite;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;

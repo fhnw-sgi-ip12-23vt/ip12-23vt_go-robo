@@ -3,9 +3,19 @@ package roomba.controller;
 import roomba.model.Constants;
 import roomba.model.Player;
 
+/**
+ * The PlayerMovement class represents the logic for moving the player character in the Roomba application.
+ * It determines the direction in which the player should move based on input direction and current facing direction.
+ */
 public class PlayerMovement {
     private Player player;
 
+    /**
+     * Move the player character based on the input direction and current facing direction.
+     *
+     * @param player       The player object to be moved.
+     * @param inpDirection The input direction indicating the desired movement direction.
+     */
     public void movePlayer(Player player, int inpDirection) {
         this.player = player;
 

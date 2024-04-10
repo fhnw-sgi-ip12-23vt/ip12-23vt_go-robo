@@ -43,14 +43,14 @@ public class AnimatedSprite extends Sprite {
         }
     }
 
-
+    /**
+     * Updates the animation of the sprite for one frame, regardless of the animation frame rate.
+     */
     public void updateAnimationPlayer1Frame() {
         frame++;
-
         selectDirection();
         selectCurrentImages();
         advanceToNextImage();
-
     }
 
     /**
