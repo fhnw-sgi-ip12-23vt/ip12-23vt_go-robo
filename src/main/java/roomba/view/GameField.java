@@ -52,16 +52,6 @@ public class GameField extends PApplet {
         }
     }
 
-    public GameField() {
-        this.pui = null;
-        levelManager = new LevelManager();
-        if (Constants.FULLSCREEN) {
-            collisionHandler = new CollisionHandler(Constants.HEIGHT - 230, Constants.WIDTH - 400, headerSize);
-        } else {
-            collisionHandler = new CollisionHandler(Constants.HEIGHT, Constants.WIDTH, headerSize);
-        }
-    }
-
     @Override
     public void settings() {
         if (Constants.FULLSCREEN) {
@@ -75,7 +65,7 @@ public class GameField extends PApplet {
      * Draws the game field, including obstacles, goals, and the player.
      */
     public void draw() {
-        clear();
+//        clear();
         background(backgroundImage);
         displayAll();
         if (!nextLevel) {
