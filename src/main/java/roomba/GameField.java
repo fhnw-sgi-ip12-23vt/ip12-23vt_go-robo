@@ -34,7 +34,6 @@ public class GameField extends PApplet {
     private static boolean init = true;
     private boolean winCondition = false;
     private boolean isMov = false;
-    private PGraphics pg;
 
     /**
      * Constructs a GameField instance.
@@ -233,7 +232,6 @@ public class GameField extends PApplet {
     // called whenever a key is pressed, will be deleted later on if the handleInput
     // functions
     public void keyPressed() {
-        isMov = true;
         if (nextLevel) {
             setup();
         } else if (player.isInPlace()) {
