@@ -19,8 +19,8 @@ public class PlayerMovement {
     public void movePlayer(Player player, int inpDirection) {
         this.player = player;
 
-        //Player is facing right
-        if (player.direction == Constants.RIGHT_FACING) {
+        switch (player.direction) {
+        case Constants.RIGHT_FACING -> {
             switch (inpDirection) {
             case Constants.RIGHT_FACING -> moveDown();
             case Constants.LEFT_FACING -> moveUp();
@@ -28,8 +28,7 @@ public class PlayerMovement {
             case Constants.DOWN_FACING -> moveLeft();
             }
         }
-        //Player is facing left
-        if (player.direction == Constants.LEFT_FACING) {
+        case Constants.LEFT_FACING -> {
             switch (inpDirection) {
             case Constants.RIGHT_FACING -> moveUp();
             case Constants.LEFT_FACING -> moveDown();
@@ -37,8 +36,7 @@ public class PlayerMovement {
             case Constants.DOWN_FACING -> moveRight();
             }
         }
-        //Player is facing up
-        if (player.direction == Constants.UP_FACING) {
+        case Constants.UP_FACING -> {
             switch (inpDirection) {
             case Constants.RIGHT_FACING -> moveRight();
             case Constants.LEFT_FACING -> moveLeft();
@@ -46,8 +44,7 @@ public class PlayerMovement {
             case Constants.DOWN_FACING -> moveDown();
             }
         }
-        //Player is facing down
-        if (player.direction == Constants.DOWN_FACING) {
+        case Constants.DOWN_FACING -> {
             switch (inpDirection) {
             case Constants.RIGHT_FACING -> moveLeft();
             case Constants.LEFT_FACING -> moveRight();
@@ -55,7 +52,12 @@ public class PlayerMovement {
             case Constants.DOWN_FACING -> moveUp();
             }
         }
+        default -> {
+        }
+        // Handle unexpected input direction
+        }
     }
+
 
     private void moveLeft() {
         player.change_y = 0;
