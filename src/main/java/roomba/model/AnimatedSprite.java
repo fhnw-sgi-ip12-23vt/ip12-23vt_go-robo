@@ -36,8 +36,9 @@ public class AnimatedSprite extends Sprite {
      */
     public void updateAnimation() {
         frame++;
-        if (frame % 5 == 0) {
-            selectDirection();
+        selectDirection();
+
+        if (frame % 5   == 0) {
             selectCurrentImages();
             advanceToNextImage();
         }
