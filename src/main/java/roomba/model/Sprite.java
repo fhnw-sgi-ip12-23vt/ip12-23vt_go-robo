@@ -33,7 +33,7 @@ public class Sprite {
         changeY = 0;
     }
 
-    private float w, h;
+    private final float w, h;
 
     /**
      * Constructs a Sprite object with the specified image file and scale, with the initial position at (0,0).

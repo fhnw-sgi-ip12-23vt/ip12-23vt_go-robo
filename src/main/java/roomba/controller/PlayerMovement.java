@@ -57,8 +57,6 @@ public class PlayerMovement {
         // Handle unexpected input direction
         }
     }
-
-
     private void moveLeft() {
         player.changeY = 0;
         player.changeX = -Constants.MOVE_SPEED;

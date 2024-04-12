@@ -17,60 +17,79 @@ public final class Constants {
     public static final int LEFT_FACING = 2;
     public static final int UP_FACING = 3;
     public static final int DOWN_FACING = 4;
-    public static float MOVE_SPEED = 4;
-    public static float SPRITE_SIZE = 50;
-    public static float SPRITE_SCALE = SPRITE_SIZE / 128;
-    public static int HEIGHT = (int) (SPRITE_SIZE * 12);
-    public static int WIDTH = (int) (SPRITE_SIZE * 16);
-    public static boolean FULLSCREEN = false;
-    public static String RFID_RIGHT = "";
-    public static String RFID_LEFT = "";
-    public static String RFID_UP = "";
-    public static String RFID_DOWN = "";
-    public static String RFID_RESET = "";
-    public static String RFID_NEXT = "";
+    public static final float MOVE_SPEED;
+    public static final float SPRITE_SIZE;
+    public static final float SPRITE_SCALE;
+    public static final int HEIGHT;
+    public static final int WIDTH;
+    public static final boolean FULLSCREEN;
+    public static final String RFID_RIGHT;
+    public static final String RFID_LEFT;
+    public static final String RFID_UP;
+    public static final String RFID_DOWN;
+    public static final String RFID_RESET;
+    public static final String RFID_NEXT;
 
     static {
-        initConfigs();
-    }
+        float moveSpeed = 4;
+        float spriteSize = 50;
+        float spriteScale = spriteSize / 128;
+        int height = (int) (spriteSize * 12);
+        int width = (int) (spriteSize * 16);
+        boolean fullscreen = false;
+        String rfidRight = "";
+        String rfidLeft = "";
+        String rfidUp = "";
+        String rfidDown = "";
+        String rfidReset = "";
+        String rfidNext = "";
 
-    private Constants() {
-        throw new AssertionError("Utility class should not be instantiated");
-    }
-
-    /**
-     * Initializes the game configuration from the app.properties file.
-     */
-    private static void initConfigs() {
         try {
             Path fullPath = ImageLoader.loadFile("/main/java/app.properties");
             Properties appProps = new Properties();
             appProps.load(new FileInputStream(fullPath.toString()));
 
-            MOVE_SPEED = Float.parseFloat(appProps.getProperty("MOVE_SPEED"));
-            SPRITE_SIZE = Float.parseFloat(appProps.getProperty("SPRITE_SIZE"));
-            SPRITE_SCALE = SPRITE_SIZE / 128;
-            FULLSCREEN = Boolean.parseBoolean(appProps.getProperty("FULLSCREEN"));
+            moveSpeed = Float.parseFloat(appProps.getProperty("MOVE_SPEED"));
+            spriteSize = Float.parseFloat(appProps.getProperty("SPRITE_SIZE"));
+            spriteScale = spriteSize / 128;
+            fullscreen = Boolean.parseBoolean(appProps.getProperty("FULLSCREEN"));
 
-            if (FULLSCREEN) {
+            if (fullscreen) {
                 GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-                HEIGHT = Integer.parseInt(String.valueOf(gd.getDisplayMode().getHeight()));
-                WIDTH = Integer.parseInt(String.valueOf(gd.getDisplayMode().getWidth()));
+                height = Integer.parseInt(String.valueOf(gd.getDisplayMode().getHeight()));
+                width = Integer.parseInt(String.valueOf(gd.getDisplayMode().getWidth()));
 
             } else {
-                HEIGHT = Integer.parseInt(appProps.getProperty("HEIGHT"));
-                WIDTH = Integer.parseInt(appProps.getProperty("WIDTH"));
+                height = Integer.parseInt(appProps.getProperty("HEIGHT"));
+                width = Integer.parseInt(appProps.getProperty("WIDTH"));
             }
 
-            RFID_RIGHT = appProps.getProperty("RFID_RIGHT");
-            RFID_LEFT = appProps.getProperty("RFID_LEFT");
-            RFID_UP = appProps.getProperty("RFID_UP");
-            RFID_DOWN = appProps.getProperty("RFID_DOWN");
-            RFID_RESET = appProps.getProperty("RFID_RESET");
-            RFID_NEXT = appProps.getProperty("RFID_NEXT");
+            rfidRight = appProps.getProperty("RFID_RIGHT");
+            rfidLeft = appProps.getProperty("RFID_LEFT");
+            rfidUp = appProps.getProperty("RFID_UP");
+            rfidDown = appProps.getProperty("RFID_DOWN");
+            rfidReset = appProps.getProperty("RFID_RESET");
+            rfidNext = appProps.getProperty("RFID_NEXT");
 
         } catch (Exception e) {
             System.err.println("Error reading config file: " + e.getMessage());
         }
+
+        MOVE_SPEED = moveSpeed;
+        SPRITE_SIZE = spriteSize;
+        SPRITE_SCALE = spriteScale;
+        HEIGHT = height;
+        WIDTH = width;
+        FULLSCREEN = fullscreen;
+        RFID_RIGHT = rfidRight;
+        RFID_LEFT = rfidLeft;
+        RFID_UP = rfidUp;
+        RFID_DOWN = rfidDown;
+        RFID_RESET = rfidReset;
+        RFID_NEXT = rfidNext;
+    }
+
+    private Constants() {
+        throw new AssertionError("Utility class should not be instantiated");
     }
 }
