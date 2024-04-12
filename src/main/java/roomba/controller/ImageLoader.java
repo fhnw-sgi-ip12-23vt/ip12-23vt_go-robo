@@ -11,9 +11,11 @@ import java.util.logging.Logger;
 /**
  * Utility class for loading images in the "Roomba in Trouble" game.
  */
-public class ImageLoader {
-    private static final Logger logger = Logger.getLogger(ImageLoader.class.getName());
-
+public final class ImageLoader {
+    private static final Logger LOGGER = Logger.getLogger(ImageLoader.class.getName());
+    private ImageLoader() {
+        throw new AssertionError("Utility class should not be instantiated");
+    }
     /**
      * Loads an image using the provided PApplet and filename.
      *
@@ -35,25 +37,25 @@ public class ImageLoader {
     public static Path getImagePath(String filename) {
         String os = System.getProperty("os.name").toLowerCase();
         String currentDirectory = System.getProperty("user.dir");
-        logger.log(Level.FINE, "OS: " + os);
-        logger.log(Level.FINE, "FilePath: "
+        LOGGER.log(Level.FINE, "OS: " + os);
+        LOGGER.log(Level.FINE, "FilePath: "
             + FileSystems.getDefault().getPath(currentDirectory, "target/classes", filename));
 
         if (os.contains("win")) {
             // Windows path
-            logger.log(Level.FINE, "Windows path");
+            LOGGER.log(Level.FINE, "Windows path");
             return FileSystems.getDefault().getPath(currentDirectory, "target/classes", filename);
         } else if (os.contains("mac")) {
             // MacOS path
-            logger.log(Level.FINE, "MacOS path");
+            LOGGER.log(Level.FINE, "MacOS path");
             return FileSystems.getDefault().getPath("target/classes", filename);
         } else if (os.contains("nix") || os.contains("nux")) {
             // Unix path (Maven project structure)
-            logger.log(Level.FINE, "Unix path");
+            LOGGER.log(Level.FINE, "Unix path");
             return FileSystems.getDefault().getPath(currentDirectory, "target/classes", filename);
         } else {
             // Default path
-            logger.log(Level.FINE, "Default path");
+            LOGGER.log(Level.FINE, "Default path");
             return FileSystems.getDefault().getPath("src/main/resources", filename);
         }
     }
@@ -71,8 +73,8 @@ public class ImageLoader {
     private static Path getFilePath(String filename) {
         String os = System.getProperty("os.name").toLowerCase();
         String currentDirectory = System.getProperty("user.dir");
-        logger.log(Level.FINE, "OS: " + os);
-        logger.log(Level.FINE, "FilePath: "
+        LOGGER.log(Level.FINE, "OS: " + os);
+        LOGGER.log(Level.FINE, "FilePath: "
             + FileSystems.getDefault().getPath(currentDirectory, "target/classes", filename));
 
         if (os.contains("win")) {
