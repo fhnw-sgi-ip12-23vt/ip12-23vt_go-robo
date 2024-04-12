@@ -7,12 +7,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * The PhysicalController class represents the controller component for managing physical interactions in the Roomba application.
+ * The PhysicalController class represents the controller component
+ * for managing physical interactions in the Roomba application.
  * It is responsible for enqueueing and dequeueing items in the input queue.
  */
 public class PhysicalController extends ControllerBase<PhysicalModel> {
 
-    private static final Logger logger = Logger.getLogger(PhysicalController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(PhysicalController.class.getName());
 
     /**
      * Constructor for PhysicalController.
@@ -36,8 +37,8 @@ public class PhysicalController extends ControllerBase<PhysicalModel> {
         Queue<String> currentQueue = model.inputQueue.getValue();
         currentQueue.offer(item);
         setValue(model.inputQueue, currentQueue);
-        logger.log(Level.INFO, "Queued item " + item);
-        logger.log(Level.INFO, String.valueOf(model.inputQueue.getValue().size()));
+        LOGGER.log(Level.INFO, "Queued item " + item);
+        LOGGER.log(Level.INFO, String.valueOf(model.inputQueue.getValue().size()));
     }
 
     /**
@@ -50,7 +51,7 @@ public class PhysicalController extends ControllerBase<PhysicalModel> {
         if (!currentQueue.isEmpty()) {
             String dequeuedItem = currentQueue.poll();
             setValue(model.inputQueue, currentQueue);
-            logger.log(Level.INFO, "Dequeued item " + dequeuedItem);
+            LOGGER.log(Level.INFO, "Dequeued item " + dequeuedItem);
 
             return dequeuedItem;
         } else {
