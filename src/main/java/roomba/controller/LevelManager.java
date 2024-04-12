@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * Manages the levels in the "Roomba in Trouble" game.
  */
 public class LevelManager {
-    private static final Logger logger = Logger.getLogger(LevelManager.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(LevelManager.class.getName());
 
     private String levelName;
     private int difficulty = 0;
@@ -65,7 +65,7 @@ public class LevelManager {
      * @return The file path of the next level.
      */
     public String getNextLevel() {
-        logger.log(Level.FINE, "Next Level");
+        LOGGER.log(Level.FINE, "Next Level");
 
         File[] listOfFiles;
         // Resets difficulty after 3
@@ -102,7 +102,7 @@ public class LevelManager {
      * @param filename  The name of the level file.
      */
     public void createPlatforms(GameField gameField, String filename) {
-        logger.log(Level.FINE, "load from file game Objects");
+        LOGGER.log(Level.FINE, "load from file game Objects");
 
         gameField.nextLevel = false;
         gameField.obstacles = new ArrayList<>();
@@ -114,10 +114,12 @@ public class LevelManager {
             for (int col = 0; col < values.length; col++) {
                 switch (values[col]) {
                 case "1" -> {
-                    Goal goal_ = new Goal(gameField, gameField.chargingStation, Constants.SPRITE_SIZE * 0.005f);
-                    goal_.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
-                    goal_.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
-                    gameField.goal.add(goal_);
+
+                    Goal loadedGoal = new Goal(gameField, gameField.chargingStation, Constants.SPRITE_SIZE * 0.005f);
+                    loadedGoal.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
+                    loadedGoal.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
+                    gameField.goal.add(loadedGoal);
+
                 }
                 case "2" -> {
                     Sprite s = new Sprite(gameField, gameField.wall, Constants.SPRITE_SCALE);
@@ -142,6 +144,15 @@ public class LevelManager {
                     player.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
                     player.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
                     gameField.player = player;
+                }
+                case "" -> {
+                    //Air does nothing
+                }
+                case "0" -> {
+                    //0 does nothing
+                }
+                default -> {
+                    LOGGER.log(Level.WARNING, "Illegal Character in csv file: " +values[col]);
                 }
                 }
             }
