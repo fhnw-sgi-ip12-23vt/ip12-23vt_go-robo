@@ -14,7 +14,7 @@ import roomba.view.PhysicalScanner;
 /**
  * The main class for the "Roomba in Trouble" Java application.
  */
-public class RoombaInTrouble {
+public final class RoombaInTrouble {
 
     /**
      * The main entry point for the application.
@@ -36,5 +36,9 @@ public class RoombaInTrouble {
         GameField gameField = new GameField(pui);
         PApplet.runSketch(new String[] {"Game Field"}, gameField);
     }
+    private RoombaInTrouble() {
+        throw new AssertionError("Utility class should not be instantiated");
+    }
+
 
 }

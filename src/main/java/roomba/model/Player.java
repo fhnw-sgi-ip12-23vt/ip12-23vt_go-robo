@@ -3,6 +3,7 @@ package roomba.model;
 import processing.core.PImage;
 import roomba.controller.ImageLoader;
 import roomba.view.GameField;
+import roomba.controller.PlayerMovement;
 
 /**
  * The Player class represents the player character in the "Roomba in Trouble"
@@ -16,6 +17,7 @@ public class Player extends AnimatedSprite {
     private final PImage[] faceRight;
     private final PImage[] faceDown;
     private final PImage[] faceUp;
+    private final PlayerMovement playerMovement;
 
     /**
      * Constructs a new Player instance.
@@ -52,6 +54,11 @@ public class Player extends AnimatedSprite {
         moveDown[0] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-orange-down.png");
         moveDown[1] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-dark.png");
         currentImages = faceRight; // Initial direction
+        playerMovement = new PlayerMovement(); // Initialize PlayerMovement
+    }
+
+    public void movePlayer(int inpDirection) {
+        playerMovement.movePlayer(this, inpDirection);
     }
 
     public boolean isInPlace() {

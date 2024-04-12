@@ -5,7 +5,6 @@ import processing.core.PImage;
 import roomba.controller.CollisionHandler;
 import roomba.controller.ImageLoader;
 import roomba.controller.LevelManager;
-import roomba.controller.PlayerMovement;
 import roomba.model.AnimatedSprite;
 import roomba.model.Constants;
 import roomba.model.Player;
@@ -21,12 +20,11 @@ import java.util.logging.Logger;
  * and goals.
  */
 public class GameField extends PApplet {
-    private static final Logger logger = Logger.getLogger(GameField.class.getName());
-    private static final float headerSize = 113;
+    private static final Logger LOGGER = Logger.getLogger(GameField.class.getName());
+    private static final float HEADER_SIZE = 113;
     private final PhysicalScanner pui;
     private final LevelManager levelManager;
     private final CollisionHandler collisionHandler;
-    private final PlayerMovement playerMovement = new PlayerMovement();
     public boolean nextLevel = false;
     public List<Sprite> obstacles;
     public List<Sprite> goal;
@@ -46,9 +44,9 @@ public class GameField extends PApplet {
         this.pui = pui;
         levelManager = new LevelManager();
         if (Constants.FULLSCREEN) {
-            collisionHandler = new CollisionHandler(Constants.HEIGHT - 230, Constants.WIDTH - 400, headerSize);
+            collisionHandler = new CollisionHandler(Constants.HEIGHT - 230, Constants.WIDTH - 400, HEADER_SIZE);
         } else {
-            collisionHandler = new CollisionHandler(Constants.HEIGHT, Constants.WIDTH, headerSize);
+            collisionHandler = new CollisionHandler(Constants.HEIGHT, Constants.WIDTH, HEADER_SIZE);
         }
     }
 
@@ -104,16 +102,16 @@ public class GameField extends PApplet {
 
         //Header
         fill(0, 0, 0);
-        rect(0, 0, Constants.WIDTH, headerSize);
+        rect(0, 0, Constants.WIDTH, HEADER_SIZE);
         fill(0, 255, 0);
         textSize(32);
-        float view_x = 0;
-        float view_y = 0;
-        text("Level: " + levelManager.getLevelName(), view_x + 50, view_y + 50);
+        float viewX = 0;
+        float viewY = 0;
+        text("Level: " + levelManager.getLevelName(), viewX + 50, viewY + 50);
 
         if (winCondition) {
             fill(0, 0, 255);
-            text("Du hast es geschafft!", (float) (view_x + width / 2.0 - 100), (float) (view_y + height / 2.0 + 50));
+            text("Du hast es geschafft!", (float) (viewX + width / 2.0 - 100), (float) (viewY + height / 2.0 + 50));
         }
     }
 
@@ -121,9 +119,9 @@ public class GameField extends PApplet {
      * Handles the collection of goals and checks for win conditions.
      */
     private void collectGoal() {
-        ArrayList<Sprite> goal_list = collisionHandler.checkCollisionList(player, goal);
+        ArrayList<Sprite> goalList = collisionHandler.checkCollisionList(player, goal);
         if (!goal.isEmpty()) {
-            for (Sprite g : goal_list) {
+            for (Sprite g : goalList) {
                 goal.remove(g);
             }
         } else {
@@ -183,9 +181,9 @@ public class GameField extends PApplet {
         assert pui != null;
         if (!pui.getController().getQueue().getValue().isEmpty()) {
             String input = pui.getController().dequeue();
-            logger.log(Level.FINE,
-                "handleInput queue item !" + input + "!" + "    nextLevel" + nextLevel + "    player.isInPlace()" +
-                    player.isInPlace());
+            LOGGER.log(Level.FINE,
+                "handleInput queue item !" + input + "!" + "    nextLevel" + nextLevel + "    player.isInPlace()"
+                    + player.isInPlace());
 
             if (nextLevel) {
                 setup();
@@ -193,16 +191,16 @@ public class GameField extends PApplet {
 
                 if (input.equals(Constants.RFID_RIGHT)) {
 
-                    playerMovement.movePlayer(player, Constants.RIGHT_FACING);
+                    player.movePlayer(Constants.RIGHT_FACING);
                 }
                 if (input.equals(Constants.RFID_LEFT)) {
-                    playerMovement.movePlayer(player, Constants.LEFT_FACING);
+                    player.movePlayer(Constants.LEFT_FACING);
                 }
                 if (input.equals(Constants.RFID_UP)) {
-                    playerMovement.movePlayer(player, Constants.UP_FACING);
+                    player.movePlayer(Constants.UP_FACING);
                 }
                 if (input.equals(Constants.RFID_DOWN)) {
-                    playerMovement.movePlayer(player, Constants.DOWN_FACING);
+                    player.movePlayer(Constants.DOWN_FACING);
                 }
             }
         }
@@ -213,16 +211,16 @@ public class GameField extends PApplet {
             setup();
         } else if (player.isInPlace()) {
             if (((keyCode == RIGHT || key == 'd'))) {
-                playerMovement.movePlayer(player, Constants.RIGHT_FACING);
+                player.movePlayer(Constants.RIGHT_FACING);
             }
             if (((keyCode == LEFT || key == 'a'))) {
-                playerMovement.movePlayer(player, Constants.LEFT_FACING);
+                player.movePlayer(Constants.LEFT_FACING);
             }
             if (((keyCode == UP || key == 'w'))) {
-                playerMovement.movePlayer(player, Constants.UP_FACING);
+                player.movePlayer(Constants.UP_FACING);
             }
             if (((keyCode == DOWN || key == 's'))) {
-                playerMovement.movePlayer(player, Constants.DOWN_FACING);
+                player.movePlayer(Constants.DOWN_FACING);
             }
         }
     }
@@ -233,7 +231,7 @@ public class GameField extends PApplet {
      */
     @Override
     public void exit() {
-        logger.log(Level.WARNING, "Shutdown");
+        LOGGER.log(Level.WARNING, "Shutdown");
         if (pui != null) {
             pui.getController().shutdown();
             pui.shutdown();
