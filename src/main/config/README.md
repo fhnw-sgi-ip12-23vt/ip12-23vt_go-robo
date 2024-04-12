@@ -1,11 +1,12 @@
 How to add the checkstyle to inteliji:
 1. click top left hamburger menu
 2. File --> Settings...
-3. Code Styles --> click on the Gear icon next to Scheme
-4. Click on import Scheme --> Checkstyle configuration
-5. ![img.png](img.png)
-6. Navigate to checks.xml file
+3. search checkstyle --> click on the plus (Configuration File)
+5. ![img_1.png](img_1.png)
+6. ![img.png](img.png) Navigate to checks.xml file
 
+How to use?
+1. ![img_2.png](img_2.png) Choose at Rules the correct checkstyle, run on projekt or on class
 Credit:
 © checks.xml to FHNW (SWC Module)
 

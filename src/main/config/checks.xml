@@ -84,10 +84,6 @@
         <module name="TodoComment" />
         <module name="UpperEll" />
         <module name="SingleSpaceSeparator"/>
-        <module name="HiddenField"/>
-        <!-- disable metrics
-        <module name="CyclomaticComplexity"/>
-        -->
     </module>
     <module name="FileLength" />
     <module name="LineLength">
