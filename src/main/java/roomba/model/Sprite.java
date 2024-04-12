@@ -7,14 +7,12 @@ import processing.core.PImage;
  * The Sprite class represents a basic game sprite with position, size, and movement properties.
  */
 public class Sprite {
-    public float center_x;
-    public float center_y;
-    public float change_x;
-    public float change_y;
+    public float centerX;
+    public float centerY;
+    public float changeX;
+    public float changeY;
     protected PApplet pApplet;
     protected PImage image;
-    protected float w, h;
-
     /**
      * Constructs a Sprite object with the specified image file, scale, and initial position.
      *
@@ -29,11 +27,13 @@ public class Sprite {
         image = pApplet.loadImage(filename);
         w = image.width * scale;
         h = image.height * scale;
-        center_x = x;
-        center_y = y;
-        change_x = 0;
-        change_y = 0;
+        centerX = x;
+        centerY = y;
+        changeX = 0;
+        changeY = 0;
     }
+
+    private float w, h;
 
     /**
      * Constructs a Sprite object with the specified image file and scale, with the initial position at (0,0).
@@ -58,17 +58,17 @@ public class Sprite {
         image = img;
         w = image.width * scale;
         h = image.height * scale;
-        center_x = 0;
-        center_y = 0;
-        change_x = 0;
-        change_y = 0;
+        centerX = 0;
+        centerY = 0;
+        changeX = 0;
+        changeY = 0;
     }
 
     /**
      * Displays the sprite on the PApplet canvas.
      */
     public void display() {
-        pApplet.image(image, center_x, center_y, w, h);
+        pApplet.image(image, centerX, centerY, w, h);
     }
 
     /**
@@ -77,7 +77,7 @@ public class Sprite {
      * @return The x-coordinate of the left edge.
      */
     public float getLeft() {
-        return center_x - w / 2;
+        return centerX - w / 2;
     }
 
     /**
@@ -86,7 +86,7 @@ public class Sprite {
      * @param left The x-coordinate of the left edge.
      */
     public void setLeft(float left) {
-        center_x = left + w / 2;
+        centerX = left + w / 2;
     }
 
     /**
@@ -95,7 +95,7 @@ public class Sprite {
      * @return The x-coordinate of the right edge.
      */
     public float getRight() {
-        return center_x + w / 2;
+        return centerX + w / 2;
     }
 
     /**
@@ -104,7 +104,7 @@ public class Sprite {
      * @param right The x-coordinate of the right edge.
      */
     public void setRight(float right) {
-        center_x = right - w / 2;
+        centerX = right - w / 2;
     }
 
     /**
@@ -113,7 +113,7 @@ public class Sprite {
      * @return The y-coordinate of the top edge.
      */
     public float getTop() {
-        return center_y - h / 2;
+        return centerY - h / 2;
     }
 
     /**
@@ -122,7 +122,7 @@ public class Sprite {
      * @param top The y-coordinate of the top edge.
      */
     public void setTop(float top) {
-        center_y = top + h / 2;
+        centerY = top + h / 2;
     }
 
     /**
@@ -131,7 +131,7 @@ public class Sprite {
      * @return The y-coordinate of the bottom edge.
      */
     public float getBottom() {
-        return center_y + h / 2;
+        return centerY + h / 2;
     }
 
     /**
@@ -140,6 +140,6 @@ public class Sprite {
      * @param bottom The y-coordinate of the bottom edge.
      */
     public void setBottom(float bottom) {
-        center_y = bottom - h / 2;
+        centerY = bottom - h / 2;
     }
 }

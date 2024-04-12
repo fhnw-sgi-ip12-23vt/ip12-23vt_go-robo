@@ -12,10 +12,10 @@ import roomba.view.GameField;
  */
 public class Player extends AnimatedSprite {
     private boolean inPlace;
-    private final PImage[] FaceLeft;
-    private final PImage[] FaceRight;
-    private final PImage[] FaceDown;
-    private final PImage[] FaceUp;
+    private final PImage[] faceLeft;
+    private final PImage[] faceRight;
+    private final PImage[] faceDown;
+    private final PImage[] faceUp;
 
     /**
      * Constructs a new Player instance.
@@ -30,14 +30,14 @@ public class Player extends AnimatedSprite {
         inPlace = true;
 
         // Loading images for different directions and animations
-        FaceLeft = new PImage[1];
-        FaceLeft[0] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-green-left.png");
-        FaceRight = new PImage[1];
-        FaceRight[0] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-green-right.png");
-        FaceDown = new PImage[1];
-        FaceDown[0] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-green-down.png");
-        FaceUp = new PImage[1];
-        FaceUp[0] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-green-up.png");
+        faceLeft = new PImage[1];
+        faceLeft[0] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-green-left.png");
+        faceRight = new PImage[1];
+        faceRight[0] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-green-right.png");
+        faceDown = new PImage[1];
+        faceDown[0] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-green-down.png");
+        faceUp = new PImage[1];
+        faceUp[0] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-green-up.png");
 
         moveLeft = new PImage[2];
         moveLeft[0] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-orange-left.png");
@@ -51,7 +51,7 @@ public class Player extends AnimatedSprite {
         moveDown = new PImage[2];
         moveDown[0] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-orange-down.png");
         moveDown[1] = ImageLoader.loadImage(pApplet, "img/roomba2-pixel-dark.png");
-        currentImages = FaceRight; // Initial direction
+        currentImages = faceRight; // Initial direction
     }
 
     public boolean isInPlace() {
@@ -63,7 +63,7 @@ public class Player extends AnimatedSprite {
      */
     @Override
     public void updateAnimation() {
-        inPlace = change_x == 0 && change_y == 0;
+        inPlace = changeX == 0 && changeY == 0;
         super.updateAnimation();
     }
 
@@ -71,7 +71,7 @@ public class Player extends AnimatedSprite {
      * Updates the animation for 1 Frame and inPlace status of the player.
      */
     public void updateAnimationFrame1() {
-        inPlace = change_x == 0 && change_y == 0;
+        inPlace = changeX == 0 && changeY == 0;
         super.updateAnimationPlayer1Frame();
     }
 
@@ -81,13 +81,13 @@ public class Player extends AnimatedSprite {
      */
     @Override
     public void selectDirection() {
-        if (change_x > 0) {
+        if (changeX > 0) {
             direction = Constants.RIGHT_FACING;
-        } else if (change_x < 0) {
+        } else if (changeX < 0) {
             direction = Constants.LEFT_FACING;
-        } else if (change_y < 0) {
+        } else if (changeY < 0) {
             direction = Constants.UP_FACING;
-        } else if (change_y > 0) {
+        } else if (changeY > 0) {
             direction = Constants.DOWN_FACING;
         }
     }
@@ -100,25 +100,25 @@ public class Player extends AnimatedSprite {
     public void selectCurrentImages() {
         if (direction == Constants.RIGHT_FACING) {
             if (inPlace) {
-                currentImages = FaceRight;
+                currentImages = faceRight;
             } else {
                 currentImages = moveRight;
             }
         } else if (direction == Constants.LEFT_FACING) {
             if (inPlace) {
-                currentImages = FaceLeft;
+                currentImages = faceLeft;
             } else {
                 currentImages = moveLeft;
             }
         } else if (direction == Constants.UP_FACING) {
             if (inPlace) {
-                currentImages = FaceUp;
+                currentImages = faceUp;
             } else {
                 currentImages = moveUp;
             }
         } else if (direction == Constants.DOWN_FACING) {
             if (inPlace) {
-                currentImages = FaceDown;
+                currentImages = faceDown;
             } else {
                 currentImages = moveDown;
             }

@@ -10,7 +10,7 @@ import java.util.Properties;
 /**
  * Represents constants used in the "Roomba in Trouble" game.
  */
-public class Constants {
+public final class Constants {
 
     public static final int NEUTRAL_FACING = 0;
     public static final int RIGHT_FACING = 1;
@@ -32,6 +32,10 @@ public class Constants {
 
     static {
         initConfigs();
+    }
+
+    private Constants() {
+        throw new AssertionError("Utility class should not be instantiated");
     }
 
     /**

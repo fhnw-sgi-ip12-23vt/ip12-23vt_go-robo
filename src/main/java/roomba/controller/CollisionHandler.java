@@ -26,46 +26,46 @@ public class CollisionHandler {
      */
     public void resolveObstaclesCollisions(Sprite s, List<Sprite> walls) {
         // Vertical collisions
-        s.center_y += s.change_y;
+        s.centerY += s.changeY;
         ArrayList<Sprite> colList = checkCollisionList(s, walls);
         if (!colList.isEmpty()) {
             Sprite collided = colList.get(0);
-            if (s.change_y > 0) {
+            if (s.changeY > 0) {
                 s.setBottom(collided.getTop());
-            } else if (s.change_y < 0) {
+            } else if (s.changeY < 0) {
                 s.setTop(collided.getBottom());
             }
-            s.change_y = 0;
+            s.changeY = 0;
         } else {
             // Check if sprite is colliding with window borders vertically
             if (s.getTop() < headerSize) {
                 s.setTop(headerSize);
-                s.change_y = 0;
+                s.changeY = 0;
             } else if (s.getBottom() > height) {
                 s.setBottom(height);
-                s.change_y = 0;
+                s.changeY = 0;
             }
         }
 
         // Horizontal collisions
-        s.center_x += s.change_x;
+        s.centerX += s.changeX;
         colList = checkCollisionList(s, walls);
         if (!colList.isEmpty()) {
             Sprite collided = colList.get(0);
-            if (s.change_x > 0) {
+            if (s.changeX > 0) {
                 s.setRight(collided.getLeft());
-            } else if (s.change_x < 0) {
+            } else if (s.changeX < 0) {
                 s.setLeft(collided.getRight());
             }
-            s.change_x = 0;
+            s.changeX = 0;
         } else {
             // Check if sprite is colliding with window borders horizontally
             if (s.getLeft() < 0) {
                 s.setLeft(0);
-                s.change_x = 0;
+                s.changeX = 0;
             } else if (s.getRight() > width) {
                 s.setRight(width);
-                s.change_x = 0;
+                s.changeX = 0;
             }
         }
     }

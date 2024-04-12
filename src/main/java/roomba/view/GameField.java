@@ -181,8 +181,8 @@ public class GameField extends PApplet {
 
     private void handleInput() {
         assert pui != null;
-        if (!pui.controller.getQueue().getValue().isEmpty()) {
-            String input = pui.controller.dequeue();
+        if (!pui.getController().getQueue().getValue().isEmpty()) {
+            String input = pui.getController().dequeue();
             logger.log(Level.FINE,
                 "handleInput queue item !" + input + "!" + "    nextLevel" + nextLevel + "    player.isInPlace()" +
                     player.isInPlace());
@@ -235,7 +235,7 @@ public class GameField extends PApplet {
     public void exit() {
         logger.log(Level.WARNING, "Shutdown");
         if (pui != null) {
-            pui.controller.shutdown();
+            pui.getController().shutdown();
             pui.shutdown();
         }
         super.exit();

@@ -116,15 +116,15 @@ public class LevelManager {
                 case "1" -> {
 
                     Goal loadedGoal = new Goal(gameField, gameField.chargingStation, Constants.SPRITE_SIZE * 0.005f);
-                    loadedGoal.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
-                    loadedGoal.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
+                    loadedGoal.centerX = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
+                    loadedGoal.centerY = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
                     gameField.goal.add(loadedGoal);
 
                 }
                 case "2" -> {
                     Sprite s = new Sprite(gameField, gameField.wall, Constants.SPRITE_SCALE);
-                    s.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
-                    s.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
+                    s.centerX = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
+                    s.centerY = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
                     gameField.obstacles.add(s);
                 }
                 case "3" -> {
@@ -135,14 +135,14 @@ public class LevelManager {
                     int i = random.nextInt(allObstacleImages.length);
 
                     Sprite s = new Sprite(gameField, allObstacleImages[i], Constants.SPRITE_SCALE);
-                    s.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
-                    s.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
+                    s.centerX = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
+                    s.centerY = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
                     gameField.obstacles.add(s);
                 }
                 case "4" -> {
                     Player player = new Player(gameField, gameField.playerImage, Constants.SPRITE_SIZE * 0.006f);
-                    player.center_x = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
-                    player.center_y = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
+                    player.centerX = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
+                    player.centerY = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
                     gameField.player = player;
                 }
                 case "" -> {
@@ -151,9 +151,8 @@ public class LevelManager {
                 case "0" -> {
                     //0 does nothing
                 }
-                default -> {
-                    LOGGER.log(Level.WARNING, "Illegal Character in csv file: " +values[col]);
-                }
+                default -> LOGGER.log(Level.WARNING, "Illegal Character in csv file: " + values[col]);
+
                 }
             }
         }

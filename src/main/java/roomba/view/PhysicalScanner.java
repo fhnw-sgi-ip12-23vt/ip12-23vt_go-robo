@@ -14,9 +14,14 @@ import java.util.logging.Logger;
  * It is responsible for initializing and managing interactions with the RFID scanner component.
  */
 public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> {
-    private static final Logger logger = Logger.getLogger(PhysicalScanner.class.getName());
-    public PhysicalController controller;
-    protected RfidComponent rfid;
+    private static final Logger LOGGER = Logger.getLogger(PhysicalScanner.class.getName());
+
+    public PhysicalController getController() {
+        return controller;
+    }
+
+    private final PhysicalController controller;
+    private RfidComponent rfid;
 
     /**
      * Constructor for PhysicalScanner.
@@ -46,7 +51,7 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
     public void setupUiToActionBindings(PhysicalController controller) {
 
         rfid.onCardDetected(rfidCard -> {
-                logger.log(Level.INFO, "Card:  " + rfidCard);
+                LOGGER.log(Level.INFO, "Card:  " + rfidCard);
 
                 controller.enqueue(rfidCard.getSerial());
             }

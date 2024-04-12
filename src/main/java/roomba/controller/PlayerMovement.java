@@ -60,23 +60,23 @@ public class PlayerMovement {
 
 
     private void moveLeft() {
-        player.change_y = 0;
-        player.change_x = -Constants.MOVE_SPEED;
+        player.changeY = 0;
+        player.changeX = -Constants.MOVE_SPEED;
     }
 
     private void moveRight() {
-        player.change_y = 0;
-        player.change_x = Constants.MOVE_SPEED;
+        player.changeY = 0;
+        player.changeX = Constants.MOVE_SPEED;
     }
 
     private void moveUp() {
-        player.change_y = -Constants.MOVE_SPEED;
-        player.change_x = 0;
+        player.changeY = -Constants.MOVE_SPEED;
+        player.changeX = 0;
     }
 
     private void moveDown() {
-        player.change_y = Constants.MOVE_SPEED;
-        player.change_x = 0;
+        player.changeY = Constants.MOVE_SPEED;
+        player.changeX = 0;
     }
 
 }

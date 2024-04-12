@@ -14,8 +14,8 @@ public class AnimatedSprite extends Sprite {
     protected PImage[] moveRight;
     protected PImage[] moveUp;
     protected PImage[] moveDown;
-    protected int index;
-    protected int frame;
+    private int index;
+    private int frame;
 
     /**
      * Constructs an animated sprite.
@@ -38,7 +38,7 @@ public class AnimatedSprite extends Sprite {
         frame++;
         selectDirection();
 
-        if (frame % 5   == 0) {
+        if (frame % 5 == 0) {
             selectCurrentImages();
             advanceToNextImage();
         }
@@ -58,13 +58,13 @@ public class AnimatedSprite extends Sprite {
      * Selects the direction of the sprite based on its movement.
      */
     public void selectDirection() {
-        if (change_x > 0) {
+        if (changeX > 0) {
             direction = Constants.RIGHT_FACING;
-        } else if (change_x < 0) {
+        } else if (changeX < 0) {
             direction = Constants.LEFT_FACING;
-        } else if (change_y < 0) {
+        } else if (changeY < 0) {
             direction = Constants.DOWN_FACING;
-        } else if (change_y > 0) {
+        } else if (changeY > 0) {
             direction = Constants.UP_FACING;
         } else {
             direction = Constants.NEUTRAL_FACING;
