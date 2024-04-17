@@ -6,13 +6,14 @@ import roomba.controller.CollisionHandler;
 import roomba.controller.ImageLoader;
 import roomba.controller.LevelManager;
 import roomba.model.AnimatedSprite;
-import roomba.model.Constants;
 import roomba.model.Player;
 import roomba.model.Sprite;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static roomba.model.Constants.*;
 
 
 /**
@@ -43,19 +44,19 @@ public class GameField extends PApplet {
     public GameField(PhysicalScanner pui) {
         this.pui = pui;
         levelManager = new LevelManager();
-        if (Constants.FULLSCREEN) {
-            collisionHandler = new CollisionHandler(Constants.HEIGHT - 230, Constants.WIDTH - 400, HEADER_SIZE);
+        if (FULLSCREEN) {
+            collisionHandler = new CollisionHandler(HEIGHT - 230, WIDTH - 400, HEADER_SIZE);
         } else {
-            collisionHandler = new CollisionHandler(Constants.HEIGHT, Constants.WIDTH, HEADER_SIZE);
+            collisionHandler = new CollisionHandler(HEIGHT, WIDTH, HEADER_SIZE);
         }
     }
 
     @Override
     public void settings() {
-        if (Constants.FULLSCREEN) {
+        if (FULLSCREEN) {
             fullScreen();
         } else {
-            size(Constants.WIDTH, Constants.HEIGHT);
+            size(WIDTH, HEIGHT);
         }
     }
 
@@ -102,7 +103,7 @@ public class GameField extends PApplet {
 
         //Header
         fill(0, 0, 0);
-        rect(0, 0, Constants.WIDTH, HEADER_SIZE);
+        rect(0, 0, WIDTH, HEADER_SIZE);
         fill(0, 255, 0);
         textSize(32);
         float viewX = 0;
@@ -159,7 +160,7 @@ public class GameField extends PApplet {
         computer = ImageLoader.loadImage(this, "img/obstacles/computer.png");
         paper = ImageLoader.loadImage(this, "img/obstacles/paper.png");
 
-        if (Constants.FULLSCREEN) {
+        if (FULLSCREEN) {
             backgroundImage = ImageLoader.loadImage(this, "img/Room-Floor-HD.png");
             backgroundImage.resize(width, height);
         } else {
@@ -189,18 +190,18 @@ public class GameField extends PApplet {
                 setup();
             } else if (player.isInPlace()) {
 
-                if (Constants.RFID_RIGHT.contains(input)) {
+                if (RFID_RIGHT.contains(input)) {
 
-                    player.movePlayer(Constants.RIGHT_FACING);
+                    player.movePlayer(RIGHT_FACING);
                 }
-                if (Constants.RFID_LEFT.contains(input)) {
-                    player.movePlayer(Constants.LEFT_FACING);
+                if (RFID_LEFT.contains(input)) {
+                    player.movePlayer(LEFT_FACING);
                 }
-                if (Constants.RFID_UP.contains(input)) {
-                    player.movePlayer(Constants.UP_FACING);
+                if (RFID_UP.contains(input)) {
+                    player.movePlayer(UP_FACING);
                 }
-                if (Constants.RFID_DOWN.contains(input)) {
-                    player.movePlayer(Constants.DOWN_FACING);
+                if (RFID_DOWN.contains(input)) {
+                    player.movePlayer(DOWN_FACING);
                 }
             }
         }
@@ -211,16 +212,16 @@ public class GameField extends PApplet {
             setup();
         } else if (player.isInPlace()) {
             if (((keyCode == RIGHT || key == 'd'))) {
-                player.movePlayer(Constants.RIGHT_FACING);
+                player.movePlayer(RIGHT_FACING);
             }
             if (((keyCode == LEFT || key == 'a'))) {
-                player.movePlayer(Constants.LEFT_FACING);
+                player.movePlayer(LEFT_FACING);
             }
             if (((keyCode == UP || key == 'w'))) {
-                player.movePlayer(Constants.UP_FACING);
+                player.movePlayer(UP_FACING);
             }
             if (((keyCode == DOWN || key == 's'))) {
-                player.movePlayer(Constants.DOWN_FACING);
+                player.movePlayer(DOWN_FACING);
             }
         }
     }
