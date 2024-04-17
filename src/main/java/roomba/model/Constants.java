@@ -61,10 +61,6 @@ public final class Constants {
                 GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
                 height = Integer.parseInt(String.valueOf(gd.getDisplayMode().getHeight()));
                 width = Integer.parseInt(String.valueOf(gd.getDisplayMode().getWidth()));
-
-            } else {
-                height = Integer.parseInt(appProps.getProperty("HEIGHT"));
-                width = Integer.parseInt(appProps.getProperty("WIDTH"));
             }
 
             //RfID Sets
