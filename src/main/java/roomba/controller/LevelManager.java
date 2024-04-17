@@ -1,7 +1,6 @@
 package roomba.controller;
 
 import processing.core.PImage;
-import roomba.model.Constants;
 import roomba.model.Goal;
 import roomba.model.Player;
 import roomba.model.Sprite;
@@ -13,6 +12,8 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static roomba.model.Constants.*;
 
 /**
  * Manages the levels in the "Roomba in Trouble" game.
@@ -115,16 +116,16 @@ public class LevelManager {
                 switch (values[col]) {
                 case "1" -> {
 
-                    Goal loadedGoal = new Goal(gameField, gameField.chargingStation, Constants.SPRITE_SIZE * 0.005f);
-                    loadedGoal.centerX = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
-                    loadedGoal.centerY = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
+                    Goal loadedGoal = new Goal(gameField, gameField.chargingStation, SPRITE_SIZE * 0.005f);
+                    loadedGoal.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
+                    loadedGoal.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
                     gameField.goal.add(loadedGoal);
 
                 }
                 case "2" -> {
-                    Sprite s = new Sprite(gameField, gameField.wall, Constants.SPRITE_SCALE);
-                    s.centerX = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
-                    s.centerY = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
+                    Sprite s = new Sprite(gameField, gameField.wall, SPRITE_SCALE);
+                    s.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
+                    s.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
                     gameField.obstacles.add(s);
                 }
                 case "3" -> {
@@ -134,15 +135,15 @@ public class LevelManager {
                     Random random = new Random();
                     int i = random.nextInt(allObstacleImages.length);
 
-                    Sprite s = new Sprite(gameField, allObstacleImages[i], Constants.SPRITE_SCALE);
-                    s.centerX = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
-                    s.centerY = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
+                    Sprite s = new Sprite(gameField, allObstacleImages[i], SPRITE_SCALE);
+                    s.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
+                    s.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
                     gameField.obstacles.add(s);
                 }
                 case "4" -> {
-                    Player player = new Player(gameField, gameField.playerImage, Constants.SPRITE_SIZE * 0.006f);
-                    player.centerX = Constants.SPRITE_SIZE / 2 + col * Constants.SPRITE_SIZE;
-                    player.centerY = Constants.SPRITE_SIZE / 2 + row * Constants.SPRITE_SIZE;
+                    Player player = new Player(gameField, gameField.playerImage, SPRITE_SIZE * 0.006f);
+                    player.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
+                    player.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
                     gameField.player = player;
                 }
                 case "" -> {

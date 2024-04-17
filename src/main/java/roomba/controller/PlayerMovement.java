@@ -1,7 +1,8 @@
 package roomba.controller;
 
-import roomba.model.Constants;
 import roomba.model.Player;
+
+import static roomba.model.Constants.*;
 
 /**
  * The PlayerMovement class represents the logic for moving the player character in the Roomba application.
@@ -20,36 +21,36 @@ public class PlayerMovement {
         this.player = player;
 
         switch (player.direction) {
-        case Constants.RIGHT_FACING -> {
+        case RIGHT_FACING -> {
             switch (inpDirection) {
-            case Constants.RIGHT_FACING -> moveDown();
-            case Constants.LEFT_FACING -> moveUp();
-            case Constants.UP_FACING -> moveRight();
-            case Constants.DOWN_FACING -> moveLeft();
+            case RIGHT_FACING -> moveDown();
+            case LEFT_FACING -> moveUp();
+            case UP_FACING -> moveRight();
+            case DOWN_FACING -> moveLeft();
             }
         }
-        case Constants.LEFT_FACING -> {
+        case LEFT_FACING -> {
             switch (inpDirection) {
-            case Constants.RIGHT_FACING -> moveUp();
-            case Constants.LEFT_FACING -> moveDown();
-            case Constants.UP_FACING -> moveLeft();
-            case Constants.DOWN_FACING -> moveRight();
+            case RIGHT_FACING -> moveUp();
+            case LEFT_FACING -> moveDown();
+            case UP_FACING -> moveLeft();
+            case DOWN_FACING -> moveRight();
             }
         }
-        case Constants.UP_FACING -> {
+        case UP_FACING -> {
             switch (inpDirection) {
-            case Constants.RIGHT_FACING -> moveRight();
-            case Constants.LEFT_FACING -> moveLeft();
-            case Constants.UP_FACING -> moveUp();
-            case Constants.DOWN_FACING -> moveDown();
+            case RIGHT_FACING -> moveRight();
+            case LEFT_FACING -> moveLeft();
+            case UP_FACING -> moveUp();
+            case DOWN_FACING -> moveDown();
             }
         }
-        case Constants.DOWN_FACING -> {
+        case DOWN_FACING -> {
             switch (inpDirection) {
-            case Constants.RIGHT_FACING -> moveLeft();
-            case Constants.LEFT_FACING -> moveRight();
-            case Constants.UP_FACING -> moveDown();
-            case Constants.DOWN_FACING -> moveUp();
+            case RIGHT_FACING -> moveLeft();
+            case LEFT_FACING -> moveRight();
+            case UP_FACING -> moveDown();
+            case DOWN_FACING -> moveUp();
             }
         }
         default -> {
@@ -59,21 +60,21 @@ public class PlayerMovement {
     }
     private void moveLeft() {
         player.changeY = 0;
-        player.changeX = -Constants.MOVE_SPEED;
+        player.changeX = -MOVE_SPEED;
     }
 
     private void moveRight() {
         player.changeY = 0;
-        player.changeX = Constants.MOVE_SPEED;
+        player.changeX = MOVE_SPEED;
     }
 
     private void moveUp() {
-        player.changeY = -Constants.MOVE_SPEED;
+        player.changeY = -MOVE_SPEED;
         player.changeX = 0;
     }
 
     private void moveDown() {
-        player.changeY = Constants.MOVE_SPEED;
+        player.changeY = MOVE_SPEED;
         player.changeX = 0;
     }
 

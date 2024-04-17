@@ -5,6 +5,8 @@ import roomba.controller.ImageLoader;
 import roomba.view.GameField;
 import roomba.controller.PlayerMovement;
 
+import static roomba.model.Constants.*;
+
 /**
  * The Player class represents the player character in the "Roomba in Trouble"
  * game.
@@ -28,7 +30,7 @@ public class Player extends AnimatedSprite {
      */
     public Player(GameField gamefield, PImage img, float scale) {
         super(gamefield, img, scale);
-        direction = Constants.RIGHT_FACING;
+        direction = RIGHT_FACING;
         inPlace = true;
 
         // Loading images for different directions and animations
@@ -89,13 +91,13 @@ public class Player extends AnimatedSprite {
     @Override
     public void selectDirection() {
         if (changeX > 0) {
-            direction = Constants.RIGHT_FACING;
+            direction = RIGHT_FACING;
         } else if (changeX < 0) {
-            direction = Constants.LEFT_FACING;
+            direction = LEFT_FACING;
         } else if (changeY < 0) {
-            direction = Constants.UP_FACING;
+            direction = UP_FACING;
         } else if (changeY > 0) {
-            direction = Constants.DOWN_FACING;
+            direction = DOWN_FACING;
         }
     }
 
@@ -105,25 +107,25 @@ public class Player extends AnimatedSprite {
      */
     @Override
     public void selectCurrentImages() {
-        if (direction == Constants.RIGHT_FACING) {
+        if (direction == RIGHT_FACING) {
             if (inPlace) {
                 currentImages = faceRight;
             } else {
                 currentImages = moveRight;
             }
-        } else if (direction == Constants.LEFT_FACING) {
+        } else if (direction == LEFT_FACING) {
             if (inPlace) {
                 currentImages = faceLeft;
             } else {
                 currentImages = moveLeft;
             }
-        } else if (direction == Constants.UP_FACING) {
+        } else if (direction == UP_FACING) {
             if (inPlace) {
                 currentImages = faceUp;
             } else {
                 currentImages = moveUp;
             }
-        } else if (direction == Constants.DOWN_FACING) {
+        } else if (direction == DOWN_FACING) {
             if (inPlace) {
                 currentImages = faceDown;
             } else {

@@ -3,6 +3,8 @@ package roomba.model;
 import processing.core.PApplet;
 import processing.core.PImage;
 
+import static roomba.model.Constants.*;
+
 /**
  * Represents an animated sprite with various movement directions.
  */
@@ -26,7 +28,7 @@ public class AnimatedSprite extends Sprite {
      */
     public AnimatedSprite(PApplet pApplet, PImage img, float scale) {
         super(pApplet, img, scale);
-        direction = Constants.NEUTRAL_FACING;
+        direction = NEUTRAL_FACING;
         index = 0;
         frame = 0;
     }
@@ -59,15 +61,15 @@ public class AnimatedSprite extends Sprite {
      */
     public void selectDirection() {
         if (changeX > 0) {
-            direction = Constants.RIGHT_FACING;
+            direction = RIGHT_FACING;
         } else if (changeX < 0) {
-            direction = Constants.LEFT_FACING;
+            direction = LEFT_FACING;
         } else if (changeY < 0) {
-            direction = Constants.DOWN_FACING;
+            direction = DOWN_FACING;
         } else if (changeY > 0) {
-            direction = Constants.UP_FACING;
+            direction = UP_FACING;
         } else {
-            direction = Constants.NEUTRAL_FACING;
+            direction = NEUTRAL_FACING;
         }
     }
 
@@ -75,13 +77,13 @@ public class AnimatedSprite extends Sprite {
      * Selects the current images based on the sprite's direction.
      */
     public void selectCurrentImages() {
-        if (direction == Constants.RIGHT_FACING) {
+        if (direction == RIGHT_FACING) {
             currentImages = moveRight;
-        } else if (direction == Constants.LEFT_FACING) {
+        } else if (direction == LEFT_FACING) {
             currentImages = moveLeft;
-        } else if (direction == Constants.UP_FACING) {
+        } else if (direction == UP_FACING) {
             currentImages = moveUp;
-        } else if (direction == Constants.DOWN_FACING) {
+        } else if (direction == DOWN_FACING) {
             currentImages = moveDown;
         } else {
             currentImages = standNeutral;
