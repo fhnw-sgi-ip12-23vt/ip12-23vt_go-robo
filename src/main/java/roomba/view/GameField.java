@@ -189,17 +189,17 @@ public class GameField extends PApplet {
                 setup();
             } else if (player.isInPlace()) {
 
-                if (input.equals(Constants.RFID_RIGHT)) {
+                if (Constants.RFID_RIGHT.contains(input)) {
 
                     player.movePlayer(Constants.RIGHT_FACING);
                 }
-                if (input.equals(Constants.RFID_LEFT)) {
+                if (Constants.RFID_LEFT.contains(input)) {
                     player.movePlayer(Constants.LEFT_FACING);
                 }
-                if (input.equals(Constants.RFID_UP)) {
+                if (Constants.RFID_UP.contains(input)) {
                     player.movePlayer(Constants.UP_FACING);
                 }
-                if (input.equals(Constants.RFID_DOWN)) {
+                if (Constants.RFID_DOWN.contains(input)) {
                     player.movePlayer(Constants.DOWN_FACING);
                 }
             }

@@ -5,7 +5,10 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.FileInputStream;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * Represents constants used in the "Roomba in Trouble" game.
@@ -23,12 +26,12 @@ public final class Constants {
     public static final int HEIGHT;
     public static final int WIDTH;
     public static final boolean FULLSCREEN;
-    public static final String RFID_RIGHT;
-    public static final String RFID_LEFT;
-    public static final String RFID_UP;
-    public static final String RFID_DOWN;
-    public static final String RFID_RESET;
-    public static final String RFID_NEXT;
+    public static final Set<String> RFID_RIGHT;
+    public static final Set<String> RFID_LEFT;
+    public static final Set<String> RFID_UP;
+    public static final Set<String> RFID_DOWN;
+    public static final Set<String> RFID_RESET;
+    public static final Set<String> RFID_NEXT;
 
     static {
         float moveSpeed = 4;
@@ -37,12 +40,12 @@ public final class Constants {
         int height = (int) (spriteSize * 12);
         int width = (int) (spriteSize * 16);
         boolean fullscreen = false;
-        String rfidRight = "";
-        String rfidLeft = "";
-        String rfidUp = "";
-        String rfidDown = "";
-        String rfidReset = "";
-        String rfidNext = "";
+        Set<String> rfidRight = new HashSet<>();
+        Set<String> rfidLeft = new HashSet<>();
+        Set<String> rfidUp = new HashSet<>();
+        Set<String> rfidDown = new HashSet<>();
+        Set<String> rfidReset = new HashSet<>();
+        Set<String> rfidNext = new HashSet<>();
 
         try {
             Path fullPath = ImageLoader.loadFile("/main/java/app.properties");
@@ -64,12 +67,20 @@ public final class Constants {
                 width = Integer.parseInt(appProps.getProperty("WIDTH"));
             }
 
-            rfidRight = appProps.getProperty("RFID_RIGHT");
-            rfidLeft = appProps.getProperty("RFID_LEFT");
-            rfidUp = appProps.getProperty("RFID_UP");
-            rfidDown = appProps.getProperty("RFID_DOWN");
-            rfidReset = appProps.getProperty("RFID_RESET");
-            rfidNext = appProps.getProperty("RFID_NEXT");
+            //RfID Sets
+            String[] ids;
+            ids = appProps.getProperty("RFID_RIGHT").split(", ");
+            rfidRight.addAll(Arrays.asList(ids));
+            ids = appProps.getProperty("RFID_LEFT").split(", ");
+            rfidLeft.addAll(Arrays.asList(ids));
+            ids = appProps.getProperty("RFID_UP").split(", ");
+            rfidUp.addAll(Arrays.asList(ids));
+            ids = appProps.getProperty("RFID_DOWN").split(", ");
+            rfidDown.addAll(Arrays.asList(ids));
+            ids = appProps.getProperty("RFID_RESET").split(", ");
+            rfidReset.addAll(Arrays.asList(ids));
+            ids = appProps.getProperty("RFID_NEXT").split(", ");
+            rfidNext.addAll(Arrays.asList(ids));
 
         } catch (Exception e) {
             System.err.println("Error reading config file: " + e.getMessage());
