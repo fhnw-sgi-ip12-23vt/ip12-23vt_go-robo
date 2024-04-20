@@ -339,6 +339,12 @@
                                                  suppresssystemerr="true" suppresssystemout="true"
                                                  command="cp /home/pi/target/classes/files /home/pi/ -r"/>
 
+                                        <!-- copy app.properties-->
+                                        <scp trust="true"
+                                             todir="${pi.username}:${pi.password}@${pi.ipnumber}:/home/pi/target/classes/main/java/"
+                                             port="${pi.port}" file="${project.basedir}/src/main/java/app.properties">
+                                        </scp>
+
                                         <!-- execute RoombaInTrouble-->
                                         <sshexec host="${pi.ipnumber}" port="${pi.port}"
                                                  username="${pi.username}" password="${pi.password}" trust="true"

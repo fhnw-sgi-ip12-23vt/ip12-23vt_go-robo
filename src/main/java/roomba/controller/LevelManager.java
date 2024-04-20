@@ -65,14 +65,16 @@ public class LevelManager {
      *
      * @return The file path of the next level.
      */
-    public String getNextLevel() {
+    public String getNextLevel(boolean restart) {
         LOGGER.log(Level.FINE, "Next Level");
 
         File[] listOfFiles;
         // Resets difficulty after 3
-        difficulty++;
-        if (difficulty == 4) {
-            difficulty = 1;
+        if(!restart) {
+            difficulty++;
+            if (difficulty == 6) {
+                difficulty = 1;
+            }
         }
 
         // Load directory using ImageLoader
