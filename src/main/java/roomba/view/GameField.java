@@ -140,7 +140,20 @@ public class GameField extends PApplet {
         loadImages();
 
         levelManager.setDifficulty(difficulty);
-        createPlatforms(levelManager.getNextLevel());
+        createPlatforms(levelManager.getNextLevel(false));
+        difficulty = levelManager.getDifficulty();
+    }
+
+    /**
+     * restart current level
+     */
+    public void restart() {
+        winCondition = false;
+        imageMode(CENTER);
+        loadImages();
+
+        levelManager.setDifficulty(difficulty);
+        createPlatforms(levelManager.getNextLevel(true));
         difficulty = levelManager.getDifficulty();
     }
 
@@ -202,6 +215,12 @@ public class GameField extends PApplet {
                 }
                 if (RFID_DOWN.contains(input)) {
                     player.movePlayer(DOWN_FACING);
+                }
+                if (input.equals(RFID_NEXT.contains(input))){
+                    nextLevel = true;
+                }
+                if(input.equals(RFID_RESET.contains(input))){
+                    restart();
                 }
             }
         }
