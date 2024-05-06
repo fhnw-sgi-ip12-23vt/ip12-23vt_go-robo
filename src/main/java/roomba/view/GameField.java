@@ -279,6 +279,10 @@ public class GameField extends PApplet {
                     turnMode = true;
                 }
             }
+            //Options
+            if (key == 'o'){
+
+            }
             if (turnMode){
                 if (((keyCode == UP || key == 'w'))) {
                     lastInputs.add("↑");
