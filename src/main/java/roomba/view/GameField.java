@@ -202,19 +202,23 @@ public class GameField extends PApplet {
             if (nextLevel) {
                 setup();
             } else if (player.isInPlace()) {
-
+                pui.ledOff();
                 if (RFID_RIGHT.contains(input)) {
 
                     player.movePlayer(RIGHT_FACING);
+                    pui.ledOn();
                 }
                 if (RFID_LEFT.contains(input)) {
                     player.movePlayer(LEFT_FACING);
+                    pui.ledOn();
                 }
                 if (RFID_UP.contains(input)) {
                     player.movePlayer(UP_FACING);
+                    pui.ledOn();
                 }
                 if (RFID_DOWN.contains(input)) {
                     player.movePlayer(DOWN_FACING);
+                    pui.ledOn();
                 }
                 if (input.equals(RFID_NEXT.contains(input))){
                     nextLevel = true;
