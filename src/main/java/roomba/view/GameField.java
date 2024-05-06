@@ -109,6 +109,11 @@ public class GameField extends PApplet {
         float viewX = 0;
         float viewY = 0;
         text("Level: " + levelManager.getLevelName(), viewX + 50, viewY + 50);
+        if (easy){
+            text("Turn-Mode", viewX + 300, viewY + 50);
+        } else {
+            text("Normal-Mode", viewX + 300, viewY + 50);
+        }
 
         if (winCondition) {
             fill(0, 0, 255);
@@ -225,22 +230,46 @@ public class GameField extends PApplet {
             }
         }
     }
-
+    private boolean easy = false;
     public void keyPressed() {
         if (nextLevel) {
             setup();
         } else if (player.isInPlace()) {
-            if (((keyCode == RIGHT || key == 'd'))) {
-                player.movePlayer(RIGHT_FACING);
+            //easy mode
+            if (key == 'h'){
+                if (easy){
+                    easy = false;
+                } else {
+                    easy = true;
+                }
             }
-            if (((keyCode == LEFT || key == 'a'))) {
-                player.movePlayer(LEFT_FACING);
+            if (easy){
+                if (((keyCode == UP || key == 'w'))) {
+                    player.movePlayer(UP_FACING);
+                }
+                if (((keyCode == DOWN || key == 's'))) {
+                    player.movePlayer(DOWN_FACING);
+                }
+                if (((keyCode == RIGHT || key == 'd'))) {
+                    player.turnPlayer(RIGHT_FACING);
+                }
+                if (((keyCode == LEFT || key == 'a'))) {
+                    player.turnPlayer(LEFT_FACING);
+                }
             }
-            if (((keyCode == UP || key == 'w'))) {
-                player.movePlayer(UP_FACING);
-            }
-            if (((keyCode == DOWN || key == 's'))) {
-                player.movePlayer(DOWN_FACING);
+            if (!easy){
+                if (((keyCode == RIGHT || key == 'd'))) {
+                    player.movePlayer(RIGHT_FACING);
+                }
+                if (((keyCode == LEFT || key == 'a'))) {
+                    player.movePlayer(LEFT_FACING);
+                }
+                if (((keyCode == UP || key == 'w'))) {
+                    player.movePlayer(UP_FACING);
+                }
+                if (((keyCode == DOWN || key == 's'))) {
+                    player.movePlayer(DOWN_FACING);
+                }
             }
         }
     }
