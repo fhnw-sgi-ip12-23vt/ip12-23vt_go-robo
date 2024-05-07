@@ -62,6 +62,9 @@ public class Player extends AnimatedSprite {
     public void movePlayer(int inpDirection) {
         playerMovement.movePlayer(this, inpDirection);
     }
+    public void turnPlayer(int inpDirection) {
+        playerMovement.turnPlayer(this, inpDirection);
+    }
 
     public boolean isInPlace() {
         return inPlace;

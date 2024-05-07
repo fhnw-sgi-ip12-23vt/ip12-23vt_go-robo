@@ -35,6 +35,9 @@ public class GameField extends PApplet {
     private PImage backgroundImage;
     private boolean winCondition = false;
     private boolean isMov = false;
+    private List<String> lastInputs = new ArrayList<>();
+    private boolean turnMode = false;
+    private boolean loadingNextLevel = false;
 
     /**
      * Constructs a GameField instance.
@@ -64,12 +67,20 @@ public class GameField extends PApplet {
      * Draws the game field, including obstacles, goals, and the player.
      */
     public void draw() {
-//        clear();
         background(backgroundImage);
         displayAll();
         if (!nextLevel) {
             updateAll();
             collectGoal();
+        } else {
+            // If the next level flag is set, delay input for 5 seconds
+            if (!loadingNextLevel) {
+                delay(5000); // 5 seconds delay
+                loadingNextLevel = true;
+            } else {
+                setup(); // Start the next level after the delay
+                loadingNextLevel = false; // Reset the flag for the next level
+            }
         }
     }
 
@@ -109,6 +120,15 @@ public class GameField extends PApplet {
         float viewX = 0;
         float viewY = 0;
         text("Level: " + levelManager.getLevelName(), viewX + 50, viewY + 50);
+        if (turnMode){
+            text("Turn-Mode", viewX + 300, viewY + 50);
+        } else {
+            text("Normal-Mode", viewX + 300, viewY + 50);
+        }
+        int start = Math.max(0, lastInputs.size() - 5); // Start index for the loop
+        for (int i = start; i < lastInputs.size(); i++) {
+            text(lastInputs.get(i), viewX + 1200 + (i - start) * 25, viewY + 50);
+        }
 
         if (winCondition) {
             fill(0, 0, 255);
@@ -125,6 +145,7 @@ public class GameField extends PApplet {
             for (Sprite g : goalList) {
                 goal.remove(g);
             }
+
         } else {
             nextLevel = true;
             winCondition = difficulty == 3;
@@ -203,21 +224,44 @@ public class GameField extends PApplet {
                 setup();
             } else if (player.isInPlace()) {
                 pui.ledOff();
-                if (RFID_RIGHT.contains(input)) {
-                    player.movePlayer(RIGHT_FACING);
-                    pui.ledOn();
-                }
-                if (RFID_LEFT.contains(input)) {
-                    player.movePlayer(LEFT_FACING);
-                    pui.ledOn();
-                }
-                if (RFID_UP.contains(input)) {
-                    player.movePlayer(UP_FACING);
-                    pui.ledOn();
-                }
-                if (RFID_DOWN.contains(input)) {
-                    player.movePlayer(DOWN_FACING);
-                    pui.ledOn();
+                if (turnMode){
+                    if (RFID_RIGHT.contains(input)) {
+                        lastInputs.add("→");
+                        player.turnPlayer(RIGHT_FACING);
+                    }
+                    if (RFID_LEFT.contains(input)) {
+                        lastInputs.add("←");
+                        player.turnPlayer(LEFT_FACING);
+                    }
+                    if (RFID_UP.contains(input)) {
+                        lastInputs.add("↑");
+                        player.movePlayer(UP_FACING);
+                    }
+                    if (RFID_DOWN.contains(input)) {
+                        lastInputs.add("↓");
+                        player.movePlayer(DOWN_FACING);
+                    }
+                } else {
+                    if (RFID_RIGHT.contains(input)) {
+                        lastInputs.add("→");
+                        player.movePlayer(RIGHT_FACING);
+                        pui.ledOn();
+                    }
+                    if (RFID_LEFT.contains(input)) {
+                        lastInputs.add("←");
+                        player.movePlayer(LEFT_FACING);
+                        pui.ledOn();
+                    }
+                    if (RFID_UP.contains(input)) {
+                        lastInputs.add("↑");
+                        player.movePlayer(UP_FACING);
+                        pui.ledOn();
+                    }
+                    if (RFID_DOWN.contains(input)) {
+                        lastInputs.add("↓");
+                        player.movePlayer(DOWN_FACING);
+                        pui.ledOn();
+                    }
                 }
                 if (input.equals(RFID_NEXT.contains(input))){
                     nextLevel = true;
@@ -233,17 +277,51 @@ public class GameField extends PApplet {
         if (nextLevel) {
             setup();
         } else if (player.isInPlace()) {
-            if (((keyCode == RIGHT || key == 'd'))) {
-                player.movePlayer(RIGHT_FACING);
+            if (key == 'h'){
+                if (turnMode){
+                    turnMode = false;
+                } else {
+                    turnMode = true;
+                }
             }
-            if (((keyCode == LEFT || key == 'a'))) {
-                player.movePlayer(LEFT_FACING);
+            //Options
+            if (key == 'o'){
+
             }
-            if (((keyCode == UP || key == 'w'))) {
-                player.movePlayer(UP_FACING);
-            }
-            if (((keyCode == DOWN || key == 's'))) {
-                player.movePlayer(DOWN_FACING);
+            if (turnMode){
+                if (((keyCode == UP || key == 'w'))) {
+                    lastInputs.add("↑");
+                    player.movePlayer(UP_FACING);
+                }
+                if (((keyCode == DOWN || key == 's'))) {
+                    lastInputs.add("↓");
+                    player.movePlayer(DOWN_FACING);
+                }
+                if (((keyCode == RIGHT || key == 'd'))) {
+                    lastInputs.add("→");
+                    player.turnPlayer(RIGHT_FACING);
+                }
+                if (((keyCode == LEFT || key == 'a'))) {
+                    lastInputs.add("←");
+                    player.turnPlayer(LEFT_FACING);
+                }
+            } else {
+                if (((keyCode == RIGHT || key == 'd'))) {
+                    lastInputs.add("→");
+                    player.movePlayer(RIGHT_FACING);
+                }
+                if (((keyCode == LEFT || key == 'a'))) {
+                    lastInputs.add("←");
+                    player.movePlayer(LEFT_FACING);
+                }
+                if (((keyCode == UP || key == 'w'))) {
+                    lastInputs.add("↓");
+                    player.movePlayer(UP_FACING);
+                }
+                if (((keyCode == DOWN || key == 's'))) {
+                    lastInputs.add("↑");
+                    player.movePlayer(DOWN_FACING);
+                }
             }
         }
     }

@@ -58,6 +58,45 @@ public class PlayerMovement {
         // Handle unexpected input direction
         }
     }
+    /**
+     * Turn the player character based on the input direction and current facing direction.
+     *
+     * @param player       The player object to be moved.
+     * @param inpDirection The input direction indicating the desired movement direction.
+     */
+    public void turnPlayer(Player player, int inpDirection) {
+        this.player = player;
+
+        switch (player.direction) {
+        case RIGHT_FACING -> {
+            switch (inpDirection) {
+            case RIGHT_FACING -> player.direction = DOWN_FACING;
+            case LEFT_FACING -> player.direction = UP_FACING;
+            }
+        }
+        case LEFT_FACING -> {
+            switch (inpDirection) {
+            case RIGHT_FACING -> player.direction = UP_FACING;
+            case LEFT_FACING -> player.direction = DOWN_FACING;
+            }
+        }
+        case UP_FACING -> {
+            switch (inpDirection) {
+            case RIGHT_FACING -> player.direction = RIGHT_FACING;
+            case LEFT_FACING -> player.direction = LEFT_FACING;
+            }
+        }
+        case DOWN_FACING -> {
+            switch (inpDirection) {
+            case RIGHT_FACING -> player.direction = LEFT_FACING;
+            case LEFT_FACING -> player.direction = RIGHT_FACING;
+            }
+        }
+        default -> {
+        }
+        // Handle unexpected input direction
+        }
+    }
     private void moveLeft() {
         player.changeY = 0;
         player.changeX = -MOVE_SPEED;
@@ -77,5 +116,8 @@ public class PlayerMovement {
         player.changeY = MOVE_SPEED;
         player.changeX = 0;
     }
+
+
+
 
 }
