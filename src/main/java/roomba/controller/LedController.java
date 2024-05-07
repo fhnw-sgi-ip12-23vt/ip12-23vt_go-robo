@@ -2,8 +2,11 @@ package roomba.controller;
 
 import roomba.catalog.components.base.SimpleLed;
 import roomba.model.LedModel;
+import roomba.model.PhysicalModel;
 import roomba.util.mvcbase.ControllerBase;
 import roomba.view.PhysicalLed;
+
+import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,7 +41,7 @@ public class LedController extends ControllerBase<LedModel> {
             ledOn(typ);
             Thread.sleep(1000); // Sleep for 1000 milliseconds (1 second)
             ledOff(typ);
-        } catch (InterruptedException e) {
+            } catch (InterruptedException e) {
             ledReset(typ);
             // Handle the InterruptedException, if necessary
         }
