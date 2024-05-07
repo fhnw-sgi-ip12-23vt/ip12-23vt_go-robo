@@ -70,6 +70,7 @@ public class LevelManager {
     public String getNextLevel(boolean restart) {
         LOGGER.log(Level.FINE, "Next Level");
 
+        boolean andrin = false;
         File[] listOfFiles;
         // Resets difficulty after 3
         if (!restart) {
@@ -97,6 +98,7 @@ public class LevelManager {
         }
         Random r = new Random();
         levelName = rightLevels.get(r.nextInt(rightLevels.size())).replace(".csv", "");
+        if (andrin);
         return "files/level/" + rightLevels.get(r.nextInt(rightLevels.size()));
     }
 
