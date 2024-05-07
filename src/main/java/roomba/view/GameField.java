@@ -175,7 +175,7 @@ public class GameField extends PApplet {
      * Sets up the initial game state.
      */
     public void setup() {
-        //puiLed.blink(PhysicalLed.LEDType.GREEN);
+        puiLed.blink(PhysicalLed.LEDType.GREEN);
         winCondition = false;
         imageMode(CENTER);
         loadImages();
