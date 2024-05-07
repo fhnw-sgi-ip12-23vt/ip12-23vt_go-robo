@@ -74,7 +74,7 @@ public class LevelManager {
         // Resets difficulty after 3
         if (!restart) {
             difficulty++;
-            if (difficulty == 6) {
+            if (difficulty == 4) {
                 difficulty = 1;
             }
         }
