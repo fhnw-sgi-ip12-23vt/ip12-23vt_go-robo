@@ -93,6 +93,7 @@ public class GameField extends PApplet {
         } else {
             // If the next level flag is set, delay input for 5 seconds
             if (!loadingNextLevel) {
+                puiLed.blink(PhysicalLed.LEDType.GREEN);
                 delay(5000); // 5 seconds delay
                 loadingNextLevel = true;
             } else {
@@ -175,7 +176,6 @@ public class GameField extends PApplet {
      * Sets up the initial game state.
      */
     public void setup() {
-        puiLed.blink(PhysicalLed.LEDType.GREEN);
         winCondition = false;
         imageMode(CENTER);
         loadImages();
