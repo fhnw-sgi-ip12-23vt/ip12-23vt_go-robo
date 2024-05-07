@@ -238,7 +238,20 @@ public class GameField extends PApplet {
 
             if (nextLevel) {
                 setup();
-            } else if (player.isInPlace()) {
+            } if (RFID_EASY.contains(input)){
+                difficulty = 0;
+                setup();
+            } if (RFID_MEDIUM.contains(input)){
+                difficulty = 1;
+                setup();
+            } if (RFID_HARD.contains(input)){
+                difficulty = 2;
+                setup();
+            } if (RFID_TURN.contains(input)){
+                turnMode = !turnMode;
+            } if (RFID_RESET.contains(input)) {
+                restart();
+            }else if (player.isInPlace()) {
                 pui.ledOff();
                 if (turnMode) {
                     if (RFID_RIGHT.contains(input)) {
@@ -279,12 +292,6 @@ public class GameField extends PApplet {
                         pui.ledOn();
                     }
                 }
-                if (input.equals(RFID_EASY.contains(input))) {
-                    nextLevel = true;
-                }
-                if (input.equals(RFID_RESET.contains(input))) {
-                    restart();
-                }
             }
         }
     }
@@ -292,10 +299,25 @@ public class GameField extends PApplet {
     public void keyPressed() {
         if (nextLevel) {
             setup();
+        }
+        if (key == '1'){
+            difficulty = 0;
+            setup();
+        }
+        if (key == '2'){
+            difficulty = 1;
+            setup();
+        }
+        if (key == '3'){
+            difficulty = 2;
+            setup();
+        }
+        if (key == 'r'){
+            restart();
+        }
+        if (key == 'h') {
+            turnMode = !turnMode;
         } else if (player.isInPlace()) {
-            if (key == 'h') {
-                turnMode = !turnMode;
-            }
             //Options
             if (turnMode) {
                 if (((keyCode == UP || key == 'w'))) {
