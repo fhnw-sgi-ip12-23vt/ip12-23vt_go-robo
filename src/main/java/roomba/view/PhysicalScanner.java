@@ -44,7 +44,7 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
     @Override
     public void initializeParts() {
         rfid = new RfidComponent(pi4J);
-        led = new SimpleLed(pi4J, PIN.D11);
+        led = new SimpleLed(pi4J, PIN.D17);
     }
 
     /**
@@ -72,5 +72,9 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
         if(led.isOn()){
             led.off();
         }
+    }
+
+    public void ledReset(){
+        led.reset();
     }
 }

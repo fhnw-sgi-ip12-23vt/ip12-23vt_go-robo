@@ -2,9 +2,14 @@ package roomba.catalog.components.base;
 
 import com.pi4j.context.Context;
 import com.pi4j.io.gpio.digital.DigitalOutput;
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import roomba.catalog.components.base.DigitalActuator;
 import roomba.catalog.components.base.PIN;
+import roomba.util.Pi4JContext;
+
+import static roomba.util.Pi4JContext.createContext;
 
 public class SimpleLed extends DigitalActuator {
 

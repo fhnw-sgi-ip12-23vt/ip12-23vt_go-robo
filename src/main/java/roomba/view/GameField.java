@@ -204,7 +204,6 @@ public class GameField extends PApplet {
             } else if (player.isInPlace()) {
                 pui.ledOff();
                 if (RFID_RIGHT.contains(input)) {
-
                     player.movePlayer(RIGHT_FACING);
                     pui.ledOn();
                 }
@@ -257,6 +256,7 @@ public class GameField extends PApplet {
     public void exit() {
         LOGGER.log(Level.WARNING, "Shutdown");
         if (pui != null) {
+            pui.ledReset();
             pui.getController().shutdown();
             pui.shutdown();
         }
