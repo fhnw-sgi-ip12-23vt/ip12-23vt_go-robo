@@ -163,7 +163,7 @@ public class LevelManager {
                     createObstacle(gameField,7,col,row);
                 }
                 case "9" -> {
-                    createObstacle(gameField,7,col,row);
+                    createObstacle(gameField,8,col,row);
                 }
 
                 // RANDOM OBSTACLES
