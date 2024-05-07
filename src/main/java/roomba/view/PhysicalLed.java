@@ -49,8 +49,8 @@ public class PhysicalLed extends PuiBase<LedModel, LedController> {
     @Override
     public void initializeParts() {
         greenLED = new SimpleLed(pi4J, PIN.D17);
-        blueLED = new SimpleLed(pi4J, PIN.D20);
-        yellowLED = new SimpleLed(pi4J, PIN.D21);
+        blueLED = new SimpleLed(pi4J, PIN.D22);
+        yellowLED = new SimpleLed(pi4J, PIN.D27);
 
     }
 
