@@ -64,17 +64,17 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
 
     }
 
-    public void ledOn(){
+    public void ledOn() {
         led.on();
     }
 
-    public void ledOff(){
-        if(led.isOn()){
+    public void ledOff() {
+        if (led.isOn()) {
             led.off();
         }
     }
 
-    public void ledReset(){
+    public void ledReset() {
         led.reset();
     }
 }

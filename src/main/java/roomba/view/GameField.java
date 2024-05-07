@@ -13,7 +13,19 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static roomba.model.Constants.*;
+import static roomba.model.Constants.DOWN_FACING;
+import static roomba.model.Constants.FULLSCREEN;
+import static roomba.model.Constants.HEIGHT;
+import static roomba.model.Constants.LEFT_FACING;
+import static roomba.model.Constants.RFID_DOWN;
+import static roomba.model.Constants.RFID_LEFT;
+import static roomba.model.Constants.RFID_NEXT;
+import static roomba.model.Constants.RFID_RESET;
+import static roomba.model.Constants.RFID_RIGHT;
+import static roomba.model.Constants.RFID_UP;
+import static roomba.model.Constants.RIGHT_FACING;
+import static roomba.model.Constants.UP_FACING;
+import static roomba.model.Constants.WIDTH;
 
 
 /**
@@ -120,15 +132,16 @@ public class GameField extends PApplet {
         float viewX = 0;
         float viewY = 0;
         text("Level: " + levelManager.getLevelName(), viewX + 50, viewY + 50);
-        if (turnMode){
+        if (turnMode) {
             text("Turn-Mode", viewX + 300, viewY + 50);
         } else {
             text("Normal-Mode", viewX + 300, viewY + 50);
         }
-        int start = Math.max(0, lastInputs.size() - 5); // Start index for the loop
-        for (int i = start; i < lastInputs.size(); i++) {
-            text(lastInputs.get(i), viewX + 1200 + (i - start) * 25, viewY + 50);
+        int end = Math.min(lastInputs.size(), 5); // End index for the loop
+        for (int i = lastInputs.size() - 1; i >= lastInputs.size() - end; i--) {
+            text(lastInputs.get(i), viewX + 1200 + (lastInputs.size() - 1 - i) * 25, viewY + 50);
         }
+
 
         if (winCondition) {
             fill(0, 0, 255);
@@ -224,7 +237,7 @@ public class GameField extends PApplet {
                 setup();
             } else if (player.isInPlace()) {
                 pui.ledOff();
-                if (turnMode){
+                if (turnMode) {
                     if (RFID_RIGHT.contains(input)) {
                         lastInputs.add("→");
                         player.turnPlayer(RIGHT_FACING);
@@ -263,10 +276,10 @@ public class GameField extends PApplet {
                         pui.ledOn();
                     }
                 }
-                if (input.equals(RFID_NEXT.contains(input))){
+                if (input.equals(RFID_NEXT.contains(input))) {
                     nextLevel = true;
                 }
-                if(input.equals(RFID_RESET.contains(input))){
+                if (input.equals(RFID_RESET.contains(input))) {
                     restart();
                 }
             }
@@ -277,18 +290,11 @@ public class GameField extends PApplet {
         if (nextLevel) {
             setup();
         } else if (player.isInPlace()) {
-            if (key == 'h'){
-                if (turnMode){
-                    turnMode = false;
-                } else {
-                    turnMode = true;
-                }
+            if (key == 'h') {
+                turnMode = !turnMode;
             }
             //Options
-            if (key == 'o'){
-
-            }
-            if (turnMode){
+            if (turnMode) {
                 if (((keyCode == UP || key == 'w'))) {
                     lastInputs.add("↑");
                     player.movePlayer(UP_FACING);
