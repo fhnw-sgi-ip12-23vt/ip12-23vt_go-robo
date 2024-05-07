@@ -2,14 +2,13 @@ package roomba.controller;
 
 import roomba.catalog.components.base.SimpleLed;
 import roomba.model.LedModel;
-import roomba.model.PhysicalModel;
 import roomba.util.mvcbase.ControllerBase;
 import roomba.view.PhysicalLed;
-
-import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 /**
  * The PhysicalController class represents the controller component
  * for managing physical interactions in the Roomba application.
@@ -36,17 +35,22 @@ public class LedController extends ControllerBase<LedModel> {
         model.yellowLED = y;
     }
 
-    public void blinkLedD1(PhysicalLed.LEDType typ){
-        try {
-            ledOn(typ);
-            Thread.sleep(1000); // Sleep for 1000 milliseconds (1 second)
-            ledOff(typ);
+    public void blinkLedD1(PhysicalLed.LEDType typ) {
+        new Thread(() -> {
+            try {
+                // Toggle the LED state every 1 second for a total of 5 seconds (5 cycles)
+                int numCycles = 5;
+                for (int i = 0; i < numCycles; i++) {
+                    ledOn(typ);
+                    Thread.sleep(500); // LED on for 500 milliseconds (half second)
+                    ledOff(typ);
+                    Thread.sleep(500); // LED off for 500 milliseconds (half second)
+                }
             } catch (InterruptedException e) {
-            ledReset(typ);
-            // Handle the InterruptedException, if necessary
-        }
-
-
+                ledReset(typ);
+                // Handle the InterruptedException, if necessary
+            }
+        }).start();
     }
 
 

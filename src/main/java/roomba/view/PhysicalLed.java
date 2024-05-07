@@ -6,8 +6,6 @@ import roomba.catalog.components.base.SimpleLed;
 import roomba.controller.LedController;
 import roomba.model.LedModel;
 import roomba.util.mvcbase.PuiBase;
-
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -39,7 +37,7 @@ public class PhysicalLed extends PuiBase<LedModel, LedController> {
     public PhysicalLed(LedController controller, Context pi4J) {
         super(controller, pi4J);
         this.controller = controller;
-        controller.saveInModel(greenLED,blueLED,yellowLED);
+        controller.saveInModel(greenLED, blueLED, yellowLED);
 
     }
 
@@ -60,9 +58,9 @@ public class PhysicalLed extends PuiBase<LedModel, LedController> {
     }
 
     public void ledOff(LEDType typ) {
-       controller.ledOff(typ);
+        controller.ledOff(typ);
     }
-    public void blink(LEDType typ){
+    public void blink(LEDType typ) {
         controller.blinkLedD1(typ);
     }
 
