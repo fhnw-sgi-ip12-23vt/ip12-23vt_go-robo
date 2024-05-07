@@ -40,6 +40,8 @@ public class GameField extends PApplet {
     public PImage wall, chargingStation, playerImage;
 
     public List<PImage> pImageListObstacles = new ArrayList<>();
+
+    public List<PImage> bed = new ArrayList<>();
     public Player player;
     private int difficulty = 0;
     private PImage backgroundImage;
@@ -199,9 +201,13 @@ public class GameField extends PApplet {
         var files = path.toFile().listFiles();
         assert files != null;
         for (var file: files) {
-            if (!file.isHidden()) {
+            if (!file.isHidden() && file.getName().endsWith(".png")) {
                pImageListObstacles.add(ImageLoader.loadImage(this,"img/obstacles/" + file.getName()));
             }
+        }
+
+        for (int i = 0; i <4; i++) {
+            bed.add(i,ImageLoader.loadImage(this,"img/obstacles/bed/bed" + (i+1) + ".png"));
         }
 
         if (FULLSCREEN) {
