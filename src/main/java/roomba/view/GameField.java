@@ -8,6 +8,14 @@ import roomba.controller.LevelManager;
 import roomba.model.AnimatedSprite;
 import roomba.model.Player;
 import roomba.model.Sprite;
+
+import javax.swing.JFileChooser;
+import javax.swing.plaf.basic.BasicDirectoryModel;
+import java.io.File;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -29,7 +37,9 @@ public class GameField extends PApplet {
     public boolean nextLevel = false;
     public List<Sprite> obstacles;
     public List<Sprite> goal;
-    public PImage wall, ball, toy, pillow, plushy, plant1, plant2, computer, paper, chargingStation, playerImage;
+    public PImage wall, chargingStation, playerImage;
+
+    public List<PImage> pImageListObstacles = new ArrayList<>();
     public Player player;
     private int difficulty = 0;
     private PImage backgroundImage;
@@ -183,16 +193,16 @@ public class GameField extends PApplet {
      */
     private void loadImages() {
         playerImage = ImageLoader.loadImage(this, "img/roomba2-pixel-dark.png");
-        chargingStation = ImageLoader.loadImage(this, "img/goal/battery-frame0.png");
+        chargingStation = ImageLoader.loadImage(this, "img/goal/battery-frame3.png");
         wall = ImageLoader.loadImage(this, "img/red_brick.png");
-        ball = ImageLoader.loadImage(this, "img/obstacles/ball.png");
-        pillow = ImageLoader.loadImage(this, "img/obstacles/pillow.png");
-        toy = ImageLoader.loadImage(this, "img/obstacles/bookshelf.png");
-        plushy = ImageLoader.loadImage(this, "img/obstacles/Teddy.png");
-        plant1 = ImageLoader.loadImage(this, "img/obstacles/plant1.png");
-        plant2 = ImageLoader.loadImage(this, "img/obstacles/plant2.png");
-        computer = ImageLoader.loadImage(this, "img/obstacles/computer.png");
-        paper = ImageLoader.loadImage(this, "img/obstacles/paper.png");
+        Path path = ImageLoader.getImagePath("img/obstacles").toAbsolutePath();
+        var files = path.toFile().listFiles();
+        assert files != null;
+        for (var file: files) {
+            if (!file.isHidden()) {
+               pImageListObstacles.add(ImageLoader.loadImage(this,"img/obstacles/" + file.getName()));
+            }
+        }
 
         if (FULLSCREEN) {
             backgroundImage = ImageLoader.loadImage(this, "img/Room-Floor-HD.png");

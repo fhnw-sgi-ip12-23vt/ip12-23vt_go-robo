@@ -8,6 +8,7 @@ import roomba.view.GameField;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.logging.Level;
@@ -95,7 +96,7 @@ public class LevelManager {
         }
         Random r = new Random();
         levelName = rightLevels.get(r.nextInt(rightLevels.size())).replace(".csv", "");
-        return "files/level/" + rightLevels.get(r.nextInt(rightLevels.size()));
+        return fullPath + "/" + rightLevels.get(r.nextInt(rightLevels.size()));
     }
 
     /**
@@ -131,13 +132,11 @@ public class LevelManager {
                     gameField.obstacles.add(s);
                 }
                 case "3" -> {
-                    PImage[] allObstacleImages = new PImage[] {gameField.ball, gameField.pillow, gameField.toy,
-                        gameField.plushy, gameField.plant1, gameField.plant2, gameField.computer,
-                        gameField.paper};
+                    List<PImage> allObstacleImages = gameField.pImageListObstacles;
                     Random random = new Random();
-                    int i = random.nextInt(allObstacleImages.length);
+                    int i = random.nextInt(allObstacleImages.size());
 
-                    Sprite s = new Sprite(gameField, allObstacleImages[i], SPRITE_SCALE);
+                    Sprite s = new Sprite(gameField, allObstacleImages.get(i), SPRITE_SCALE);
                     s.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
                     s.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
                     gameField.obstacles.add(s);
@@ -147,6 +146,10 @@ public class LevelManager {
                     player.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
                     player.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
                     gameField.player = player;
+                }
+
+                case "a" -> {
+
                 }
                 case "" -> {
                     //Air does nothing
