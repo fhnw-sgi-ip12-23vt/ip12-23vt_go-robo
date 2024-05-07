@@ -19,7 +19,10 @@ import static roomba.model.Constants.HEIGHT;
 import static roomba.model.Constants.LEFT_FACING;
 import static roomba.model.Constants.RFID_DOWN;
 import static roomba.model.Constants.RFID_LEFT;
-import static roomba.model.Constants.RFID_NEXT;
+import static roomba.model.Constants.RFID_EASY;
+import static roomba.model.Constants.RFID_MEDIUM;
+import static roomba.model.Constants.RFID_HARD;
+import static roomba.model.Constants.RFID_TURN;
 import static roomba.model.Constants.RFID_RESET;
 import static roomba.model.Constants.RFID_RIGHT;
 import static roomba.model.Constants.RFID_UP;
@@ -276,7 +279,7 @@ public class GameField extends PApplet {
                         pui.ledOn();
                     }
                 }
-                if (input.equals(RFID_NEXT.contains(input))) {
+                if (input.equals(RFID_EASY.contains(input))) {
                     nextLevel = true;
                 }
                 if (input.equals(RFID_RESET.contains(input))) {
