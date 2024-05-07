@@ -39,7 +39,7 @@ public final class Constants {
         float spriteScale = spriteSize / 128;
         int height = (int) (spriteSize * 12);
         int width = (int) (spriteSize * 16);
-        boolean fullscreen = false;
+        boolean fullscreen = true;
         Set<String> rfidRight = new HashSet<>();
         Set<String> rfidLeft = new HashSet<>();
         Set<String> rfidUp = new HashSet<>();

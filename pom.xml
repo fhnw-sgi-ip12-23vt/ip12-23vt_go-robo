@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>groupId</groupId>
-    <artifactId>ProcessingTemplate</artifactId>
+    <artifactId>RoboGo</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -13,6 +13,35 @@
     <!-- BUILD PROPERTIES -->
     <build>
         <plugins>
+
+            <!-- CheckStyle PlugIn -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven-checkstyle-plugin}</version>
+                <executions>
+                    <execution>
+                        <id>test-compile-verify-style</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>${checkstyle.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <configLocation>src/main/config/checks.xml</configLocation>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <violationSeverity>warning</violationSeverity>
+                </configuration>
+
+            </plugin>
 
 
             <!-- JAVA COMPILER -->
@@ -155,13 +184,20 @@
     </build>
 
     <properties>
+        <mainClass>roomba.RoombaInTrouble</mainClass>
+
+        <maven-shade.version>3.2.4</maven-shade.version> <!-- Version des Shade Plugins -->
+
+        <checkstyle.version>10.14.1</checkstyle.version>  <!-- Version des CheckStyle Plugins -->
+        <maven-checkstyle-plugin>3.3.1</maven-checkstyle-plugin>
+
         <!-- The class that will be started, choose one and only one -->
 
         <!-- <launcher.class>com.pi4j.mvc/com.pi4j.setup.HelloFX</launcher.class> -->
         <!-- <launcher.class>com.pi4j.mvc/com.pi4j.setup.MinimalPi4J</launcher.class> -->
         <!-- <launcher.class>com.pi4j.mvc/com.pi4j.mvc.templateapp.AppStarter</launcher.class> -->
         <!-- <launcher.class>com.pi4j.mvc/com.pi4j.mvc.templatepuiapp.AppStarter</launcher.class> -->
-        <launcher.class>ProcessingTemplate/roomba.RoombaInTrouble</launcher.class>
+        <launcher.class>RoboGo/roomba.RoombaInTrouble</launcher.class>
 
         <!-- Setup for the RaspPi -->
         <pi.hostname>pi4j</pi.hostname> <!-- if ping to pi4j not possible replace to ip address and at <pi.ipnumber> remove .local-->
@@ -351,7 +387,7 @@
                                                  failonerror="false" usepty="true" useSystemIn="false"
                                                  suppresssystemerr="true" suppresssystemout="true"
                                                  command="DISPLAY=:0 XAUTHORITY=/home/pi/.Xauthority sudo -E java -XX:+UseZGC -Xmx1G   --module-path /opt/javafx-sdk/lib:/home/pi/deploy --add-modules javafx.controls -Dglass.platform=gtk
-                                                 --module ProcessingTemplate/roomba.RoombaInTrouble"/>
+                                                 --module RoboGo/roomba.RoombaInTrouble"/>
 
                                     </target>
                                 </configuration>
