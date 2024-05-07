@@ -37,6 +37,7 @@ public class LedController extends ControllerBase<LedModel> {
         try {
             ledOn(typ);
             Thread.sleep(1000); // Sleep for 1000 milliseconds (1 second)
+            ledOff(typ);
         } catch (InterruptedException e) {
             ledReset(typ);
             // Handle the InterruptedException, if necessary
