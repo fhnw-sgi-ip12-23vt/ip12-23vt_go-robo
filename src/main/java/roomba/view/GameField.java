@@ -174,7 +174,7 @@ public class GameField extends PApplet {
      * Sets up the initial game state.
      */
     public void setup() {
-        puiLed.blink(PhysicalLed.LEDType.GREEN);
+        //puiLed.blink(PhysicalLed.LEDType.GREEN);
         winCondition = false;
         imageMode(CENTER);
         loadImages();
@@ -255,8 +255,6 @@ public class GameField extends PApplet {
                 turnMode = !turnMode;
             } if (RFID_RESET.contains(input)) {
                 restart();
-            }else if (player.isInPlace()) {
-                pui.ledOff();
             } else if (player.isInPlace()) {
                 puiLed.ledOff(PhysicalLed.LEDType.YELLOW);
                 if (turnMode) {
