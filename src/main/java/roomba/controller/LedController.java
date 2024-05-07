@@ -39,7 +39,8 @@ public class LedController extends ControllerBase<LedModel> {
     public void blinkLedD1(PhysicalLed.LEDType typ){
         try {
             ledOn(typ);
-            Thread.sleep(1000); // Sleep for 1000 milliseconds (1 second)
+            Thread.sleep(1000);
+            ledOff(typ);// Sleep for 1000 milliseconds (1 second)
         } catch (InterruptedException e) {
             ledReset(typ);
             // Handle the InterruptedException, if necessary
