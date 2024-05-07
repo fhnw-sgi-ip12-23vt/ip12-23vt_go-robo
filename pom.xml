@@ -35,7 +35,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <excludes>**/util/**/*,*/catalog.components.base/**/*,**/module-info.java</excludes>
+                    <excludes>**/util/**/*,*/catalog/components/base/**/*,**/module-info.java</excludes>
                     <configLocation>src/main/config/checks.xml</configLocation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                     <violationSeverity>warning</violationSeverity>

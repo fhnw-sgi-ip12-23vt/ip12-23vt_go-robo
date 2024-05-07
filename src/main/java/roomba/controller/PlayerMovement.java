@@ -2,7 +2,11 @@ package roomba.controller;
 
 import roomba.model.Player;
 
-import static roomba.model.Constants.*;
+import static roomba.model.Constants.DOWN_FACING;
+import static roomba.model.Constants.LEFT_FACING;
+import static roomba.model.Constants.MOVE_SPEED;
+import static roomba.model.Constants.RIGHT_FACING;
+import static roomba.model.Constants.UP_FACING;
 
 /**
  * The PlayerMovement class represents the logic for moving the player character in the Roomba application.

@@ -59,6 +59,7 @@ public class GameField extends PApplet {
      * Constructs a GameField instance.
      *
      * @param pui The physical scanner.
+     * @param puiLed The physical Led.
      */
     public GameField(PhysicalScanner pui, PhysicalLed puiLed) {
         this.pui = pui;
@@ -242,18 +243,23 @@ public class GameField extends PApplet {
 
             if (nextLevel) {
                 setup();
-            } if (RFID_EASY.contains(input)){
+            }
+            if (RFID_EASY.contains(input)) {
                 difficulty = 0;
                 setup();
-            } if (RFID_MEDIUM.contains(input)){
+            }
+            if (RFID_MEDIUM.contains(input)) {
                 difficulty = 1;
                 setup();
-            } if (RFID_HARD.contains(input)){
+            }
+            if (RFID_HARD.contains(input)) {
                 difficulty = 2;
                 setup();
-            } if (RFID_TURN.contains(input)){
+            }
+            if (RFID_TURN.contains(input)) {
                 turnMode = !turnMode;
-            } if (RFID_RESET.contains(input)) {
+            }
+            if (RFID_RESET.contains(input)) {
                 restart();
             } else if (player.isInPlace()) {
                 puiLed.ledOff(PhysicalLed.LEDType.YELLOW);
@@ -293,7 +299,7 @@ public class GameField extends PApplet {
                     if (RFID_DOWN.contains(input)) {
                         lastInputs.add("↓");
                         player.movePlayer(DOWN_FACING);
-                      puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
+                        puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
                     }
                 }
             }
@@ -304,19 +310,19 @@ public class GameField extends PApplet {
         if (nextLevel) {
             setup();
         }
-        if (key == '1'){
+        if (key == '1') {
             difficulty = 0;
             setup();
         }
-        if (key == '2'){
+        if (key == '2') {
             difficulty = 1;
             setup();
         }
-        if (key == '3'){
+        if (key == '3') {
             difficulty = 2;
             setup();
         }
-        if (key == 'r'){
+        if (key == 'r') {
             restart();
         }
         if (key == 'h') {

@@ -6,9 +6,6 @@ import roomba.util.mvcbase.ControllerBase;
 import roomba.view.PhysicalLed;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Timer;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 /**
  * The PhysicalController class represents the controller component
  * for managing physical interactions in the Roomba application.
@@ -29,7 +26,7 @@ public class LedController extends ControllerBase<LedModel> {
         this.model = model;
     }
 
-    public void saveInModel(SimpleLed g, SimpleLed b, SimpleLed y){
+    public void saveInModel(SimpleLed g, SimpleLed b, SimpleLed y) {
         model.greenLED = g;
         model.blueLED = b;
         model.yellowLED = y;
