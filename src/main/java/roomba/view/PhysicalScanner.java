@@ -2,9 +2,12 @@ package roomba.view;
 
 import com.pi4j.context.Context;
 import com.pi4j.crowpi.components.RfidComponent;
+import roomba.catalog.components.base.PIN;
+import roomba.catalog.components.base.SimpleLed;
 import roomba.controller.PhysicalController;
 import roomba.model.PhysicalModel;
 import roomba.util.mvcbase.PuiBase;
+
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +25,7 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
 
     private final PhysicalController controller;
     private RfidComponent rfid;
+    private SimpleLed led;
 
     /**
      * Constructor for PhysicalScanner.
@@ -40,6 +44,7 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
     @Override
     public void initializeParts() {
         rfid = new RfidComponent(pi4J);
+        led = new SimpleLed(pi4J, PIN.D17);
     }
 
     /**
@@ -57,5 +62,19 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
             }
         );
 
+    }
+
+    public void ledOn(){
+        led.on();
+    }
+
+    public void ledOff(){
+        if(led.isOn()){
+            led.off();
+        }
+    }
+
+    public void ledReset(){
+        led.reset();
     }
 }

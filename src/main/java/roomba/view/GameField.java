@@ -223,6 +223,7 @@ public class GameField extends PApplet {
             if (nextLevel) {
                 setup();
             } else if (player.isInPlace()) {
+                pui.ledOff();
                 if (turnMode){
                     if (RFID_RIGHT.contains(input)) {
                         lastInputs.add("→");
@@ -244,18 +245,22 @@ public class GameField extends PApplet {
                     if (RFID_RIGHT.contains(input)) {
                         lastInputs.add("→");
                         player.movePlayer(RIGHT_FACING);
+                        pui.ledOn();
                     }
                     if (RFID_LEFT.contains(input)) {
                         lastInputs.add("←");
                         player.movePlayer(LEFT_FACING);
+                        pui.ledOn();
                     }
                     if (RFID_UP.contains(input)) {
                         lastInputs.add("↑");
                         player.movePlayer(UP_FACING);
+                        pui.ledOn();
                     }
                     if (RFID_DOWN.contains(input)) {
                         lastInputs.add("↓");
                         player.movePlayer(DOWN_FACING);
+                        pui.ledOn();
                     }
                 }
                 if (input.equals(RFID_NEXT.contains(input))){
@@ -329,6 +334,7 @@ public class GameField extends PApplet {
     public void exit() {
         LOGGER.log(Level.WARNING, "Shutdown");
         if (pui != null) {
+            pui.ledReset();
             pui.getController().shutdown();
             pui.shutdown();
         }
