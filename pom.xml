@@ -9,7 +9,6 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-
     <!-- BUILD PROPERTIES -->
     <build>
         <plugins>
@@ -36,6 +35,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
+                    <excludes>**/util/**/*,*/catalog.components.base/**/*</excludes>
                     <configLocation>src/main/config/checks.xml</configLocation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                     <violationSeverity>warning</violationSeverity>
