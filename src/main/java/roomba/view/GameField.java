@@ -45,7 +45,8 @@ public class GameField extends PApplet {
     public boolean nextLevel = false;
     public List<Sprite> obstacles;
     public List<Sprite> goal;
-    public PImage wall, ball, toy, pillow, plushy, plant1, plant2, computer, paper, chargingStation, playerImage, geschafft, neueslevel1, neueslevel2;
+    public PImage wall, ball, toy, pillow, plushy, plant1, plant2, computer, paper,
+            chargingStation, playerImage, geschafft, neueslevel1, neueslevel2;
     public Player player;
     private int difficulty = 0;
     private PImage backgroundImage;
@@ -114,16 +115,16 @@ public class GameField extends PApplet {
 
 
 
-    public void drawCompletionWindow(){
+    public void drawCompletionWindow() {
         float viewX = 0;
         float viewY = 0;
-        if (difficulty == 1){
+        if (difficulty == 1) {
             image(neueslevel1, (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
         }
-        if (difficulty == 2){
+        if (difficulty == 2) {
             image(neueslevel2, (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
         }
-        if (difficulty == 3){
+        if (difficulty == 3) {
             image(geschafft, (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
         }
     }

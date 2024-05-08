@@ -74,7 +74,7 @@ public class LevelManager {
         // Resets difficulty after 3
         difficulty++;
         if (difficulty == 4) {
-           difficulty = 1;
+            difficulty = 1;
         }
 
         Path fullPath = ImageLoader.loadFile("files/level");

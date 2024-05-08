@@ -12,8 +12,7 @@
         <property name="fileNamePattern" value="ObservableValue\.java$"/>
         <property name="fileNamePattern" value="Pi4JContext\.java$"/>
         <property name="fileNamePattern" value="module\-info\.java$"/>
-
-
+        <property name="fileNamePattern" value="rfidIDImport\.java$"/>
     </module>
 
     <!-- Note: Exclude code analysis in the view-package and non-java files.  -->
