@@ -45,7 +45,7 @@ public class GameField extends PApplet {
     public boolean nextLevel = false;
     public List<Sprite> obstacles;
     public List<Sprite> goal;
-    public PImage wall, ball, toy, pillow, plushy, plant1, plant2, computer, paper, chargingStation, playerImage;
+    public PImage wall, ball, toy, pillow, plushy, plant1, plant2, computer, paper, chargingStation, playerImage, geschafft, neueslevel1, neueslevel2;
     public Player player;
     private int difficulty = 0;
     private PImage backgroundImage;
@@ -54,6 +54,7 @@ public class GameField extends PApplet {
     private List<String> lastInputs = new ArrayList<>();
     private boolean turnMode = false;
     private boolean loadingNextLevel = false;
+    private int completionWindowStartTime;
 
     /**
      * Constructs a GameField instance.
@@ -87,19 +88,43 @@ public class GameField extends PApplet {
     public void draw() {
         background(backgroundImage);
         displayAll();
+
         if (!nextLevel) {
             updateAll();
             collectGoal();
         } else {
-            // If the next level flag is set, delay input for 5 seconds
             if (!loadingNextLevel) {
                 puiLed.blink(PhysicalLed.LEDType.GREEN);
-                delay(5000); // 5 seconds delay
+                drawCompletionWindow();
                 loadingNextLevel = true;
+                completionWindowStartTime = millis(); // Record the time when completion window starts displaying
             } else {
-                setup(); // Start the next level after the delay
-                loadingNextLevel = false; // Reset the flag for the next level
+                // Check if 5 seconds have passed since the completion window started displaying
+                if (millis() - completionWindowStartTime < 5000) {
+                    drawCompletionWindow(); // Draw completion window during the delay
+                } else {
+                    setup(); // Start the next level after the delay
+                    nextLevel = false;
+                    loadingNextLevel = false; // Reset flags
+                }
             }
+        }
+    }
+
+
+
+
+    public void drawCompletionWindow(){
+        float viewX = 0;
+        float viewY = 0;
+        if (difficulty == 1){
+            image(neueslevel1, (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
+        }
+        if (difficulty == 2){
+            image(neueslevel2, (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
+        }
+        if (difficulty == 3){
+            image(geschafft, (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
         }
     }
 
@@ -148,12 +173,6 @@ public class GameField extends PApplet {
         for (int i = lastInputs.size() - 1; i >= lastInputs.size() - end; i--) {
             text(lastInputs.get(i), viewX + 1200 + (lastInputs.size() - 1 - i) * 25, viewY + 50);
         }
-
-
-        if (winCondition) {
-            fill(0, 0, 255);
-            text("Du hast es geschafft!", (float) (viewX + width / 2.0 - 100), (float) (viewY + height / 2.0 + 50));
-        }
     }
 
     /**
@@ -177,6 +196,7 @@ public class GameField extends PApplet {
      */
     public void setup() {
         winCondition = false;
+
         imageMode(CENTER);
         loadImages();
 
@@ -213,6 +233,9 @@ public class GameField extends PApplet {
         plant2 = ImageLoader.loadImage(this, "img/obstacles/plant2.png");
         computer = ImageLoader.loadImage(this, "img/obstacles/computer.png");
         paper = ImageLoader.loadImage(this, "img/obstacles/paper.png");
+        geschafft = ImageLoader.loadImage(this, "img/response/GESCHAFFT.png");
+        neueslevel1 = ImageLoader.loadImage(this, "img/response/NEUESLEVEL1.png");
+        neueslevel2 = ImageLoader.loadImage(this, "img/response/NEUESLEVEL2.png");
 
         if (FULLSCREEN) {
             backgroundImage = ImageLoader.loadImage(this, "img/Room-Floor-HD.png");
@@ -240,10 +263,6 @@ public class GameField extends PApplet {
             LOGGER.log(Level.FINE,
                 "handleInput queue item !" + input + "!" + "    nextLevel" + nextLevel + "    player.isInPlace()"
                     + player.isInPlace());
-
-            if (nextLevel) {
-                setup();
-            }
             if (RFID_EASY.contains(input)) {
                 difficulty = 0;
                 setup();
@@ -307,9 +326,6 @@ public class GameField extends PApplet {
     }
 
     public void keyPressed() {
-        if (nextLevel) {
-            setup();
-        }
         if (key == '1') {
             difficulty = 0;
             setup();
