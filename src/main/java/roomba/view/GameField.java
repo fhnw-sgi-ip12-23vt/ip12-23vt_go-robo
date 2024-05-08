@@ -49,12 +49,12 @@ public class GameField extends PApplet {
     public Player player;
     private int difficulty = 0;
     private PImage backgroundImage;
-    private boolean winCondition = false;
     private boolean isMov = false;
     private List<String> lastInputs = new ArrayList<>();
     private boolean turnMode = false;
     private boolean loadingNextLevel = false;
     private int completionWindowStartTime;
+    private String currentLevel;
 
     /**
      * Constructs a GameField instance.
@@ -187,7 +187,6 @@ public class GameField extends PApplet {
 
         } else {
             nextLevel = true;
-            winCondition = difficulty == 3;
         }
     }
 
@@ -195,13 +194,12 @@ public class GameField extends PApplet {
      * Sets up the initial game state.
      */
     public void setup() {
-        winCondition = false;
-
         imageMode(CENTER);
         loadImages();
 
         levelManager.setDifficulty(difficulty);
-        createPlatforms(levelManager.getNextLevel(false));
+        currentLevel = levelManager.getNextLevel();
+        createPlatforms(currentLevel);
         difficulty = levelManager.getDifficulty();
     }
 
@@ -209,13 +207,10 @@ public class GameField extends PApplet {
      * restart current level
      */
     public void restart() {
-        winCondition = false;
         imageMode(CENTER);
         loadImages();
 
-        levelManager.setDifficulty(difficulty);
-        createPlatforms(levelManager.getNextLevel(true));
-        difficulty = levelManager.getDifficulty();
+        createPlatforms(currentLevel);
     }
 
     /**
