@@ -17,7 +17,22 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static roomba.model.Constants.*;
+import static roomba.model.Constants.DOWN_FACING;
+import static roomba.model.Constants.FULLSCREEN;
+import static roomba.model.Constants.HEIGHT;
+import static roomba.model.Constants.LEFT_FACING;
+import static roomba.model.Constants.RFID_DOWN;
+import static roomba.model.Constants.RFID_EASY;
+import static roomba.model.Constants.RFID_HARD;
+import static roomba.model.Constants.RFID_LEFT;
+import static roomba.model.Constants.RFID_MEDIUM;
+import static roomba.model.Constants.RFID_RESET;
+import static roomba.model.Constants.RFID_RIGHT;
+import static roomba.model.Constants.RFID_TURN;
+import static roomba.model.Constants.RFID_UP;
+import static roomba.model.Constants.RIGHT_FACING;
+import static roomba.model.Constants.UP_FACING;
+import static roomba.model.Constants.WIDTH;
 
 
 /**
@@ -25,7 +40,7 @@ import static roomba.model.Constants.*;
  * and goals.
  */
 public class GameField extends PApplet {
-    private final int BACKGROUND_SCALE = 114;
+    private static final int BACKGROUND_SCALE = 114;
     private static final Logger LOGGER = Logger.getLogger(GameField.class.getName());
     private static final float HEADER_SIZE = 113;
     private final PhysicalScanner pui;
@@ -35,7 +50,8 @@ public class GameField extends PApplet {
     public boolean nextLevel = false;
     public List<Sprite> obstacles;
     public List<Sprite> goal;
-    public PImage wall, chargingStation, playerImage;
+    public PImage playerImage;
+    public Map<String, PImage> imageMap = new HashMap<>();
     public List<PImage> pImageListObstacles = new ArrayList<>();
     public Map<String, List<PImage>> pImageMultiImageObstacles = new HashMap<>();
     public Player player;
@@ -51,7 +67,7 @@ public class GameField extends PApplet {
     /**
      * Constructs a GameField instance.
      *
-     * @param pui The physical scanner.
+     * @param pui    The physical scanner.
      * @param puiLed The physical Led.
      */
     public GameField(PhysicalScanner pui, PhysicalLed puiLed) {
@@ -60,7 +76,7 @@ public class GameField extends PApplet {
         levelManager = new LevelManager();
         pui.getController().setGm(this);
         if (FULLSCREEN) {
-            collisionHandler = new CollisionHandler(HEIGHT - 230, WIDTH - 400, HEADER_SIZE);
+            collisionHandler = new CollisionHandler(HEIGHT, WIDTH, HEADER_SIZE);
         } else {
             collisionHandler = new CollisionHandler(HEIGHT, WIDTH, HEADER_SIZE);
         }
@@ -107,13 +123,13 @@ public class GameField extends PApplet {
         float viewX = 0;
         float viewY = 0;
         if (difficulty == 1) {
-            image(neueslevel1, (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
+            image(imageMap.get("newLevel1"), (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
         }
         if (difficulty == 2) {
-            image(neueslevel2, (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
+            image(imageMap.get("newLevel2"), (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
         }
         if (difficulty == 3) {
-            image(geschafft, (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
+            image(imageMap.get("done"), (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
         }
     }
 
@@ -220,9 +236,14 @@ public class GameField extends PApplet {
      * Loads images for the game elements.
      */
     private void loadImages() {
-        playerImage = ImageLoader.loadImage(this, "img/roomba2-pixel-dark.png");
-        chargingStation = ImageLoader.loadImage(this, "img/goal/battery-frame3.png");
-        wall = ImageLoader.loadImage(this, "img/red_brick.png");
+
+        imageMap.put("playerImage", ImageLoader.loadImage(this, "img/roomba2-pixel-dark.png"));
+        imageMap.put("chargingStation", ImageLoader.loadImage(this, "img/goal/battery-frame3.png"));
+        imageMap.put("wall", ImageLoader.loadImage(this, "img/red_brick.png"));
+        imageMap.put("newLevel1", ImageLoader.loadImage(this, "img/response/new-level-1.png"));
+        imageMap.put("newLevel2", ImageLoader.loadImage(this, "img/response/new-level-2.png"));
+        imageMap.put("done", ImageLoader.loadImage(this, "img/response/done.png"));
+
         Path path = ImageLoader.getImagePath("img/obstacles").toAbsolutePath();
         var files = path.toFile().listFiles();
         assert files != null;

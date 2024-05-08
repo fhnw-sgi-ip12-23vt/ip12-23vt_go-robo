@@ -19,11 +19,12 @@ public class Goal extends AnimatedSprite {
     public Goal(PApplet pApplet, PImage img, float scale) {
         super(pApplet, img, scale);
         int frameRateScale = 5;
-        standNeutral = new PImage[4*frameRateScale];
+        standNeutral = new PImage[4 * frameRateScale];
 
-        for (int i=0; i<4;i++) {
-            for (int j=0; j<frameRateScale;j++) {
-                standNeutral[i*frameRateScale+j] = ImageLoader.loadImage(pApplet, "img/goal/battery-frame"+i+".png");
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < frameRateScale; j++) {
+                standNeutral[i * frameRateScale + j] =
+                    ImageLoader.loadImage(pApplet, "img/goal/battery-frame" + i + ".png");
             }
         }
 
