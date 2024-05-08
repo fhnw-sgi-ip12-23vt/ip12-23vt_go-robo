@@ -158,23 +158,34 @@ public class GameField extends PApplet {
     }
 
     private void drawHeader() {
-        int yLbl = 75;
-//        fill(0, 0, 0);
-//        rect(0, 0, WIDTH, HEADER_SIZE);
+        int yLbl = 65;
+        int yGrey = 15;
+        fill(0, 0, 0);
+        rect(0, 0, WIDTH, HEADER_SIZE - yGrey);
+        fill(50, 50, 50);
+        rect(0, HEADER_SIZE - yGrey, WIDTH, yGrey);
         fill(0, 255, 0);
         textSize(45);
         float viewX = 0;
         float viewY = 0;
         text("Level: " + levelManager.getLevelName(), viewX + 50, viewY + yLbl);
         if (turnMode) {
-            text("H", viewX + 400, viewY + yLbl);
+            text("╰(*°▽°*)╯", viewX + 400, viewY + yLbl);
         }
-        textSize(50);
         int end = Math.min(lastInputs.size(), 5); // End index for the loop
+        boolean first = true;
         for (int i = lastInputs.size() - 1; i >= lastInputs.size() - end; i--) {
-            text(lastInputs.size() - 1 - i + ": " + lastInputs.get(i), viewX + 1000 + (lastInputs.size() - 1 - i) * 85,
-                viewY + yLbl);
+            if (first) {
+                textSize(50);
+                text((i) + ": " + lastInputs.get(i), viewX + 1000 + (lastInputs.size() - 1 - i) * 100, viewY + yLbl);
+                first = false;
+            } else {
+                textSize(32);
+                text((i) + ": " + lastInputs.get(i), viewX + 1050 + (lastInputs.size() - 1 - i) * 70, viewY + yLbl);
+            }
+
         }
+
     }
 
     /**
