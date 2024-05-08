@@ -4,7 +4,6 @@ import roomba.model.PhysicalModel;
 import roomba.util.mvcbase.ControllerBase;
 import roomba.view.GameField;
 import java.beans.PropertyChangeListener;
-import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,14 +27,10 @@ public class PhysicalController extends ControllerBase<PhysicalModel> {
         this.addPropertyChangeListener(model);
     }
 
-    public Queue<String> getQueue() {
-        return model.inputQueue;
-    }
-
     public void enqueue(String st) {
         String old = model.inputQueue.peek();
         model.inputQueue.add(st);
-        this.triggerPropertyChange("RFID_ID",old , st);
+        this.triggerPropertyChange("RFID_ID", old, st);
         LOGGER.log(Level.INFO, "queue:  " + st);
 
     }

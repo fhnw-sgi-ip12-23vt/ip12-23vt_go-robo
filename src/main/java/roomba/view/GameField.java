@@ -306,9 +306,7 @@ public class GameField extends PApplet {
 
 
     public void keyPressed() {
-        if (key == 'p'){
-            pui.MockTest();
-        }
+
         if (nextLevel) {
             setup();
         }

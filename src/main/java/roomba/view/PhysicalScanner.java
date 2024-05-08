@@ -14,11 +14,9 @@ import java.util.logging.Logger;
  */
 public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> {
     private static final Logger LOGGER = Logger.getLogger(PhysicalScanner.class.getName());
-
     public PhysicalController getController() {
         return controller;
     }
-
     private final PhysicalController controller;
     private RfidComponent rfid;
 
@@ -52,16 +50,11 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
     public void setupUiToActionBindings(PhysicalController controller) {
 
         rfid.onCardDetected(rfidCard -> {
-                LOGGER.log(Level.INFO, "Card:  " + rfidCard);
+                LOGGER.log(Level.INFO, "Card: " + rfidCard);
 
                 controller.enqueue(rfidCard.getSerial());
             }
         );
-
-    }
-
-    public  void MockTest(){
-        controller.enqueue("BA279E16");
 
     }
 
