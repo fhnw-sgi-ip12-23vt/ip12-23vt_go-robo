@@ -54,7 +54,7 @@ public final class Constants {
         Set<String> rfidTurn = new HashSet<>();
 
         try {
-            Path fullPath = ImageLoader.loadFile("/main/java/app.properties");
+            Path fullPath = ImageLoader.loadFile("/app.properties");
             Properties appProps = new Properties();
             appProps.load(new FileInputStream(fullPath.toString()));
 

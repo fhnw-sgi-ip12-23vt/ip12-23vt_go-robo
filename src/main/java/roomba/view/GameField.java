@@ -58,6 +58,7 @@ public class GameField extends PApplet {
         this.pui = pui;
         this.puiLed = puiLed;
         levelManager = new LevelManager();
+        pui.getController().setGm(this);
         if (FULLSCREEN) {
             collisionHandler = new CollisionHandler(HEIGHT - 230, WIDTH - 400, HEADER_SIZE);
         } else {
@@ -120,7 +121,6 @@ public class GameField extends PApplet {
      * Updates the animation and handles collisions for all game elements.
      */
     void updateAll() {
-        handleInput();
         if (isMov) {
             player.updateAnimationFrame1();
             isMov = false;
@@ -148,24 +148,36 @@ public class GameField extends PApplet {
     }
 
     private void drawHeader() {
-        int yLbl = 75;
-//        fill(0, 0, 0);
-//        rect(0, 0, WIDTH, HEADER_SIZE);
+        int yLbl = 65;
+        int yGrey = 15;
+        fill(0, 0, 0);
+        rect(0, 0, WIDTH, HEADER_SIZE - yGrey);
+        fill(50, 50, 50);
+        rect(0, HEADER_SIZE - yGrey, WIDTH, yGrey);
         fill(0, 255, 0);
         textSize(45);
         float viewX = 0;
         float viewY = 0;
         text("Level: " + levelManager.getLevelName(), viewX + 50, viewY + yLbl);
         if (turnMode) {
-            text("H", viewX + 400, viewY + yLbl);
+            text("╰(*°▽°*)╯", viewX + 400, viewY + yLbl);
         }
-        textSize(50);
         int end = Math.min(lastInputs.size(), 5); // End index for the loop
+        boolean first = true;
         for (int i = lastInputs.size() - 1; i >= lastInputs.size() - end; i--) {
-            text(lastInputs.size() - 1 - i + ": " + lastInputs.get(i), viewX + 1000 + (lastInputs.size() - 1 - i) * 85,
-                viewY + yLbl);
+            if (first) {
+                textSize(50);
+                text((i) + ": " + lastInputs.get(i), viewX + 1000 + (lastInputs.size() - 1 - i) * 100, viewY + yLbl);
+                first = false;
+            } else {
+                textSize(32);
+                text((i) + ": " + lastInputs.get(i), viewX + 1050 + (lastInputs.size() - 1 - i) * 70, viewY + yLbl);
+            }
+
         }
+
     }
+
     /**
      * Handles the collection of goals and checks for win conditions.
      */
@@ -276,71 +288,70 @@ public class GameField extends PApplet {
         levelManager.createPlatforms(this, filename);
     }
 
-    private void handleInput() {
+    public void handleInput(String input) {
         assert pui != null;
-        if (!pui.getController().getQueue().getValue().isEmpty()) {
-            String input = pui.getController().dequeue();
-            puiLed.blink(PhysicalLed.LEDType.BLUE);
-            LOGGER.log(Level.FINE,
-                "handleInput queue item !" + input + "!" + "    nextLevel" + nextLevel + "    player.isInPlace()"
-                    + player.isInPlace());
-            if (RFID_EASY.contains(input)) {
-                difficulty = 0;
-                setup();
-            }
-            if (RFID_MEDIUM.contains(input)) {
-                difficulty = 1;
-                setup();
-            }
-            if (RFID_HARD.contains(input)) {
-                difficulty = 2;
-                setup();
-            }
-            if (RFID_TURN.contains(input)) {
-                turnMode = !turnMode;
-            }
-            if (RFID_RESET.contains(input)) {
-                restart();
-            } else if (player.isInPlace()) {
-                puiLed.ledOff(PhysicalLed.LEDType.YELLOW);
-                if (turnMode) {
-                    if (RFID_RIGHT.contains(input)) {
-                        lastInputs.add("→");
-                        player.turnPlayer(RIGHT_FACING);
-                    }
-                    if (RFID_LEFT.contains(input)) {
-                        lastInputs.add("←");
-                        player.turnPlayer(LEFT_FACING);
-                    }
-                    if (RFID_UP.contains(input)) {
-                        lastInputs.add("↑");
-                        player.movePlayer(UP_FACING);
-                    }
-                    if (RFID_DOWN.contains(input)) {
-                        lastInputs.add("↓");
-                        player.movePlayer(DOWN_FACING);
-                    }
-                } else {
-                    if (RFID_RIGHT.contains(input)) {
-                        lastInputs.add("→");
-                        player.movePlayer(RIGHT_FACING);
-                        puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
-                    }
-                    if (RFID_LEFT.contains(input)) {
-                        lastInputs.add("←");
-                        player.movePlayer(LEFT_FACING);
-                        puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
-                    }
-                    if (RFID_UP.contains(input)) {
-                        lastInputs.add("↑");
-                        player.movePlayer(UP_FACING);
-                        puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
-                    }
-                    if (RFID_DOWN.contains(input)) {
-                        lastInputs.add("↓");
-                        player.movePlayer(DOWN_FACING);
-                        puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
-                    }
+
+        puiLed.blink(PhysicalLed.LEDType.BLUE);
+        LOGGER.log(Level.FINE,
+            "handleInput queue item !" + input + "!" + "    nextLevel" + nextLevel + "    player.isInPlace()"
+                + player.isInPlace());
+
+        if (RFID_EASY.contains(input)) {
+            difficulty = 0;
+            setup();
+        }
+        if (RFID_MEDIUM.contains(input)) {
+            difficulty = 1;
+            setup();
+        }
+        if (RFID_HARD.contains(input)) {
+            difficulty = 2;
+            setup();
+        }
+        if (RFID_TURN.contains(input)) {
+            turnMode = !turnMode;
+        }
+        if (RFID_RESET.contains(input)) {
+            restart();
+        } else if (player.isInPlace()) {
+            puiLed.ledOff(PhysicalLed.LEDType.YELLOW);
+            if (turnMode) {
+                if (RFID_RIGHT.contains(input)) {
+                    lastInputs.add("→");
+                    player.turnPlayer(RIGHT_FACING);
+                }
+                if (RFID_LEFT.contains(input)) {
+                    lastInputs.add("←");
+                    player.turnPlayer(LEFT_FACING);
+                }
+                if (RFID_UP.contains(input)) {
+                    lastInputs.add("↑");
+                    player.movePlayer(UP_FACING);
+                }
+                if (RFID_DOWN.contains(input)) {
+                    lastInputs.add("↓");
+                    player.movePlayer(DOWN_FACING);
+                }
+            } else {
+                if (RFID_RIGHT.contains(input)) {
+                    lastInputs.add("→");
+                    player.movePlayer(RIGHT_FACING);
+                    puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
+                }
+                if (RFID_LEFT.contains(input)) {
+                    lastInputs.add("←");
+                    player.movePlayer(LEFT_FACING);
+                    puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
+                }
+                if (RFID_UP.contains(input)) {
+                    lastInputs.add("↑");
+                    player.movePlayer(UP_FACING);
+                    puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
+                }
+                if (RFID_DOWN.contains(input)) {
+                    lastInputs.add("↓");
+                    player.movePlayer(DOWN_FACING);
+                    puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
                 }
             }
         }
