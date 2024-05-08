@@ -45,7 +45,8 @@ public class GameField extends PApplet {
     public boolean nextLevel = false;
     public List<Sprite> obstacles;
     public List<Sprite> goal;
-    public PImage wall, ball, toy, pillow, plushy, plant1, plant2, computer, paper, chargingStation, playerImage, geschafft, neueslevel1, neueslevel2;
+    public PImage wall, ball, toy, pillow, plushy, plant1, plant2, computer, paper,
+        chargingStation, playerImage, geschafft, neueslevel1, neueslevel2;
     public Player player;
     private int difficulty = 0;
     private PImage backgroundImage;
@@ -111,19 +112,16 @@ public class GameField extends PApplet {
         }
     }
 
-
-
-
-    public void drawCompletionWindow(){
+    public void drawCompletionWindow() {
         float viewX = 0;
         float viewY = 0;
-        if (difficulty == 1){
+        if (difficulty == 1) {
             image(neueslevel1, (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
         }
-        if (difficulty == 2){
+        if (difficulty == 2) {
             image(neueslevel2, (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
         }
-        if (difficulty == 3){
+        if (difficulty == 3) {
             image(geschafft, (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
         }
     }
@@ -155,26 +153,29 @@ public class GameField extends PApplet {
         }
 
         player.display();
+        drawHeader();
 
-        //Header
-        fill(0, 0, 0);
-        rect(0, 0, WIDTH, HEADER_SIZE);
-        fill(0, 255, 0);
-        textSize(32);
-        float viewX = 0;
-        float viewY = 0;
-        text("Level: " + levelManager.getLevelName(), viewX + 50, viewY + 50);
-        if (turnMode) {
-            text("Turn-Mode", viewX + 300, viewY + 50);
-        } else {
-            text("Normal-Mode", viewX + 300, viewY + 50);
-        }
-        int end = Math.min(lastInputs.size(), 5); // End index for the loop
-        for (int i = lastInputs.size() - 1; i >= lastInputs.size() - end; i--) {
-            text(lastInputs.get(i), viewX + 1200 + (lastInputs.size() - 1 - i) * 25, viewY + 50);
-        }
     }
 
+    private void drawHeader() {
+        int yLbl = 75;
+//        fill(0, 0, 0);
+//        rect(0, 0, WIDTH, HEADER_SIZE);
+        fill(0, 255, 0);
+        textSize(45);
+        float viewX = 0;
+        float viewY = 0;
+        text("Level: " + levelManager.getLevelName(), viewX + 50, viewY + yLbl);
+        if (turnMode) {
+            text("H", viewX + 400, viewY + yLbl);
+        }
+        textSize(50);
+        int end = Math.min(lastInputs.size(), 5); // End index for the loop
+        for (int i = lastInputs.size() - 1; i >= lastInputs.size() - end; i--) {
+            text(lastInputs.size() - 1 - i + ": " + lastInputs.get(i), viewX + 1000 + (lastInputs.size() - 1 - i) * 85,
+                viewY + yLbl);
+        }
+    }
     /**
      * Handles the collection of goals and checks for win conditions.
      */
