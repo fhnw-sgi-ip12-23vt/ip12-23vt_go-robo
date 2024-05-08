@@ -60,4 +60,9 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
 
     }
 
+    public  void MockTest(){
+        controller.enqueue("BA279E16");
+
+    }
+
 }

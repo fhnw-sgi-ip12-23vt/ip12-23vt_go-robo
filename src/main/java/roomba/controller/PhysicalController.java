@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class PhysicalController extends ControllerBase<PhysicalModel> {
 
     private static final Logger LOGGER = Logger.getLogger(PhysicalController.class.getName());
-
+    private final PhysicalModel model;
     /**
      * Constructor for PhysicalController.
      *
@@ -24,6 +24,7 @@ public class PhysicalController extends ControllerBase<PhysicalModel> {
      */
     public PhysicalController(PhysicalModel model) {
         super(model);
+        this.model = model;
         this.addPropertyChangeListener(model);
     }
 
@@ -32,14 +33,16 @@ public class PhysicalController extends ControllerBase<PhysicalModel> {
     }
 
     public void enqueue(String st) {
+        String old = model.inputQueue.peek();
         model.inputQueue.add(st);
-        this.triggerPropertyChange(st, "", "");
-        LOGGER.log(Level.INFO, "queue:  " + model.inputQueue.peek());
+        this.triggerPropertyChange("RFID_ID",old , st);
+        LOGGER.log(Level.INFO, "queue:  " + st);
 
     }
 
     public void setGm(GameField gm) {
         assert gm != null;
+        LOGGER.log(Level.INFO, "gm set");
         model.addGameField(gm);
     }
 
