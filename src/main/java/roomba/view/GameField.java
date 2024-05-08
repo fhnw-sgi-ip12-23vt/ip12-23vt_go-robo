@@ -17,7 +17,10 @@ import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,10 +41,8 @@ public class GameField extends PApplet {
     public List<Sprite> obstacles;
     public List<Sprite> goal;
     public PImage wall, chargingStation, playerImage;
-
     public List<PImage> pImageListObstacles = new ArrayList<>();
-
-    public List<PImage> bed = new ArrayList<>();
+    public Map<String,List<PImage>> pImageMultiImageObstacles = new HashMap<>();
     public Player player;
     private int difficulty = 0;
     private PImage backgroundImage;
@@ -204,18 +205,53 @@ public class GameField extends PApplet {
             if (!file.isHidden() && file.getName().endsWith(".png")) {
                pImageListObstacles.add(ImageLoader.loadImage(this,"img/obstacles/" + file.getName()));
             }
-        }
 
-        for (int i = 0; i <4; i++) {
-            bed.add(i,ImageLoader.loadImage(this,"img/obstacles/bed/bed" + (i+1) + ".png"));
+            if (!file.isHidden() && file.isDirectory()) {
+                String newName = file.getName();
+                List<PImage> newList = new ArrayList<>();
+                var content = file.listFiles();
+                assert content != null;
+                for (var c : content) {
+                    if (!c.isHidden() && c.getName().endsWith(".png")) {
+                        newList.add(ImageLoader.loadImage(this, "img/obstacles/" + newName + "/" +c.getName()));
+                    }
+                }
+                pImageMultiImageObstacles.put(newName,newList);
+            }
         }
 
         if (FULLSCREEN) {
-            backgroundImage = ImageLoader.loadImage(this, "img/Room-Floor-HD.png");
-            backgroundImage.resize(width, height);
+
+        calculateBackgroundImage();
+
         } else {
             backgroundImage = ImageLoader.loadImage(this, "img/Room-Floor2.png");
         }
+
+    }
+
+    private void calculateBackgroundImage(){
+
+        int scale = 114;
+
+        PImage patternFull = ImageLoader.loadImage(this, "img/Room-Floor-HD.png");
+        PImage pattern = patternFull.get(128,0,128, 128);
+        pattern.resize(scale,0);
+
+        PImage fullSize = createImage(width,height,RGB);
+        fullSize.loadPixels();
+        pattern.loadPixels();
+
+        for ( int i = 0; i < height; i++) {
+            for (int j = 0; j< width; j++) {
+                fullSize.pixels[j+i*width] = pattern.pixels[(j%scale) + ((i%scale)*scale)];
+            }
+        }
+
+        fullSize.updatePixels();
+
+        backgroundImage = fullSize;
+
 
     }
 

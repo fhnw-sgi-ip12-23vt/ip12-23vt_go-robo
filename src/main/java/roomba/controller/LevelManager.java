@@ -112,6 +112,9 @@ public class LevelManager {
         gameField.obstacles = new ArrayList<>();
         gameField.goal = new ArrayList<>();
 
+        List<PImage> bed =  gameField.pImageMultiImageObstacles.get("bed");
+        List<PImage> couch =  gameField.pImageMultiImageObstacles.get("couch");
+
         String[] lines = gameField.loadStrings(filename);
         for (int row = 0; row < lines.length; row++) {
             String[] values = GameField.split(lines[row], ",");
@@ -178,30 +181,27 @@ public class LevelManager {
                 // BED
 
                 case "a" -> {
-                    Sprite s = new Sprite(gameField, gameField.bed.get(0), SPRITE_SCALE);
-                    s.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
-                    s.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
-                    gameField.obstacles.add(s);
+                    createObstacle(gameField, bed.get(0),col,row);
                 }
                 case "b" -> {
-                    Sprite s = new Sprite(gameField, gameField.bed.get(1), SPRITE_SCALE);
-                    s.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
-                    s.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
-                    gameField.obstacles.add(s);
+                    createObstacle(gameField, bed.get(2),col,row);
                 }
                 case "c" -> {
-                    Sprite s = new Sprite(gameField, gameField.bed.get(2), SPRITE_SCALE);
-                    s.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
-                    s.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
-                    gameField.obstacles.add(s);
+                    createObstacle(gameField, bed.get(1),col,row);
                 }
                 case "d" -> {
-                    Sprite s = new Sprite(gameField, gameField.bed.get(3), SPRITE_SCALE);
-                    s.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
-                    s.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
-                    gameField.obstacles.add(s);
+                    createObstacle(gameField, bed.get(3),col,row);
                 }
 
+
+                // COUCH
+
+                case "e" -> {
+                    createObstacle(gameField, couch.get(0),col,row);
+                }
+                case "f" -> {
+                    createObstacle(gameField, couch.get(1),col,row);
+                }
 
 
                 case "" -> {
@@ -222,5 +222,13 @@ public class LevelManager {
         s.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
         s.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
         gameField.obstacles.add(s);
+    }
+
+    public void createObstacle(GameField gameField, PImage pImage, int col, int row) {
+        Sprite s = new Sprite(gameField, pImage, SPRITE_SCALE);
+        s.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
+        s.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
+        gameField.obstacles.add(s);
+
     }
 }
