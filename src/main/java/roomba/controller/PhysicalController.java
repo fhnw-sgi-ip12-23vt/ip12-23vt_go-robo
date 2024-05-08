@@ -5,6 +5,7 @@ import roomba.util.mvcbase.ControllerBase;
 import roomba.view.GameField;
 import java.beans.PropertyChangeListener;
 import java.util.Queue;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -33,9 +34,12 @@ public class PhysicalController extends ControllerBase<PhysicalModel> {
     public void enqueue(String st) {
         model.inputQueue.add(st);
         this.triggerPropertyChange(st, "", "");
+        LOGGER.log(Level.INFO, "queue:  " + model.inputQueue.peek());
+
     }
 
     public void setGm(GameField gm) {
+        assert gm != null;
         model.addGameField(gm);
     }
 
