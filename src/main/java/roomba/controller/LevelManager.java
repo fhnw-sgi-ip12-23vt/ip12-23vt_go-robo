@@ -32,13 +32,13 @@ public class LevelManager {
      */
     public String getLevelName() {
         if (levelName.substring(0, levelName.indexOf("_")).equals("1")) {
-            return "Tutorial: " + levelName.substring(levelName.indexOf("_") + 1);
+            return "1 - " + levelName.substring(levelName.indexOf("_") + 1);
         }
         if (levelName.substring(0, levelName.indexOf("_")).equals("2")) {
-            return "Normal: " + levelName.substring(levelName.indexOf("_") + 1);
+            return "2 - " + levelName.substring(levelName.indexOf("_") + 1);
         }
         if (levelName.substring(0, levelName.indexOf("_")).equals("3")) {
-            return "Schwer: " + levelName.substring(levelName.indexOf("_") + 1);
+            return "3 - " + levelName.substring(levelName.indexOf("_") + 1);
         }
         return levelName;
     }
@@ -132,7 +132,7 @@ public class LevelManager {
                 case "3" -> {
                     PImage[] allObstacleImages = new PImage[] {gameField.ball, gameField.pillow, gameField.toy,
                         gameField.plushy, gameField.plant1, gameField.plant2, gameField.computer,
-                        gameField.paper};
+                        gameField.drawer};
                     Random random = new Random();
                     int i = random.nextInt(allObstacleImages.length);
 

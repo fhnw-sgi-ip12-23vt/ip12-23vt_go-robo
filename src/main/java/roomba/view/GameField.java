@@ -45,7 +45,7 @@ public class GameField extends PApplet {
     public boolean nextLevel = false;
     public List<Sprite> obstacles;
     public List<Sprite> goal;
-    public PImage wall, ball, toy, pillow, plushy, plant1, plant2, computer, paper,
+    public PImage wall, ball, toy, pillow, plushy, plant1, plant2, computer, drawer,
         chargingStation, playerImage, geschafft, neueslevel1, neueslevel2;
     public Player player;
     private int difficulty = 0;
@@ -157,6 +157,12 @@ public class GameField extends PApplet {
 
     }
 
+    /**
+     * Draws the header section of the game field, including level information and recent inputs.
+     * The header consists of a black rectangle at the top, a grey rectangle below it, level information,
+     * and recent inputs displayed in descending order.
+     * @see LevelManager
+     */
     private void drawHeader() {
         int yLbl = 65;
         int yGrey = 15;
@@ -181,11 +187,9 @@ public class GameField extends PApplet {
                 first = false;
             } else {
                 textSize(32);
-                text((i) + ": " + lastInputs.get(i), viewX + 1050 + (lastInputs.size() - 1 - i) * 70, viewY + yLbl);
+                text((i) + ": " + lastInputs.get(i), viewX + 1050 + (lastInputs.size() - 1 - i) * 75, viewY + yLbl);
             }
-
         }
-
     }
 
     /**
@@ -207,6 +211,7 @@ public class GameField extends PApplet {
      * Sets up the initial game state.
      */
     public void setup() {
+        lastInputs.clear();
         imageMode(CENTER);
         loadImages();
 
@@ -220,6 +225,7 @@ public class GameField extends PApplet {
      * restart current level
      */
     public void restart() {
+        lastInputs.clear();
         imageMode(CENTER);
         loadImages();
 
@@ -240,7 +246,7 @@ public class GameField extends PApplet {
         plant1 = ImageLoader.loadImage(this, "img/obstacles/plant1.png");
         plant2 = ImageLoader.loadImage(this, "img/obstacles/plant2.png");
         computer = ImageLoader.loadImage(this, "img/obstacles/computer.png");
-        paper = ImageLoader.loadImage(this, "img/obstacles/paper.png");
+        drawer = ImageLoader.loadImage(this, "img/obstacles/drawer.png");
         geschafft = ImageLoader.loadImage(this, "img/response/GESCHAFFT.png");
         neueslevel1 = ImageLoader.loadImage(this, "img/response/NEUESLEVEL1.png");
         neueslevel2 = ImageLoader.loadImage(this, "img/response/NEUESLEVEL2.png");
