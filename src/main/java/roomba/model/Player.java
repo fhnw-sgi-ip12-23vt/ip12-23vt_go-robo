@@ -5,7 +5,11 @@ import roomba.controller.ImageLoader;
 import roomba.view.GameField;
 import roomba.controller.PlayerMovement;
 
-import static roomba.model.Constants.*;
+import static roomba.model.Constants.DOWN_FACING;
+import static roomba.model.Constants.LEFT_FACING;
+import static roomba.model.Constants.RIGHT_FACING;
+import static roomba.model.Constants.UP_FACING;
+
 
 /**
  * The Player class represents the player character in the "Roomba in Trouble"

@@ -3,7 +3,12 @@ package roomba.model;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-import static roomba.model.Constants.*;
+import static roomba.model.Constants.DOWN_FACING;
+import static roomba.model.Constants.LEFT_FACING;
+import static roomba.model.Constants.NEUTRAL_FACING;
+import static roomba.model.Constants.RIGHT_FACING;
+import static roomba.model.Constants.UP_FACING;
+
 
 /**
  * Represents an animated sprite with various movement directions.

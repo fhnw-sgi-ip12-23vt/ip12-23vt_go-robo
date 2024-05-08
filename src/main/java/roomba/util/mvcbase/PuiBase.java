@@ -62,11 +62,11 @@ public abstract class PuiBase<M, C extends ControllerBase<M>> implements Project
         final ExecutorService waitForFinishedService = Executors.newFixedThreadPool(1);
         // would be nice if this could just be a method reference
         async(() -> {
-                  waitForFinishedService.shutdown();
-                  return null;
-              },
-              unused -> {
-              });
+                waitForFinishedService.shutdown();
+                return null;
+            },
+            unused -> {
+            });
         try {
             //noinspection ResultOfMethodCallIgnored
             waitForFinishedService.awaitTermination(5, TimeUnit.SECONDS);
@@ -116,10 +116,10 @@ public abstract class PuiBase<M, C extends ControllerBase<M>> implements Project
 
         public void execute(Consumer<V> action){
             observableValue.onChange((oldValue, newValue) ->
-                    queue.submit(() -> {
-                       action.accept(newValue);
-                       return null;
-                    }));
+                queue.submit(() -> {
+                    action.accept(newValue);
+                    return null;
+                }));
         }
     }
 

@@ -14,7 +14,8 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static roomba.model.Constants.*;
+import static roomba.model.Constants.SPRITE_SCALE;
+import static roomba.model.Constants.SPRITE_SIZE;
 
 /**
  * Manages the levels in the "Roomba in Trouble" game.
@@ -66,21 +67,17 @@ public class LevelManager {
      *
      * @return The file path of the next level.
      */
-    public String getNextLevel(boolean restart) {
+    public String getNextLevel() {
         LOGGER.log(Level.FINE, "Next Level");
 
         File[] listOfFiles;
+
         // Resets difficulty after 3
-        if(!restart) {
-            difficulty++;
-            if (difficulty == 6) {
-                difficulty = 1;
-            }
+        difficulty++;
+        if (difficulty == 4) {
+           difficulty = 1;
         }
 
-        // Load directory using ImageLoader
-        // String relativePath = "files/level";
-        // Path fullPath = ImageLoader.getImagePath(relativePath);
         Path fullPath = ImageLoader.loadFile("files/level");
 
         File folder = new File(fullPath.toString());

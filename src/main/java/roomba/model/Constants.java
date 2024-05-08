@@ -31,7 +31,10 @@ public final class Constants {
     public static final Set<String> RFID_UP;
     public static final Set<String> RFID_DOWN;
     public static final Set<String> RFID_RESET;
-    public static final Set<String> RFID_NEXT;
+    public static final Set<String> RFID_EASY;
+    public static final Set<String> RFID_MEDIUM;
+    public static final Set<String> RFID_HARD;
+    public static final Set<String> RFID_TURN;
 
     static {
         float moveSpeed = 4;
@@ -45,7 +48,10 @@ public final class Constants {
         Set<String> rfidUp = new HashSet<>();
         Set<String> rfidDown = new HashSet<>();
         Set<String> rfidReset = new HashSet<>();
-        Set<String> rfidNext = new HashSet<>();
+        Set<String> rfidEasy = new HashSet<>();
+        Set<String> rfidMedium = new HashSet<>();
+        Set<String> rfidHard = new HashSet<>();
+        Set<String> rfidTurn = new HashSet<>();
 
         try {
             Path fullPath = ImageLoader.loadFile("/main/java/app.properties");
@@ -75,8 +81,14 @@ public final class Constants {
             rfidDown.addAll(Arrays.asList(ids));
             ids = appProps.getProperty("RFID_RESET").split(", ");
             rfidReset.addAll(Arrays.asList(ids));
-            ids = appProps.getProperty("RFID_NEXT").split(", ");
-            rfidNext.addAll(Arrays.asList(ids));
+            ids = appProps.getProperty("RFID_EASY").split(", ");
+            rfidEasy.addAll(Arrays.asList(ids));
+            ids = appProps.getProperty("RFID_MEDIUM").split(", ");
+            rfidMedium.addAll(Arrays.asList(ids));
+            ids = appProps.getProperty("RFID_HARD").split(", ");
+            rfidHard.addAll(Arrays.asList(ids));
+            ids = appProps.getProperty("RFID_TURN").split(", ");
+            rfidTurn.addAll(Arrays.asList(ids));
 
         } catch (Exception e) {
             System.err.println("Error reading config file: " + e.getMessage());
@@ -93,7 +105,10 @@ public final class Constants {
         RFID_UP = rfidUp;
         RFID_DOWN = rfidDown;
         RFID_RESET = rfidReset;
-        RFID_NEXT = rfidNext;
+        RFID_EASY = rfidEasy;
+        RFID_MEDIUM = rfidMedium;
+        RFID_HARD = rfidHard;
+        RFID_TURN = rfidTurn;
     }
 
     private Constants() {
