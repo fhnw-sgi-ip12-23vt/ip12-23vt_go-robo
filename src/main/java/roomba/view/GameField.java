@@ -8,7 +8,6 @@ import roomba.controller.LevelManager;
 import roomba.model.AnimatedSprite;
 import roomba.model.Player;
 import roomba.model.Sprite;
-
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,7 +75,7 @@ public class GameField extends PApplet {
         levelManager = new LevelManager();
         pui.getController().setGm(this);
         if (FULLSCREEN) {
-            collisionHandler = new CollisionHandler(HEIGHT, WIDTH, HEADER_SIZE);
+            collisionHandler = new CollisionHandler(HEIGHT - 230, WIDTH - 400, HEADER_SIZE);
         } else {
             collisionHandler = new CollisionHandler(HEIGHT, WIDTH, HEADER_SIZE);
         }
@@ -163,6 +162,12 @@ public class GameField extends PApplet {
 
     }
 
+    /**
+     * Draws the header section of the game field, including level information and recent inputs.
+     * The header consists of a black rectangle at the top, a grey rectangle below it, level information,
+     * and recent inputs displayed in descending order.
+     * @see LevelManager
+     */
     private void drawHeader() {
         int yLbl = 65;
         int yGrey = 15;
@@ -187,11 +192,9 @@ public class GameField extends PApplet {
                 first = false;
             } else {
                 textSize(32);
-                text((i) + ": " + lastInputs.get(i), viewX + 1050 + (lastInputs.size() - 1 - i) * 70, viewY + yLbl);
+                text((i) + ": " + lastInputs.get(i), viewX + 1050 + (lastInputs.size() - 1 - i) * 75, viewY + yLbl);
             }
-
         }
-
     }
 
     /**
@@ -213,6 +216,7 @@ public class GameField extends PApplet {
      * Sets up the initial game state.
      */
     public void setup() {
+        lastInputs.clear();
         imageMode(CENTER);
         loadImages();
 
@@ -226,6 +230,7 @@ public class GameField extends PApplet {
      * restart current level
      */
     public void restart() {
+        lastInputs.clear();
         imageMode(CENTER);
         loadImages();
 

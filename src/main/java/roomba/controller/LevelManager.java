@@ -34,13 +34,13 @@ public class LevelManager {
      */
     public String getLevelName() {
         if (levelName.substring(0, levelName.indexOf("_")).equals("1")) {
-            return "Tutorial: " + levelName.substring(levelName.indexOf("_") + 1);
+            return "1 - " + levelName.substring(levelName.indexOf("_") + 1);
         }
         if (levelName.substring(0, levelName.indexOf("_")).equals("2")) {
-            return "Normal: " + levelName.substring(levelName.indexOf("_") + 1);
+            return "2 - " + levelName.substring(levelName.indexOf("_") + 1);
         }
         if (levelName.substring(0, levelName.indexOf("_")).equals("3")) {
-            return "Schwer: " + levelName.substring(levelName.indexOf("_") + 1);
+            return "3 - " + levelName.substring(levelName.indexOf("_") + 1);
         }
         return levelName;
     }
