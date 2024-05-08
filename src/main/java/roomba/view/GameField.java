@@ -9,15 +9,8 @@ import roomba.model.AnimatedSprite;
 import roomba.model.Player;
 import roomba.model.Sprite;
 
-import javax.swing.JFileChooser;
-import javax.swing.plaf.basic.BasicDirectoryModel;
-import java.io.File;
-import java.nio.file.DirectoryStream;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +28,7 @@ public class GameField extends PApplet {
     private static final Logger LOGGER = Logger.getLogger(GameField.class.getName());
     private static final float HEADER_SIZE = 113;
     private final PhysicalScanner pui;
+    private final PhysicalLed puiLed;
     private final LevelManager levelManager;
     private final CollisionHandler collisionHandler;
     public boolean nextLevel = false;
@@ -46,19 +40,22 @@ public class GameField extends PApplet {
     public Player player;
     private int difficulty = 0;
     private PImage backgroundImage;
-    private boolean winCondition = false;
     private boolean isMov = false;
     private List<String> lastInputs = new ArrayList<>();
     private boolean turnMode = false;
     private boolean loadingNextLevel = false;
+    private int completionWindowStartTime;
+    private String currentLevel;
 
     /**
      * Constructs a GameField instance.
      *
      * @param pui The physical scanner.
+     * @param puiLed The physical Led.
      */
-    public GameField(PhysicalScanner pui) {
+    public GameField(PhysicalScanner pui, PhysicalLed puiLed) {
         this.pui = pui;
+        this.puiLed = puiLed;
         levelManager = new LevelManager();
         if (FULLSCREEN) {
             collisionHandler = new CollisionHandler(HEIGHT - 230, WIDTH - 400, HEADER_SIZE);
@@ -86,14 +83,35 @@ public class GameField extends PApplet {
             updateAll();
             collectGoal();
         } else {
-            // If the next level flag is set, delay input for 5 seconds
             if (!loadingNextLevel) {
-                delay(5000); // 5 seconds delay
+                puiLed.blink(PhysicalLed.LEDType.GREEN);
+                drawCompletionWindow();
                 loadingNextLevel = true;
+                completionWindowStartTime = millis(); // Record the time when completion window starts displaying
             } else {
-                setup(); // Start the next level after the delay
-                loadingNextLevel = false; // Reset the flag for the next level
+                // Check if 5 seconds have passed since the completion window started displaying
+                if (millis() - completionWindowStartTime < 5000) {
+                    drawCompletionWindow(); // Draw completion window during the delay
+                } else {
+                    setup(); // Start the next level after the delay
+                    nextLevel = false;
+                    loadingNextLevel = false; // Reset flags
+                }
             }
+        }
+    }
+
+    public void drawCompletionWindow() {
+        float viewX = 0;
+        float viewY = 0;
+        if (difficulty == 1) {
+            image(neueslevel1, (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
+        }
+        if (difficulty == 2) {
+            image(neueslevel2, (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
+        }
+        if (difficulty == 3) {
+            image(geschafft, (float) (viewX + width / 2.0), (float) (viewY + height / 2.0 + 50));
         }
     }
 
@@ -124,31 +142,29 @@ public class GameField extends PApplet {
         }
 
         player.display();
+        drawHeader();
 
-        //Header
-        fill(0, 0, 0);
-        rect(0, 0, WIDTH, HEADER_SIZE);
-        fill(0, 255, 0);
-        textSize(32);
-        float viewX = 0;
-        float viewY = 0;
-        text("Level: " + levelManager.getLevelName(), viewX + 50, viewY + 50);
-        if (turnMode) {
-            text("Turn-Mode", viewX + 300, viewY + 50);
-        } else {
-            text("Normal-Mode", viewX + 300, viewY + 50);
-        }
-        int start = Math.max(0, lastInputs.size() - 5); // Start index for the loop
-        for (int i = start; i < lastInputs.size(); i++) {
-            text(lastInputs.get(i), viewX + 1200 + (i - start) * 25, viewY + 50);
-        }
-
-        if (winCondition) {
-            fill(0, 0, 255);
-            text("Du hast es geschafft!", (float) (viewX + width / 2.0 - 100), (float) (viewY + height / 2.0 + 50));
-        }
     }
 
+    private void drawHeader() {
+        int yLbl = 75;
+//        fill(0, 0, 0);
+//        rect(0, 0, WIDTH, HEADER_SIZE);
+        fill(0, 255, 0);
+        textSize(45);
+        float viewX = 0;
+        float viewY = 0;
+        text("Level: " + levelManager.getLevelName(), viewX + 50, viewY + yLbl);
+        if (turnMode) {
+            text("H", viewX + 400, viewY + yLbl);
+        }
+        textSize(50);
+        int end = Math.min(lastInputs.size(), 5); // End index for the loop
+        for (int i = lastInputs.size() - 1; i >= lastInputs.size() - end; i--) {
+            text(lastInputs.size() - 1 - i + ": " + lastInputs.get(i), viewX + 1000 + (lastInputs.size() - 1 - i) * 85,
+                viewY + yLbl);
+        }
+    }
     /**
      * Handles the collection of goals and checks for win conditions.
      */
@@ -161,7 +177,6 @@ public class GameField extends PApplet {
 
         } else {
             nextLevel = true;
-            winCondition = difficulty == 3;
         }
     }
 
@@ -169,12 +184,12 @@ public class GameField extends PApplet {
      * Sets up the initial game state.
      */
     public void setup() {
-        winCondition = false;
         imageMode(CENTER);
         loadImages();
 
         levelManager.setDifficulty(difficulty);
-        createPlatforms(levelManager.getNextLevel(false));
+        currentLevel = levelManager.getNextLevel();
+        createPlatforms(currentLevel);
         difficulty = levelManager.getDifficulty();
     }
 
@@ -182,13 +197,10 @@ public class GameField extends PApplet {
      * restart current level
      */
     public void restart() {
-        winCondition = false;
         imageMode(CENTER);
         loadImages();
 
-        levelManager.setDifficulty(difficulty);
-        createPlatforms(levelManager.getNextLevel(true));
-        difficulty = levelManager.getDifficulty();
+        createPlatforms(currentLevel);
     }
 
     /**
@@ -267,14 +279,29 @@ public class GameField extends PApplet {
         assert pui != null;
         if (!pui.getController().getQueue().getValue().isEmpty()) {
             String input = pui.getController().dequeue();
+            puiLed.blink(PhysicalLed.LEDType.BLUE);
             LOGGER.log(Level.FINE,
                 "handleInput queue item !" + input + "!" + "    nextLevel" + nextLevel + "    player.isInPlace()"
                     + player.isInPlace());
-
-            if (nextLevel) {
+            if (RFID_EASY.contains(input)) {
+                difficulty = 0;
                 setup();
+            }
+            if (RFID_MEDIUM.contains(input)) {
+                difficulty = 1;
+                setup();
+            }
+            if (RFID_HARD.contains(input)) {
+                difficulty = 2;
+                setup();
+            }
+            if (RFID_TURN.contains(input)) {
+                turnMode = !turnMode;
+            }
+            if (RFID_RESET.contains(input)) {
+                restart();
             } else if (player.isInPlace()) {
-                pui.ledOff();
+                puiLed.ledOff(PhysicalLed.LEDType.YELLOW);
                 if (turnMode) {
                     if (RFID_RIGHT.contains(input)) {
                         lastInputs.add("→");
@@ -296,49 +323,48 @@ public class GameField extends PApplet {
                     if (RFID_RIGHT.contains(input)) {
                         lastInputs.add("→");
                         player.movePlayer(RIGHT_FACING);
-                        pui.ledOn();
+                        puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
                     }
                     if (RFID_LEFT.contains(input)) {
                         lastInputs.add("←");
                         player.movePlayer(LEFT_FACING);
-                        pui.ledOn();
+                        puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
                     }
                     if (RFID_UP.contains(input)) {
                         lastInputs.add("↑");
                         player.movePlayer(UP_FACING);
-                        pui.ledOn();
+                        puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
                     }
                     if (RFID_DOWN.contains(input)) {
                         lastInputs.add("↓");
                         player.movePlayer(DOWN_FACING);
-                        pui.ledOn();
+                        puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
                     }
-                }
-                if (input.equals(RFID_NEXT.contains(input))) {
-                    nextLevel = true;
-                }
-                if (input.equals(RFID_RESET.contains(input))) {
-                    restart();
                 }
             }
         }
     }
 
     public void keyPressed() {
-        if (nextLevel) {
+        if (key == '1') {
+            difficulty = 0;
             setup();
+        }
+        if (key == '2') {
+            difficulty = 1;
+            setup();
+        }
+        if (key == '3') {
+            difficulty = 2;
+            setup();
+        }
+        if (key == 'r') {
+            restart();
+        }
+        if (key == 'h') {
+            turnMode = !turnMode;
         } else if (player.isInPlace()) {
-            if (key == 'h') {
-                if (turnMode) {
-                    turnMode = false;
-                } else {
-                    turnMode = true;
-                }
-            }
             //Options
-            if (key == 'o') {
-
-            }
             if (turnMode) {
                 if (((keyCode == UP || key == 'w'))) {
                     lastInputs.add("↑");
@@ -385,7 +411,10 @@ public class GameField extends PApplet {
     public void exit() {
         LOGGER.log(Level.WARNING, "Shutdown");
         if (pui != null) {
-            pui.ledReset();
+            puiLed.ledReset(PhysicalLed.LEDType.BLUE);
+            puiLed.ledReset(PhysicalLed.LEDType.YELLOW);
+            puiLed.ledReset(PhysicalLed.LEDType.GREEN);
+
             pui.getController().shutdown();
             pui.shutdown();
         }
