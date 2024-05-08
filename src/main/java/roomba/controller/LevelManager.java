@@ -65,24 +65,19 @@ public class LevelManager {
      * Gets the next level file path based on the difficulty.
      *
      * @return The file path of the next level.
-     * @param restart if it should restart
      */
-    public String getNextLevel(boolean restart) {
+    public String getNextLevel() {
         LOGGER.log(Level.FINE, "Next Level");
 
         boolean andrin = true;
         File[] listOfFiles;
+
         // Resets difficulty after 3
-        if (!restart) {
-            difficulty++;
-            if (difficulty == 4) {
-                difficulty = 1;
-            }
+        difficulty++;
+        if (difficulty == 4) {
+           difficulty = 1;
         }
 
-        // Load directory using ImageLoader
-        // String relativePath = "files/level";
-        // Path fullPath = ImageLoader.getImagePath(relativePath);
         Path fullPath = ImageLoader.loadFile("files/level");
 
         File folder = new File(fullPath.toString());
