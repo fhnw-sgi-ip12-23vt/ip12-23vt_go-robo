@@ -8,6 +8,8 @@ import roomba.controller.LevelManager;
 import roomba.model.AnimatedSprite;
 import roomba.model.Player;
 import roomba.model.Sprite;
+import roomba.script.NewWindow;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -339,6 +341,9 @@ public class GameField extends PApplet {
         }
         if (key == 'h') {
             turnMode = !turnMode;
+        }
+        if (key == 'o') {
+            NewWindow.openDialog(pui.getRfid());
         } else if (player.isInPlace()) {
             //Options
             if (turnMode) {

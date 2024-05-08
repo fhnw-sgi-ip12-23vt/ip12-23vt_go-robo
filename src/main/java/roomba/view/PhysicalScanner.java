@@ -62,4 +62,8 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
 
     }
 
+    public RfidComponent getRfid() {
+        return rfid;
+    }
+
 }
