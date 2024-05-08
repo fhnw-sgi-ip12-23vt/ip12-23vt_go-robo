@@ -42,7 +42,7 @@ public class GameField extends PApplet {
     public List<Sprite> goal;
     public PImage wall, chargingStation, playerImage;
     public List<PImage> pImageListObstacles = new ArrayList<>();
-    public Map<String,List<PImage>> pImageMultiImageObstacles = new HashMap<>();
+    public Map<String, List<PImage>> pImageMultiImageObstacles = new HashMap<>();
     public Player player;
     private int difficulty = 0;
     private PImage backgroundImage;
@@ -133,7 +133,7 @@ public class GameField extends PApplet {
         float viewX = 0;
         float viewY = 0;
         text("Level: " + levelManager.getLevelName(), viewX + 50, viewY + 50);
-        if (turnMode){
+        if (turnMode) {
             text("Turn-Mode", viewX + 300, viewY + 50);
         } else {
             text("Normal-Mode", viewX + 300, viewY + 50);
@@ -201,9 +201,9 @@ public class GameField extends PApplet {
         Path path = ImageLoader.getImagePath("img/obstacles").toAbsolutePath();
         var files = path.toFile().listFiles();
         assert files != null;
-        for (var file: files) {
+        for (var file : files) {
             if (!file.isHidden() && file.getName().endsWith(".png")) {
-               pImageListObstacles.add(ImageLoader.loadImage(this,"img/obstacles/" + file.getName()));
+                pImageListObstacles.add(ImageLoader.loadImage(this, "img/obstacles/" + file.getName()));
             }
 
             if (!file.isHidden() && file.isDirectory()) {
@@ -213,16 +213,16 @@ public class GameField extends PApplet {
                 assert content != null;
                 for (var c : content) {
                     if (!c.isHidden() && c.getName().endsWith(".png")) {
-                        newList.add(ImageLoader.loadImage(this, "img/obstacles/" + newName + "/" +c.getName()));
+                        newList.add(ImageLoader.loadImage(this, "img/obstacles/" + newName + "/" + c.getName()));
                     }
                 }
-                pImageMultiImageObstacles.put(newName,newList);
+                pImageMultiImageObstacles.put(newName, newList);
             }
         }
 
         if (FULLSCREEN) {
 
-        calculateBackgroundImage();
+            calculateBackgroundImage();
 
         } else {
             backgroundImage = ImageLoader.loadImage(this, "img/Room-Floor2.png");
@@ -230,24 +230,23 @@ public class GameField extends PApplet {
 
     }
 
-    private void calculateBackgroundImage(){
+    private void calculateBackgroundImage() {
 
         int scale = 114;
 
         PImage patternFull = ImageLoader.loadImage(this, "img/Room-Floor-HD.png");
-        PImage pattern = patternFull.get(128,0,128, 128);
-        pattern.resize(scale,0);
+        PImage pattern = patternFull.get(0, 0, 128, 128);
+        pattern.resize(scale, 0);
 
-        PImage fullSize = createImage(width,height,RGB);
+        PImage fullSize = createImage(width, height, RGB);
         fullSize.loadPixels();
         pattern.loadPixels();
 
-        for ( int i = 0; i < height; i++) {
-            for (int j = 0; j< width; j++) {
-                fullSize.pixels[j+i*width] = pattern.pixels[(j%scale) + ((i%scale)*scale)];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                fullSize.pixels[j + i * width] = pattern.pixels[(j % scale) + ((i % scale) * scale)];
             }
         }
-
         fullSize.updatePixels();
 
         backgroundImage = fullSize;
@@ -276,7 +275,7 @@ public class GameField extends PApplet {
                 setup();
             } else if (player.isInPlace()) {
                 pui.ledOff();
-                if (turnMode){
+                if (turnMode) {
                     if (RFID_RIGHT.contains(input)) {
                         lastInputs.add("→");
                         player.turnPlayer(RIGHT_FACING);
@@ -315,10 +314,10 @@ public class GameField extends PApplet {
                         pui.ledOn();
                     }
                 }
-                if (input.equals(RFID_NEXT.contains(input))){
+                if (input.equals(RFID_NEXT.contains(input))) {
                     nextLevel = true;
                 }
-                if(input.equals(RFID_RESET.contains(input))){
+                if (input.equals(RFID_RESET.contains(input))) {
                     restart();
                 }
             }
@@ -329,18 +328,18 @@ public class GameField extends PApplet {
         if (nextLevel) {
             setup();
         } else if (player.isInPlace()) {
-            if (key == 'h'){
-                if (turnMode){
+            if (key == 'h') {
+                if (turnMode) {
                     turnMode = false;
                 } else {
                     turnMode = true;
                 }
             }
             //Options
-            if (key == 'o'){
+            if (key == 'o') {
 
             }
-            if (turnMode){
+            if (turnMode) {
                 if (((keyCode == UP || key == 'w'))) {
                     lastInputs.add("↑");
                     player.movePlayer(UP_FACING);
