@@ -35,7 +35,7 @@ public class PhysicalController extends ControllerBase<PhysicalModel> {
     public void enqueue(String st) {
         String old = model.inputQueue.peek();
         model.inputQueue.add(st);
-        this.triggerPropertyChange("RFID_ID",old , st);
+        this.triggerPropertyChange("RFID_ID", old, st);
         LOGGER.log(Level.INFO, "queue:  " + st);
 
     }

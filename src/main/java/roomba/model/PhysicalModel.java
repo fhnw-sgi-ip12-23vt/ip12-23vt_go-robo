@@ -1,6 +1,5 @@
 package roomba.model;
 
-import roomba.controller.PhysicalController;
 import roomba.view.GameField;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
