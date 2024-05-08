@@ -25,6 +25,7 @@ import static roomba.model.Constants.*;
  * and goals.
  */
 public class GameField extends PApplet {
+    private final int BACKGROUND_SCALE = 114;
     private static final Logger LOGGER = Logger.getLogger(GameField.class.getName());
     private static final float HEADER_SIZE = 113;
     private final PhysicalScanner pui;
@@ -244,7 +245,7 @@ public class GameField extends PApplet {
 
     private void calculateBackgroundImage() {
 
-        int scale = 114;
+        int scale = BACKGROUND_SCALE;
 
         PImage patternFull = ImageLoader.loadImage(this, "img/Room-Floor-HD.png");
         PImage pattern = patternFull.get(0, 0, 128, 128);
