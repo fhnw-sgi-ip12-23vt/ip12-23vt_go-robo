@@ -5,8 +5,6 @@ import com.pi4j.crowpi.components.RfidComponent;
 import roomba.controller.PhysicalController;
 import roomba.model.PhysicalModel;
 import roomba.util.mvcbase.PuiBase;
-
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

@@ -65,6 +65,7 @@ public class GameField extends PApplet {
         this.pui = pui;
         this.puiLed = puiLed;
         levelManager = new LevelManager();
+        pui.getController().setGm(this);
         if (FULLSCREEN) {
             collisionHandler = new CollisionHandler(HEIGHT - 230, WIDTH - 400, HEADER_SIZE);
         } else {
@@ -94,7 +95,7 @@ public class GameField extends PApplet {
             // If the next level flag is set, delay input for 5 seconds
             if (!loadingNextLevel) {
                 puiLed.blink(PhysicalLed.LEDType.GREEN);
-                delay(5000); // 5 seconds delay
+                delay(1000); // 1 seconds delay
                 loadingNextLevel = true;
             } else {
                 setup(); // Start the next level after the delay
@@ -107,7 +108,6 @@ public class GameField extends PApplet {
      * Updates the animation and handles collisions for all game elements.
      */
     void updateAll() {
-        handleInput();
         if (isMov) {
             player.updateAnimationFrame1();
             isMov = false;
@@ -232,79 +232,78 @@ public class GameField extends PApplet {
         levelManager.createPlatforms(this, filename);
     }
 
-    private void handleInput() {
+    public void handleInput(String input) {
         assert pui != null;
-        if (!pui.getController().getQueue().getValue().isEmpty()) {
-            String input = pui.getController().dequeue();
-            puiLed.blink(PhysicalLed.LEDType.BLUE);
-            LOGGER.log(Level.FINE,
-                "handleInput queue item !" + input + "!" + "    nextLevel" + nextLevel + "    player.isInPlace()"
-                    + player.isInPlace());
 
-            if (nextLevel) {
-                setup();
-            }
-            if (RFID_EASY.contains(input)) {
-                difficulty = 0;
-                setup();
-            }
-            if (RFID_MEDIUM.contains(input)) {
-                difficulty = 1;
-                setup();
-            }
-            if (RFID_HARD.contains(input)) {
-                difficulty = 2;
-                setup();
-            }
-            if (RFID_TURN.contains(input)) {
-                turnMode = !turnMode;
-            }
-            if (RFID_RESET.contains(input)) {
-                restart();
-            } else if (player.isInPlace()) {
-                puiLed.ledOff(PhysicalLed.LEDType.YELLOW);
-                if (turnMode) {
-                    if (RFID_RIGHT.contains(input)) {
-                        lastInputs.add("→");
-                        player.turnPlayer(RIGHT_FACING);
-                    }
-                    if (RFID_LEFT.contains(input)) {
-                        lastInputs.add("←");
-                        player.turnPlayer(LEFT_FACING);
-                    }
-                    if (RFID_UP.contains(input)) {
-                        lastInputs.add("↑");
-                        player.movePlayer(UP_FACING);
-                    }
-                    if (RFID_DOWN.contains(input)) {
-                        lastInputs.add("↓");
-                        player.movePlayer(DOWN_FACING);
-                    }
-                } else {
-                    if (RFID_RIGHT.contains(input)) {
-                        lastInputs.add("→");
-                        player.movePlayer(RIGHT_FACING);
-                        puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
-                    }
-                    if (RFID_LEFT.contains(input)) {
-                        lastInputs.add("←");
-                        player.movePlayer(LEFT_FACING);
-                        puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
-                    }
-                    if (RFID_UP.contains(input)) {
-                        lastInputs.add("↑");
-                        player.movePlayer(UP_FACING);
-                        puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
-                    }
-                    if (RFID_DOWN.contains(input)) {
-                        lastInputs.add("↓");
-                        player.movePlayer(DOWN_FACING);
-                        puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
-                    }
+        puiLed.blink(PhysicalLed.LEDType.BLUE);
+        LOGGER.log(Level.FINE,
+            "handleInput queue item !" + input + "!" + "    nextLevel" + nextLevel + "    player.isInPlace()"
+                + player.isInPlace());
+
+        if (nextLevel) {
+            setup();
+        }
+        if (RFID_EASY.contains(input)) {
+            difficulty = 0;
+            setup();
+        }
+        if (RFID_MEDIUM.contains(input)) {
+            difficulty = 1;
+            setup();
+        }
+        if (RFID_HARD.contains(input)) {
+            difficulty = 2;
+            setup();
+        }
+        if (RFID_TURN.contains(input)) {
+            turnMode = !turnMode;
+        }
+        if (RFID_RESET.contains(input)) {
+            restart();
+        } else if (player.isInPlace()) {
+            puiLed.ledOff(PhysicalLed.LEDType.YELLOW);
+            if (turnMode) {
+                if (RFID_RIGHT.contains(input)) {
+                    lastInputs.add("→");
+                    player.turnPlayer(RIGHT_FACING);
+                }
+                if (RFID_LEFT.contains(input)) {
+                    lastInputs.add("←");
+                    player.turnPlayer(LEFT_FACING);
+                }
+                if (RFID_UP.contains(input)) {
+                    lastInputs.add("↑");
+                    player.movePlayer(UP_FACING);
+                }
+                if (RFID_DOWN.contains(input)) {
+                    lastInputs.add("↓");
+                    player.movePlayer(DOWN_FACING);
+                }
+            } else {
+                if (RFID_RIGHT.contains(input)) {
+                    lastInputs.add("→");
+                    player.movePlayer(RIGHT_FACING);
+                    puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
+                }
+                if (RFID_LEFT.contains(input)) {
+                    lastInputs.add("←");
+                    player.movePlayer(LEFT_FACING);
+                    puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
+                }
+                if (RFID_UP.contains(input)) {
+                    lastInputs.add("↑");
+                    player.movePlayer(UP_FACING);
+                    puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
+                }
+                if (RFID_DOWN.contains(input)) {
+                    lastInputs.add("↓");
+                    player.movePlayer(DOWN_FACING);
+                    puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
                 }
             }
         }
     }
+
 
     public void keyPressed() {
         if (nextLevel) {

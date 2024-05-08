@@ -2,8 +2,9 @@ package roomba.controller;
 
 import roomba.model.PhysicalModel;
 import roomba.util.mvcbase.ControllerBase;
+import roomba.view.GameField;
+import java.beans.PropertyChangeListener;
 import java.util.Queue;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -22,40 +23,33 @@ public class PhysicalController extends ControllerBase<PhysicalModel> {
      */
     public PhysicalController(PhysicalModel model) {
         super(model);
+        this.addPropertyChangeListener(model);
     }
 
-    public roomba.util.mvcbase.ObservableValue<Queue<String>> getQueue() {
+    public Queue<String> getQueue() {
         return model.inputQueue;
     }
 
-    /**
-     * Enqueue an item into the input queue.
-     *
-     * @param item The item to be enqueued.
-     */
-    public void enqueue(String item) {
-        Queue<String> currentQueue = model.inputQueue.getValue();
-        currentQueue.offer(item);
-        setValue(model.inputQueue, currentQueue);
-        LOGGER.log(Level.INFO, "Queued item " + item);
-        LOGGER.log(Level.INFO, String.valueOf(model.inputQueue.getValue().size()));
+    public void enqueue(String st) {
+        model.inputQueue.add(st);
+        this.triggerPropertyChange(st, "", "");
     }
 
-    /**
-     * Dequeue an item from the input queue.
-     *
-     * @return The dequeued item or null if the queue is empty.
-     */
-    public String dequeue() {
-        Queue<String> currentQueue = model.inputQueue.getValue();
-        if (!currentQueue.isEmpty()) {
-            String dequeuedItem = currentQueue.poll();
-            setValue(model.inputQueue, currentQueue);
-            LOGGER.log(Level.INFO, "Dequeued item " + dequeuedItem);
-
-            return dequeuedItem;
-        } else {
-            return null;
-        }
+    public void setGm(GameField gm) {
+        model.addGameField(gm);
     }
+
+
+    private final java.beans.PropertyChangeSupport support = new java.beans.PropertyChangeSupport(this);
+
+    public void addPropertyChangeListener(PropertyChangeListener p) {
+        support.addPropertyChangeListener(p);
+    }
+
+    // Methode, die die Property-Änderung auslöst
+    void triggerPropertyChange(String propertyName, Object oldValue, Object newValue) {
+        support.firePropertyChange(propertyName, oldValue, newValue);
+    }
+
+
 }
