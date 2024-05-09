@@ -30,6 +30,7 @@ import static roomba.model.Constants.RFID_RIGHT;
 import static roomba.model.Constants.RFID_TURN;
 import static roomba.model.Constants.RFID_UP;
 import static roomba.model.Constants.RIGHT_FACING;
+import static roomba.model.Constants.SPRITE_SIZE;
 import static roomba.model.Constants.UP_FACING;
 import static roomba.model.Constants.WIDTH;
 
@@ -39,9 +40,9 @@ import static roomba.model.Constants.WIDTH;
  * and goals.
  */
 public class GameField extends PApplet {
-    private static final int BACKGROUND_SCALE = 114;
+    private static final int BACKGROUND_SCALE = 2 * (int) SPRITE_SIZE;
     private static final Logger LOGGER = Logger.getLogger(GameField.class.getName());
-    private static final float HEADER_SIZE = 113;
+    private static final float HEADER_SIZE = BACKGROUND_SCALE;
     private final PhysicalScanner pui;
     private final PhysicalLed puiLed;
     private final LevelManager levelManager;
@@ -49,7 +50,6 @@ public class GameField extends PApplet {
     public boolean nextLevel = false;
     public List<Sprite> obstacles;
     public List<Sprite> goal;
-    public PImage playerImage;
     public Map<String, PImage> imageMap = new HashMap<>();
     public List<PImage> pImageListObstacles = new ArrayList<>();
     public Map<String, List<PImage>> pImageMultiImageObstacles = new HashMap<>();
@@ -75,7 +75,7 @@ public class GameField extends PApplet {
         levelManager = new LevelManager();
         pui.getController().setGm(this);
         if (FULLSCREEN) {
-            collisionHandler = new CollisionHandler(HEIGHT - 230, WIDTH - 400, HEADER_SIZE);
+            collisionHandler = new CollisionHandler(HEIGHT, WIDTH, HEADER_SIZE);
         } else {
             collisionHandler = new CollisionHandler(HEIGHT, WIDTH, HEADER_SIZE);
         }
@@ -142,7 +142,7 @@ public class GameField extends PApplet {
         } else {
             player.updateAnimation();
         }
-        collisionHandler.resolveObstaclesCollisions(player, obstacles);
+        collisionHandler.resolveObstaclesCollisions(player, obstacles, BACKGROUND_SCALE);
     }
 
     /**
