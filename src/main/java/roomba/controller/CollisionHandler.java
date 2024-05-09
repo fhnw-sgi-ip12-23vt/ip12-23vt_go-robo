@@ -72,7 +72,7 @@ public class CollisionHandler {
             if (s.getLeft() < border) {
                 s.setLeft(border);
                 s.changeX = 0;
-            } else if (s.getRight() > width - border - width % border) {
+            } else if (s.getRight() > width - border - width % gridcorrection) {
                 s.setRight(width - border - width % gridcorrection);
                 s.changeX = 0;
             }

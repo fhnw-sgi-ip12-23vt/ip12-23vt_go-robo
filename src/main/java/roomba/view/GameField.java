@@ -142,7 +142,7 @@ public class GameField extends PApplet {
         } else {
             player.updateAnimation();
         }
-        collisionHandler.resolveObstaclesCollisions(player, obstacles, BACKGROUND_SCALE);
+        collisionHandler.resolveObstaclesCollisions(player, obstacles, 0);
     }
 
     /**
