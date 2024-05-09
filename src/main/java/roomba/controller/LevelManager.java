@@ -117,80 +117,101 @@ public class LevelManager {
         List<PImage> couch = gameField.pImageMultiImageObstacles.get("couch");
 
         String[] lines = gameField.loadStrings(filename);
-        int offsetX = 0;
-        int offsetY = 0;
+        int totalX = (int) (gameField.width / SPRITE_SIZE);
+        int totalY = (int) (gameField.height / SPRITE_SIZE);
+        int offsetX = (totalX - (GameField.split(lines[0], ",")).length) / 2;
+        int offsetY = (totalY - lines.length + 2) / 2;
 
 
         for (int row = 0; row < lines.length; row++) {
             String[] values = GameField.split(lines[row], ",");
             for (int col = 0; col < values.length; col++) {
+                int colOffset = offsetX + col;
+                int rowOffset = offsetY + row;
                 switch (values[col]) {
                 case "g" -> {
                     Goal loadedGoal =
                         new Goal(gameField, gameField.imageMap.get("chargingStation"), SPRITE_SIZE * 0.009f);
-                    loadedGoal.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
-                    loadedGoal.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
+                    loadedGoal.centerX = SPRITE_SIZE / 2 + colOffset * SPRITE_SIZE;
+                    loadedGoal.centerY = SPRITE_SIZE / 2 + rowOffset * SPRITE_SIZE;
                     gameField.goal.add(loadedGoal);
 
                 }
                 case "w" -> {
                     Sprite s = new Sprite(gameField, gameField.imageMap.get("wall"), SPRITE_SCALE);
-                    s.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
-                    s.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
+                    s.centerX = SPRITE_SIZE / 2 + colOffset * SPRITE_SIZE;
+                    s.centerY = SPRITE_SIZE / 2 + rowOffset * SPRITE_SIZE;
                     gameField.obstacles.add(s);
                 }
 
                 case "p" -> {
                     Player player = new Player(gameField, gameField.imageMap.get("playerImage"), SPRITE_SIZE * 0.006f);
-                    player.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
-                    player.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
+                    player.centerX = SPRITE_SIZE / 2 + colOffset * SPRITE_SIZE;
+                    player.centerY = SPRITE_SIZE / 2 + rowOffset * SPRITE_SIZE;
                     gameField.player = player;
                 }
 
                 case "1" -> {
-                    createObstacle(gameField, 0, col, row); }
+                    createObstacle(gameField, 0, colOffset, rowOffset);
+                }
                 case "2" -> {
-                    createObstacle(gameField, 1, col, row); }
+                    createObstacle(gameField, 1, colOffset, rowOffset);
+                }
                 case "3" -> {
-                    createObstacle(gameField, 2, col, row); }
+                    createObstacle(gameField, 2, colOffset, rowOffset);
+                }
                 case "4" -> {
-                    createObstacle(gameField, 3, col, row); }
+                    createObstacle(gameField, 3, colOffset, rowOffset);
+                }
                 case "5" -> {
-                    createObstacle(gameField, 4, col, row); }
+                    createObstacle(gameField, 4, colOffset, rowOffset);
+                }
                 case "6" -> {
-                    createObstacle(gameField, 5, col, row); }
+                    createObstacle(gameField, 5, colOffset, rowOffset);
+                }
                 case "7" -> {
-                    createObstacle(gameField, 6, col, row); }
+                    createObstacle(gameField, 6, colOffset, rowOffset);
+                }
                 case "8" -> {
-                    createObstacle(gameField, 7, col, row); }
+                    createObstacle(gameField, 7, colOffset, rowOffset);
+                }
                 case "9" -> {
-                    createObstacle(gameField, 8, col, row); }
+                    createObstacle(gameField, 8, colOffset, rowOffset);
+                }
 
                 // RANDOM OBSTACLES
                 case "r" -> {
                     List<PImage> allObstacleImages = gameField.pImageListObstacles;
                     Random random = new Random();
                     int i = random.nextInt(allObstacleImages.size());
-                    createObstacle(gameField, i, col, row);
+                    createObstacle(gameField, i, colOffset, rowOffset);
                 }
                 // BED
                 case "a" -> {
-                    createObstacle(gameField, bed.get(0), col, row); }
+                    createObstacle(gameField, bed.get(0), colOffset, rowOffset);
+                }
                 case "b" -> {
-                    createObstacle(gameField, bed.get(2), col, row); }
+                    createObstacle(gameField, bed.get(2), colOffset, rowOffset);
+                }
                 case "c" -> {
-                    createObstacle(gameField, bed.get(1), col, row); }
+                    createObstacle(gameField, bed.get(1), colOffset, rowOffset);
+                }
                 case "d" -> {
-                    createObstacle(gameField, bed.get(3), col, row); }
+                    createObstacle(gameField, bed.get(3), colOffset, rowOffset);
+                }
                 // COUCH
                 case "e" -> {
-                    createObstacle(gameField, couch.get(0), col, row); }
+                    createObstacle(gameField, couch.get(0), colOffset, rowOffset);
+                }
                 case "f" -> {
-                    createObstacle(gameField, couch.get(1), col, row); }
+                    createObstacle(gameField, couch.get(1), colOffset, rowOffset);
+                }
                 // Air does nothing
-                case "" -> { }
+                case "" -> {
+                }
                 //0 does nothing
-                case "0" -> { }
+                case "0" -> {
+                }
                 default -> LOGGER.log(Level.WARNING, "Illegal Character in csv file: " + values[col]);
 
                 }
