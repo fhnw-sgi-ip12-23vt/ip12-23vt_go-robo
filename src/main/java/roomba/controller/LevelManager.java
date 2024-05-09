@@ -71,7 +71,6 @@ public class LevelManager {
     public String getNextLevel() {
         LOGGER.log(Level.FINE, "Next Level");
 
-        boolean mac = false;
         File[] listOfFiles;
 
         // Resets difficulty after 3
@@ -95,7 +94,7 @@ public class LevelManager {
         }
         Random r = new Random();
         levelName = rightLevels.get(r.nextInt(rightLevels.size())).replace(".csv", "");
-        if (mac) {
+        if (true) {
             return fullPath + "/" + rightLevels.get(r.nextInt(rightLevels.size()));
         }
         return "files/level/" + rightLevels.get(r.nextInt(rightLevels.size()));
@@ -118,6 +117,10 @@ public class LevelManager {
         List<PImage> couch = gameField.pImageMultiImageObstacles.get("couch");
 
         String[] lines = gameField.loadStrings(filename);
+        int offsetX = 0;
+        int offsetY = 0;
+
+
         for (int row = 0; row < lines.length; row++) {
             String[] values = GameField.split(lines[row], ",");
             for (int col = 0; col < values.length; col++) {
