@@ -71,7 +71,7 @@ public class LevelManager {
     public String getNextLevel() {
         LOGGER.log(Level.FINE, "Next Level");
 
-        boolean andrin = true;
+        boolean mac = false;
         File[] listOfFiles;
 
         // Resets difficulty after 3
@@ -95,7 +95,7 @@ public class LevelManager {
         }
         Random r = new Random();
         levelName = rightLevels.get(r.nextInt(rightLevels.size())).replace(".csv", "");
-        if (andrin) {
+        if (mac) {
             return fullPath + "/" + rightLevels.get(r.nextInt(rightLevels.size()));
         }
         return "files/level/" + rightLevels.get(r.nextInt(rightLevels.size()));
