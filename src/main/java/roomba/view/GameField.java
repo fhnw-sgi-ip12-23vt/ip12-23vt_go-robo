@@ -151,7 +151,8 @@ public class GameField extends PApplet {
      * Displays all game elements on the screen.
      */
     void displayAll() {
-        for (Sprite ob : obstacles) {
+        List<Sprite> obstaclesCopy = new ArrayList<>(obstacles); // Kopie der Hindernisse erstellen
+        for (Sprite ob : obstaclesCopy) {
             ob.display();
         }
         for (Sprite g : goal) {
@@ -390,6 +391,9 @@ public class GameField extends PApplet {
     }
 
     public void keyPressed() {
+        if (key == 'p') {
+           pui.getController().enqueue("7DCE129B");
+        }
         if (key == '1') {
             difficulty = 0;
             setup();

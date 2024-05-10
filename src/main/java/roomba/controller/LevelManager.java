@@ -100,15 +100,19 @@ public class LevelManager {
         return "files/level/" + rightLevels.get(r.nextInt(rightLevels.size()));
     }
 
+    static List<Sprite> obstacles = new ArrayList<>();
+
     /**
      * Creates platforms and obstacles for the specified game field based on the level file.
      *
      * @param gameField The game field to create platforms for.
      * @param filename  The name of the level file.
      */
-    public void createPlatforms(GameField gameField, String filename) {
+    public static void createPlatforms(GameField gameField, String filename) {
 
         LOGGER.log(Level.INFO, "loading game objects from file " + filename);
+          obstacles = new ArrayList<>();
+
 
         gameField.nextLevel = false;
         gameField.obstacles = new ArrayList<>();
@@ -134,7 +138,7 @@ public class LevelManager {
                     Sprite s = new Sprite(gameField, gameField.imageMap.get("wall"), SPRITE_SCALE);
                     s.centerX = SPRITE_SIZE / 2 + colOffset * SPRITE_SIZE;
                     s.centerY = SPRITE_SIZE / 2 + rowOffset * SPRITE_SIZE;
-                    gameField.obstacles.add(s);
+                    obstacles.add(s);
                 }
                 case "p" -> {
                     Player player = new Player(gameField, gameField.imageMap.get("playerImage"), SPRITE_SIZE * 0.006f);
@@ -204,20 +208,21 @@ public class LevelManager {
                 }
             }
         }
+        gameField.obstacles.addAll(obstacles);
     }
 
-    public void createObstacle(GameField gameField, int i, int col, int row) {
+    public static void createObstacle(GameField gameField, int i, int col, int row) {
         Sprite s = new Sprite(gameField, gameField.pImageListObstacles.get(i), SPRITE_SCALE);
         s.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
         s.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
-        gameField.obstacles.add(s);
+        obstacles.add(s);
     }
 
-    public void createObstacle(GameField gameField, PImage pImage, int col, int row) {
+    public static void createObstacle(GameField gameField, PImage pImage, int col, int row) {
         Sprite s = new Sprite(gameField, pImage, SPRITE_SCALE);
         s.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
         s.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
-        gameField.obstacles.add(s);
+        obstacles.add(s);
 
     }
 }
