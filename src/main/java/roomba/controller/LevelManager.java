@@ -94,7 +94,7 @@ public class LevelManager {
         }
         Random r = new Random();
         levelName = rightLevels.get(r.nextInt(rightLevels.size())).replace(".csv", "");
-        if (false) {
+        if (true) {
             return fullPath + "/" + rightLevels.get(r.nextInt(rightLevels.size()));
         }
         return "files/level/" + rightLevels.get(r.nextInt(rightLevels.size()));
@@ -122,7 +122,7 @@ public class LevelManager {
         int offsetX = (totalX - (GameField.split(lines[0], ",")).length) / 2;
         int offsetY = (totalY - lines.length + 2) / 2;
         offsetX=0;
-        offsetY=2;
+        offsetY=0;
         for (int row = 0; row < lines.length; row++) {
             String[] values = GameField.split(lines[row], ",");
             for (int col = 0; col < values.length; col++) {
