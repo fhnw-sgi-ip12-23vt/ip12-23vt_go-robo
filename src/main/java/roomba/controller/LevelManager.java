@@ -107,7 +107,9 @@ public class LevelManager {
      * @param filename  The name of the level file.
      */
     public void createPlatforms(GameField gameField, String filename) {
-        LOGGER.log(Level.FINE, "loading game objects from file ");
+
+        LOGGER.log(Level.INFO, "loading game objects from file " + filename);
+
         gameField.nextLevel = false;
         gameField.obstacles = new ArrayList<>();
         gameField.goal = new ArrayList<>();
@@ -195,11 +197,9 @@ public class LevelManager {
                     createObstacle(gameField, couch.get(1), colOffset, rowOffset);
                 }
                 // Air does nothing
-                case "" -> {
+                case "", "0" -> {
                 }
                 //0 does nothing
-                case "0" -> {
-                }
                 default -> LOGGER.log(Level.WARNING, "Illegal Character in csv file: " + values[col]);
                 }
             }

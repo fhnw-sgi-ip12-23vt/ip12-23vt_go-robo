@@ -460,4 +460,8 @@ public class GameField extends PApplet {
         }
         super.exit();
     }
+
+    public List<String> getLastInputs() {
+        return lastInputs;
+    }
 }
