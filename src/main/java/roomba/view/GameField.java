@@ -391,9 +391,7 @@ public class GameField extends PApplet {
     }
 
     public void keyPressed() {
-        if (key == 'p') {
-           pui.getController().enqueue("7DCE129B");
-        }
+
         if (key == '1') {
             difficulty = 0;
             setup();
