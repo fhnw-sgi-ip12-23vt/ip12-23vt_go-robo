@@ -35,7 +35,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <excludes>**/util/**/*,*/catalog/components/base/**/*,**/module-info.java</excludes>
+                    <excludes>**/util/**/*,*/catalog/components/base/**/*,**/module-info.java,**/test/**</excludes>
                     <configLocation>src/main/config/checks.xml</configLocation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                     <violationSeverity>warning</violationSeverity>
@@ -184,6 +184,8 @@
     </build>
 
     <properties>
+        <junit.jupiter.version>5.10.2</junit.jupiter.version>
+
         <mainClass>roomba.RoombaInTrouble</mainClass>
 
         <maven-shade.version>3.2.4</maven-shade.version> <!-- Version des Shade Plugins -->
@@ -246,7 +248,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.12</version>
+            <version>1.4.12</version>
         </dependency>
 
         <dependency>
@@ -297,6 +299,23 @@
             <artifactId>pi4j-plugin-mock</artifactId>
             <version>${pi4j.version}</version>
             <!-- <scope>test</scope> -->
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.3.1</version>
         </dependency>
     </dependencies>
     <profiles>

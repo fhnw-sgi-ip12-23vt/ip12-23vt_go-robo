@@ -107,22 +107,16 @@ public class LevelManager {
      * @param filename  The name of the level file.
      */
     public void createPlatforms(GameField gameField, String filename) {
-        LOGGER.log(Level.FINE, "loading game objects from file ");
+
+        LOGGER.log(Level.INFO, "loading game objects from file " + filename);
 
         gameField.nextLevel = false;
         gameField.obstacles = new ArrayList<>();
         gameField.goal = new ArrayList<>();
-
         List<PImage> bed = gameField.pImageMultiImageObstacles.get("bed");
         List<PImage> couch = gameField.pImageMultiImageObstacles.get("couch");
-
         String[] lines = gameField.loadStrings(filename);
-        int totalX = (int) (gameField.width / SPRITE_SIZE);
-        int totalY = (int) (gameField.height / SPRITE_SIZE);
-        int offsetX = (totalX - (GameField.split(lines[0], ",")).length) / 2;
-        int offsetY = (totalY - lines.length + 2) / 2;
-        offsetX = 0;
-        offsetY = 0;
+        int offsetX = 0, offsetY = 0;
         for (int row = 0; row < lines.length; row++) {
             String[] values = GameField.split(lines[row], ",");
             for (int col = 0; col < values.length; col++) {
@@ -135,7 +129,6 @@ public class LevelManager {
                     loadedGoal.centerX = SPRITE_SIZE / 2 + colOffset * SPRITE_SIZE;
                     loadedGoal.centerY = SPRITE_SIZE / 2 + rowOffset * SPRITE_SIZE;
                     gameField.goal.add(loadedGoal);
-
                 }
                 case "w" -> {
                     Sprite s = new Sprite(gameField, gameField.imageMap.get("wall"), SPRITE_SCALE);
@@ -143,14 +136,12 @@ public class LevelManager {
                     s.centerY = SPRITE_SIZE / 2 + rowOffset * SPRITE_SIZE;
                     gameField.obstacles.add(s);
                 }
-
                 case "p" -> {
                     Player player = new Player(gameField, gameField.imageMap.get("playerImage"), SPRITE_SIZE * 0.006f);
                     player.centerX = SPRITE_SIZE / 2 + colOffset * SPRITE_SIZE;
                     player.centerY = SPRITE_SIZE / 2 + rowOffset * SPRITE_SIZE;
                     gameField.player = player;
                 }
-
                 case "1" -> {
                     createObstacle(gameField, 0, colOffset, rowOffset);
                 }
@@ -178,7 +169,6 @@ public class LevelManager {
                 case "9" -> {
                     createObstacle(gameField, 8, colOffset, rowOffset);
                 }
-
                 // RANDOM OBSTACLES
                 case "r" -> {
                     List<PImage> allObstacleImages = gameField.pImageListObstacles;
@@ -207,13 +197,10 @@ public class LevelManager {
                     createObstacle(gameField, couch.get(1), colOffset, rowOffset);
                 }
                 // Air does nothing
-                case "" -> {
+                case "", "0" -> {
                 }
                 //0 does nothing
-                case "0" -> {
-                }
                 default -> LOGGER.log(Level.WARNING, "Illegal Character in csv file: " + values[col]);
-
                 }
             }
         }

@@ -10,5 +10,8 @@ module RoboGo {
     requires com.pi4j.crowpi;
     requires org.slf4j;
     requires java.desktop;
-    requires logback.classic;
+    requires ch.qos.logback.classic;
+    requires junit;
+    requires org.mockito;
+    // Export the test package to the junit module
 }

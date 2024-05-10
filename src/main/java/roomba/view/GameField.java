@@ -77,7 +77,7 @@ public class GameField extends PApplet {
         levelManager = new LevelManager();
         pui.getController().setGm(this);
         if (FULLSCREEN) {
-            collisionHandler = new CollisionHandler(HEIGHT, WIDTH, HEADER_SIZE);
+            collisionHandler = new CollisionHandler(HEIGHT - 230, WIDTH - 400, HEADER_SIZE);
         } else {
             collisionHandler = new CollisionHandler(HEIGHT, WIDTH, HEADER_SIZE);
         }
@@ -144,7 +144,7 @@ public class GameField extends PApplet {
         } else {
             player.updateAnimation();
         }
-        collisionHandler.resolveObstaclesCollisions(player, obstacles);
+        collisionHandler.resolveObstaclesCollisions(player, obstacles, 0);
     }
 
     /**
@@ -168,6 +168,7 @@ public class GameField extends PApplet {
      * Draws the header section of the game field, including level information and recent inputs.
      * The header consists of a black rectangle at the top, a grey rectangle below it, level information,
      * and recent inputs displayed in descending order.
+     *
      * @see LevelManager
      */
     private void drawHeader() {
@@ -462,5 +463,9 @@ public class GameField extends PApplet {
             pui.shutdown();
         }
         super.exit();
+    }
+
+    public List<String> getLastInputs() {
+        return lastInputs;
     }
 }
