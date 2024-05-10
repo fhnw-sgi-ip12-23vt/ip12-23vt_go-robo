@@ -12,6 +12,7 @@
         <property name="fileNamePattern" value="ObservableValue\.java$"/>
         <property name="fileNamePattern" value="Pi4JContext\.java$"/>
         <property name="fileNamePattern" value="module\-info\.java$"/>
+        <property name="fileNamePattern" value="rfidIDImport\.java$"/>
 
 
     </module>
@@ -23,7 +24,7 @@
     </module>
     <module name="SuppressionSingleFilter">
         <property name="checks" value=".*"/>
-        <property name="files" value="ch.fhnw.swc.mrs.view"/>
+        <property name="files" value="roomba.script"/>
     </module>
 
     <module name="TreeWalker">
