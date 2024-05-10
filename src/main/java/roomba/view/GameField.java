@@ -75,7 +75,7 @@ public class GameField extends PApplet {
         this.puiLed = puiLed;
         levelManager = new LevelManager();
         pui.getController().setGm(this);
-        if (FULLSCREEN) {
+        if (FULLSCREEN && !System.getProperty("os.name").toLowerCase().contains("mac")) {
             collisionHandler = new CollisionHandler(HEIGHT - 230, WIDTH - 400, HEADER_SIZE);
         } else {
             collisionHandler = new CollisionHandler(HEIGHT, WIDTH, HEADER_SIZE);
@@ -272,11 +272,8 @@ public class GameField extends PApplet {
                 pImageMultiImageObstacles.put(newName, newList);
             }
         }
-
         if (FULLSCREEN) {
-
             calculateBackgroundImage();
-
         } else {
             backgroundImage = ImageLoader.loadImage(this, "img/Room-Floor2.png");
         }

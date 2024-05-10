@@ -47,6 +47,7 @@ public final class ImageLoader {
             return FileSystems.getDefault().getPath(currentDirectory, "target/classes", filename);
         } else if (os.contains("mac")) {
             // MacOS path
+
             LOGGER.log(Level.FINE, "MacOS path");
             return FileSystems.getDefault().getPath("target/classes", filename);
         } else if (os.contains("nix") || os.contains("nux")) {

@@ -94,7 +94,7 @@ public class LevelManager {
         }
         Random r = new Random();
         levelName = rightLevels.get(r.nextInt(rightLevels.size())).replace(".csv", "");
-        if (true) {
+        if (System.getProperty("os.name").toLowerCase().contains("mac")) {
             return fullPath + "/" + rightLevels.get(r.nextInt(rightLevels.size()));
         }
         return "files/level/" + rightLevels.get(r.nextInt(rightLevels.size()));
@@ -107,7 +107,6 @@ public class LevelManager {
      * @param filename  The name of the level file.
      */
     public void createPlatforms(GameField gameField, String filename) {
-        LOGGER.log(Level.FINE, "loading game objects from file ");
         gameField.nextLevel = false;
         gameField.obstacles = new ArrayList<>();
         gameField.goal = new ArrayList<>();
@@ -115,11 +114,15 @@ public class LevelManager {
         List<PImage> couch = gameField.pImageMultiImageObstacles.get("couch");
         String[] lines = gameField.loadStrings(filename);
         int offsetX = 0, offsetY = 0;
+        if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+            int totalX = (int) (gameField.width / SPRITE_SIZE); int totalY = (int) (gameField.height / SPRITE_SIZE);
+            offsetX = (totalX - (GameField.split(lines[0], ",")).length) / 2;
+            offsetY = (totalY - lines.length + 2) / 2;
+        }
         for (int row = 0; row < lines.length; row++) {
             String[] values = GameField.split(lines[row], ",");
             for (int col = 0; col < values.length; col++) {
-                int colOffset = offsetX + col;
-                int rowOffset = offsetY + row;
+                int colOffset = offsetX + col; int rowOffset = offsetY + row;
                 switch (values[col]) {
                 case "g" -> {
                     Goal loadedGoal =
@@ -129,10 +132,7 @@ public class LevelManager {
                     gameField.goal.add(loadedGoal);
                 }
                 case "w" -> {
-                    Sprite s = new Sprite(gameField, gameField.imageMap.get("wall"), SPRITE_SCALE);
-                    s.centerX = SPRITE_SIZE / 2 + colOffset * SPRITE_SIZE;
-                    s.centerY = SPRITE_SIZE / 2 + rowOffset * SPRITE_SIZE;
-                    gameField.obstacles.add(s);
+                    createObstacle(gameField, gameField.imageMap.get("wall"), colOffset, rowOffset);
                 }
                 case "p" -> {
                     Player player = new Player(gameField, gameField.imageMap.get("playerImage"), SPRITE_SIZE * 0.006f);
