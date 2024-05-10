@@ -111,7 +111,7 @@ public class LevelManager {
     public static void createPlatforms(GameField gameField, String filename) {
 
         LOGGER.log(Level.INFO, "loading game objects from file " + filename);
-          obstacles = new ArrayList<>();
+        obstacles = new ArrayList<>();
 
 
         gameField.nextLevel = false;
