@@ -8,7 +8,7 @@ import roomba.controller.LevelManager;
 import roomba.model.AnimatedSprite;
 import roomba.model.Player;
 import roomba.model.Sprite;
-import roomba.script.NewWindow;
+import roomba.script.addRFIDCard;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -405,7 +405,7 @@ public class GameField extends PApplet {
             turnMode = !turnMode;
         }
         if (Character.toLowerCase(key) == 'o') {
-            NewWindow.openDialog(pui.getRfid());
+            addRFIDCard.openDialog(pui.getRfid());
         } else if (player.isInPlace()) {
             //Options
             if (turnMode) {

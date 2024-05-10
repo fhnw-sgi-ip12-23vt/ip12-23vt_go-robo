@@ -5,14 +5,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.pi4j.crowpi.components.RfidComponent;
-import com.pi4j.context.Context;
-import roomba.util.Pi4JContext;
 
 public class rfidIDImport {
     private static final String CONFIG_FILE = "/home/pi/target/classes/app.properties";
     private static final Logger LOGGER = Logger.getLogger(rfidIDImport.class.getName());
 
-    private static void addRfidCard(String key, String idToAdd, NewWindow window) {
+    private static void addRfidCard(String key, String idToAdd, addRFIDCard window) {
         String tempFilePath = CONFIG_FILE + ".temp";
         String oldFilePath = CONFIG_FILE + ".old";
 
@@ -32,13 +30,9 @@ public class rfidIDImport {
         }
 
         // Replace the original file with the temporary file
-        LOGGER.log(Level.INFO, "Creating Path for " + CONFIG_FILE);
         File originalFile = new File(CONFIG_FILE);
-        LOGGER.log(Level.INFO, "Creating Path for " + oldFilePath);
         File oldFile = new File(oldFilePath);
-        LOGGER.log(Level.INFO, "Renaming File " + CONFIG_FILE + " to " + oldFilePath);
         originalFile.renameTo(oldFile);
-        LOGGER.log(Level.INFO, "Creating Path for " + tempFilePath);
         File tempFile = new File(tempFilePath);
         if (tempFile.renameTo(originalFile)) {
             LOGGER.log(Level.INFO, "Rename succeeded, deleting " + oldFilePath);
@@ -60,7 +54,7 @@ public class rfidIDImport {
         }
     }
 
-    public static void getID(String key, NewWindow window, RfidComponent rfid) {
+    public static void getID(String key, addRFIDCard window, RfidComponent rfid) {
         window.updateTextBoxText("Vorgang" + key );
         LOGGER.log(Level.INFO, "Creating RFID Event handler");
         rfid.waitForAnyCard(rfidCard -> {

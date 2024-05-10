@@ -6,17 +6,16 @@ import processing.core.PApplet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class NewWindow extends PApplet {
-    Button[] buttons = new Button[9]; // Array to store buttons
-    String textTop = "Klicken Sie die gewollte Funktion an und halten sie die Karte für 3 Sekunden über den Scanenr"; // Text above buttons
-    TextBox textBoxBottom; // Textbox below buttons
+public class addRFIDCard extends PApplet {
+    Button[] buttons = new Button[9];
+    String textTop = "Klicken Sie die gewollte Funktion an und halten sie die Karte für 3 Sekunden über den Scanenr";
+    TextBox textBoxBottom;
     RfidComponent rfid;
-    private static final Logger LOGGER = Logger.getLogger(NewWindow.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(addRFIDCard.class.getName());
 
-    // button names
     String[] buttonNames = new String[9];
 
-    public NewWindow(RfidComponent rfid) {
+    public addRFIDCard(RfidComponent rfid) {
         this.rfid = rfid;
     }
 
@@ -39,7 +38,7 @@ public class NewWindow extends PApplet {
         buttonNames[8] = "Moduswechsel";
 
         for (int i = 0; i < buttons.length; i++) {
-            buttons[i] = new Button(i * buttonWidth, 80, buttonWidth, 50, buttonNames[i]); // Create buttons
+            buttons[i] = new Button(i * buttonWidth, 80, buttonWidth, 50, buttonNames[i]);
         }
         textBoxBottom = new TextBox(50, height - 40, width - 100, 30, "");
     }
@@ -48,21 +47,21 @@ public class NewWindow extends PApplet {
         background(255);
         textSize(24);
         textAlign(CENTER, CENTER);
-        text(textTop, width / 2, 25); // Display text at the top
-        textBoxBottom.display(); // Display textbox below buttons
+        text(textTop, width / 2, 25);
+        textBoxBottom.display();
         for (Button button : buttons) {
-            button.display(); // Display buttons
+            button.display();
         }
     }
 
-    private NewWindow getWindow(){
+    private addRFIDCard getWindow(){
         return this;
     }
 
     public void mousePressed() {
         for (Button button : buttons) {
             if (button.isMouseInside()) {
-                button.onClick(); // Handle button click
+                button.onClick();
             }
         }
     }
@@ -106,9 +105,7 @@ public class NewWindow extends PApplet {
                     rfidIDImport.getID("RFID_RIGHT", getWindow(), rfid);
                     break;
                 case "Links":
-                    LOGGER.log(Level.INFO, "Beginning Import Scan for LEFT");
                     rfidIDImport.getID("RFID_LEFT", getWindow(), rfid);
-                    LOGGER.log(Level.INFO, "End of Import Scan sequence for LEFT");
                     break;
                 case "Vorne":
                     rfidIDImport.getID("RFID_UP", getWindow(), rfid);
@@ -169,7 +166,7 @@ public class NewWindow extends PApplet {
 
 
     public static void openDialog(RfidComponent rfid) {
-        NewWindow nw = new NewWindow(rfid);
+        addRFIDCard nw = new addRFIDCard(rfid);
         PApplet.runSketch(new String[]{"Dialog"}, nw);
     }
 }
