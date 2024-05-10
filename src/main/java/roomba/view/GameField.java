@@ -77,7 +77,7 @@ public class GameField extends PApplet {
         levelManager = new LevelManager();
         pui.getController().setGm(this);
         if (FULLSCREEN) {
-            collisionHandler = new CollisionHandler(HEIGHT - 230, WIDTH - 400, HEADER_SIZE);
+            collisionHandler = new CollisionHandler(HEIGHT, WIDTH, HEADER_SIZE);
         } else {
             collisionHandler = new CollisionHandler(HEIGHT, WIDTH, HEADER_SIZE);
         }
@@ -326,14 +326,17 @@ public class GameField extends PApplet {
                 + player.isInPlace());
 
         if (RFID_EASY.contains(input)) {
+            LOGGER.log(Level.WARNING, "EASY RFID LEVEL CHANGE");
             difficulty = 0;
             setup();
         }
         if (RFID_MEDIUM.contains(input)) {
+            LOGGER.log(Level.WARNING, "MEDIUM RFID LEVEL CHANGE");
             difficulty = 1;
             setup();
         }
         if (RFID_HARD.contains(input)) {
+            LOGGER.log(Level.WARNING, "HARD RFID LEVEL CHANGE");
             difficulty = 2;
             setup();
         }
