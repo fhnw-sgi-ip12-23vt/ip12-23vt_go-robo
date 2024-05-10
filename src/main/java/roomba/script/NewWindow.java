@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 public class NewWindow extends PApplet {
     Button[] buttons = new Button[9]; // Array to store buttons
-    String textTop = "Für welche Funktion soll eine neue Karte eingelesen werden"; // Text above buttons
+    String textTop = "Klicken Sie die gewollte Funktion an und halten sie die Karte für 3 Sekunden über den Scanenr"; // Text above buttons
     TextBox textBoxBottom; // Textbox below buttons
     RfidComponent rfid;
     private static final Logger LOGGER = Logger.getLogger(NewWindow.class.getName());
@@ -41,7 +41,7 @@ public class NewWindow extends PApplet {
         for (int i = 0; i < buttons.length; i++) {
             buttons[i] = new Button(i * buttonWidth, 80, buttonWidth, 50, buttonNames[i]); // Create buttons
         }
-        textBoxBottom = new TextBox(50, height - 40, width - 100, 30, "Enter text below");
+        textBoxBottom = new TextBox(50, height - 40, width - 100, 30, "");
     }
 
     public void draw() {
@@ -70,6 +70,7 @@ public class NewWindow extends PApplet {
     // Method to update textbox text
     void updateTextBoxText(String newText) {
         textBoxBottom.setText(newText);
+        redraw();
     }
 
     class Button {

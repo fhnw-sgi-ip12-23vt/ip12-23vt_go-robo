@@ -398,13 +398,13 @@ public class GameField extends PApplet {
             difficulty = 2;
             setup();
         }
-        if (key == 'r') {
+        if (Character.toLowerCase(key) == 'r') {
             restart();
         }
-        if (key == 'h') {
+        if (Character.toLowerCase(key) == 'h') {
             turnMode = !turnMode;
         }
-        if (key == 'o') {
+        if (Character.toLowerCase(key) == 'o') {
             NewWindow.openDialog(pui.getRfid());
         } else if (player.isInPlace()) {
             //Options

@@ -9,7 +9,7 @@ import com.pi4j.context.Context;
 import roomba.util.Pi4JContext;
 
 public class rfidIDImport {
-    private static final String CONFIG_FILE = "/home/pi/target/classes/main/java/app.properties";
+    private static final String CONFIG_FILE = "/home/pi/target/classes/app.properties";
     private static final Logger LOGGER = Logger.getLogger(rfidIDImport.class.getName());
 
     private static void addRfidCard(String key, String idToAdd, NewWindow window) {
@@ -43,8 +43,15 @@ public class rfidIDImport {
         if (tempFile.renameTo(originalFile)) {
             LOGGER.log(Level.INFO, "Rename succeeded, deleting " + oldFilePath);
             oldFile.delete();
-            window.updateTextBoxText("Vorgang abgeschlossen");
+            window.updateTextBoxText("Vorgang abgeschlossen" + " (" + key + ")");
             LOGGER.log(Level.INFO, "RFID import and file update completed");
+            //set pi user as owner of new file
+            try {
+                ProcessBuilder pb = new ProcessBuilder("chown", "pi", CONFIG_FILE);
+                pb.start();
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             LOGGER.log(Level.INFO, "Rename failed, returning to old app.properties");
             window.updateTextBoxText("Vorgang fehlgeschlagen");

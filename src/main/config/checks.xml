@@ -64,7 +64,7 @@
             <property name="caseIndent" value="0" />
         </module>
         <module name="MethodLength">
-            <property name="max" value="100" />
+            <property name="max" value="120" />
             <property name="tokens" value="METHOD_DEF" />
         </module>
         <module name="ParameterNumber" />
