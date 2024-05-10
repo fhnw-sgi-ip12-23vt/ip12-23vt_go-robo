@@ -24,9 +24,13 @@ public class CollisionHandler {
      *
      * @param s      The sprite for which collisions need to be resolved.
      * @param walls  The list of wall sprites.
+     * @param border distance between screen border and game border
      */
-    public void resolveObstaclesCollisions(Sprite s, List<Sprite> walls) {
-
+    public void resolveObstaclesCollisions(Sprite s, List<Sprite> walls, int border) {
+        int gridcorrection = 1;
+        if (border != 0) {
+            gridcorrection = border;
+        }
 
         // Vertical collisions
         s.centerY += s.changeY;
@@ -41,11 +45,11 @@ public class CollisionHandler {
             s.changeY = 0;
         } else {
             // Check if sprite is colliding with window borders vertically
-            if (s.getTop() < headerSize) {
-                s.setTop(headerSize);
+            if (s.getTop() < headerSize + border) {
+                s.setTop(headerSize + border);
                 s.changeY = 0;
-            } else if (s.getBottom() > height) {
-                s.setBottom(height);
+            } else if (s.getBottom() > height - border - height % gridcorrection) {
+                s.setBottom(height - border - height % gridcorrection);
                 s.changeY = 0;
             }
         }
@@ -63,11 +67,11 @@ public class CollisionHandler {
             s.changeX = 0;
         } else {
             // Check if sprite is colliding with window borders horizontally
-            if (s.getLeft() < 0) {
-                s.setLeft(0);
+            if (s.getLeft() < border) {
+                s.setLeft(border);
                 s.changeX = 0;
-            } else if (s.getRight() > width) {
-                s.setRight(width);
+            } else if (s.getRight() > width - border - width % gridcorrection) {
+                s.setRight(width - border - width % gridcorrection);
                 s.changeX = 0;
             }
         }
