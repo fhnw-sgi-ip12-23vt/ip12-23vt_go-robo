@@ -121,8 +121,8 @@ public class LevelManager {
         int totalY = (int) (gameField.height / SPRITE_SIZE);
         int offsetX = (totalX - (GameField.split(lines[0], ",")).length) / 2;
         int offsetY = (totalY - lines.length + 2) / 2;
-
-
+        offsetX=0;
+        offsetY=2;
         for (int row = 0; row < lines.length; row++) {
             String[] values = GameField.split(lines[row], ",");
             for (int col = 0; col < values.length; col++) {
