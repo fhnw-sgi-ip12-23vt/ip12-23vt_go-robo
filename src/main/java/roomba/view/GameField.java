@@ -320,7 +320,7 @@ public class GameField extends PApplet {
 
     public void handleInput(String input) {
         assert pui != null;
-
+        LOGGER.log(Level.INFO, "Input: " + input);
         puiLed.blink(PhysicalLed.LEDType.BLUE);
         LOGGER.log(Level.FINE,
             "handleInput queue item !" + input + "!" + "    nextLevel" + nextLevel + "    player.isInPlace()"
