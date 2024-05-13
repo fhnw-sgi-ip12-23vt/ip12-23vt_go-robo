@@ -93,11 +93,11 @@ public class LevelManager {
             }
         }
         Random r = new Random();
-        levelName = rightLevels.get(r.nextInt(rightLevels.size())).replace(".csv", "");
-        if (true) {
-            return fullPath + "/" + rightLevels.get(r.nextInt(rightLevels.size()));
-        }
-        return "files/level/" + rightLevels.get(r.nextInt(rightLevels.size()));
+        String levelPath = rightLevels.get(r.nextInt(rightLevels.size()));
+        levelName = levelPath.replace(".csv", "");
+        return fullPath + "/" + levelPath;
+
+
     }
 
     static List<Sprite> obstacles = new ArrayList<>();
