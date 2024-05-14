@@ -129,7 +129,7 @@ public class LevelManager {
                 switch (values[col]) {
                 case "g" -> {
                     Goal loadedGoal =
-                        new Goal(gameField, gameField.imageMap.get("chargingStation"), SPRITE_SIZE * 0.009f);
+                        new Goal(gameField, gameField.imageMap.get("chargingStation"), SPRITE_SIZE * 0.007f);
                     loadedGoal.centerX = SPRITE_SIZE / 2 + colOffset * SPRITE_SIZE;
                     loadedGoal.centerY = SPRITE_SIZE / 2 + rowOffset * SPRITE_SIZE;
                     gameField.goal.add(loadedGoal);
