@@ -248,7 +248,7 @@ public class GameField extends PApplet {
 
         imageMap.put("playerImage", ImageLoader.loadImage(this, "img/roomba2-pixel-dark.png"));
         imageMap.put("chargingStation", ImageLoader.loadImage(this, "img/goal/battery-frame3.png"));
-        imageMap.put("wall", ImageLoader.loadImage(this, "img/red_brick.png"));
+        imageMap.put("wall", ImageLoader.loadImage(this, "img/black.png"));
         imageMap.put("newLevel1", ImageLoader.loadImage(this, "img/response/new-level-1.png"));
         imageMap.put("newLevel2", ImageLoader.loadImage(this, "img/response/new-level-2.png"));
         imageMap.put("done", ImageLoader.loadImage(this, "img/response/done.png"));
