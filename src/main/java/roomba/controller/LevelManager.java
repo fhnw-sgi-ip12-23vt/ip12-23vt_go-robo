@@ -107,23 +107,23 @@ public class LevelManager {
      *
      * @param gameField The game field to create platforms for.
      * @param filename  The name of the level file
-     * g: goal
-     * p: player
-     * w: black wall
-     * 1: ball
-     * 2: bookshelf
-     * 3: computer
-     * 4: game console
-     * 5: shelf
-     * 6: paper
-     * 7: cushion
-     * 8: plant
-     * 9: plant
-     * t: teddy
-     * r: random
-     * a,b,c,d: bett
-     * e,f: couch
-     * 0: air
+     *                  g: goal
+     *                  p: player
+     *                  w: black wall
+     *                  1: ball
+     *                  2: bookshelf
+     *                  3: computer
+     *                  4: game console
+     *                  5: shelf
+     *                  6: paper
+     *                  7: cushion
+     *                  8: plant
+     *                  9: plant
+     *                  t: teddy
+     *                  r: random
+     *                  a,b,c,d: bett
+     *                  e,f: couch
+     *                  0: air
      */
     public static void createPlatforms(GameField gameField, String filename) {
 
@@ -139,14 +139,16 @@ public class LevelManager {
         String[] lines = gameField.loadStrings(filename);
         int offsetX = 0, offsetY = 0;
         if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-            int totalX = (int) (gameField.width / SPRITE_SIZE); int totalY = (int) (gameField.height / SPRITE_SIZE);
+            int totalX = (int) (gameField.width / SPRITE_SIZE);
+            int totalY = (int) (gameField.height / SPRITE_SIZE);
             offsetX = (totalX - (GameField.split(lines[0], ",")).length) / 2;
             offsetY = (totalY - lines.length + 2) / 2;
         }
         for (int row = 0; row < lines.length; row++) {
             String[] values = GameField.split(lines[row], ",");
             for (int col = 0; col < values.length; col++) {
-                int colOffset = offsetX + col; int rowOffset = offsetY + row;
+                int colOffset = offsetX + col;
+                int rowOffset = offsetY + row;
                 switch (values[col]) {
                 case "g" -> {
                     Goal loadedGoal =
@@ -158,14 +160,17 @@ public class LevelManager {
                 case "w" -> {
                     createObstacle(gameField, gameField.imageMap.get("wall"), colOffset, rowOffset);
                 }
+                case "B" -> {
+                    createObstacle(gameField, gameField.imageMap.get("bricks"), colOffset, rowOffset);
+                }
                 case "p" -> {
                     Player player = new Player(gameField, gameField.imageMap.get("playerImage"), SPRITE_SIZE * 0.006f);
                     player.centerX = SPRITE_SIZE / 2 + colOffset * SPRITE_SIZE;
                     player.centerY = SPRITE_SIZE / 2 + rowOffset * SPRITE_SIZE;
                     gameField.player = player;
                 }
-                case "1","2","3","4","5","6","7","8","9" -> {
-                    createObstacle(gameField, values[col], colOffset, rowOffset);
+                case "1", "2", "3", "4", "5", "6", "7", "8", "9" -> {
+                    createObstacle(gameField, Integer.parseInt(values[col]) - 1, colOffset, rowOffset);
                 }
                 case "t" -> {
                     createObstacle(gameField, 9, colOffset, rowOffset);

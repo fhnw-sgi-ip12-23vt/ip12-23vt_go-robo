@@ -252,6 +252,7 @@ public class GameField extends PApplet {
         imageMap.put("newLevel1", ImageLoader.loadImage(this, "img/response/new-level-1.png"));
         imageMap.put("newLevel2", ImageLoader.loadImage(this, "img/response/new-level-2.png"));
         imageMap.put("done", ImageLoader.loadImage(this, "img/response/done.png"));
+        imageMap.put("bricks", ImageLoader.loadImage(this, "img/bricks.png"));
 
         Path path = ImageLoader.getImagePath("img/obstacles").toAbsolutePath();
         var files = path.toFile().listFiles();
