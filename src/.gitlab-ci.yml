@@ -1,0 +1,14 @@
+variables:
+  MAVEN_CLI_OPTS: "package"
+image: 'maven:3.9.6-eclipse-temurin-17'
+stages:
+  - build
+
+build-job:
+  stage: build
+  script:
+    - mvn $MAVEN_CLI_OPTS
+  artifacts:
+    when: always
+    paths:
+      - /builds/IP12-23vt/IP12-23vt_tun-Exponat/LostRoomba/target/RoboGo-1.0-SNAPSHOT.jar

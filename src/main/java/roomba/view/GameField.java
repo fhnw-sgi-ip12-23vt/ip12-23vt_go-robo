@@ -8,6 +8,7 @@ import roomba.controller.LevelManager;
 import roomba.model.AnimatedSprite;
 import roomba.model.Player;
 import roomba.model.Sprite;
+import roomba.script.addRFIDCard;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -75,8 +76,8 @@ public class GameField extends PApplet {
         this.puiLed = puiLed;
         levelManager = new LevelManager();
         pui.getController().setGm(this);
-        if (FULLSCREEN && !System.getProperty("os.name").toLowerCase().contains("mac")) {
-            collisionHandler = new CollisionHandler(HEIGHT - 230, WIDTH - 400, HEADER_SIZE);
+        if (FULLSCREEN) {
+            collisionHandler = new CollisionHandler(HEIGHT, WIDTH, HEADER_SIZE);
         } else {
             collisionHandler = new CollisionHandler(HEIGHT, WIDTH, HEADER_SIZE);
         }
@@ -150,7 +151,8 @@ public class GameField extends PApplet {
      * Displays all game elements on the screen.
      */
     void displayAll() {
-        for (Sprite ob : obstacles) {
+        List<Sprite> obstaclesCopy = new ArrayList<>(obstacles); // Kopie der Hindernisse erstellen
+        for (Sprite ob : obstaclesCopy) {
             ob.display();
         }
         for (Sprite g : goal) {
@@ -246,7 +248,7 @@ public class GameField extends PApplet {
 
         imageMap.put("playerImage", ImageLoader.loadImage(this, "img/roomba2-pixel-dark.png"));
         imageMap.put("chargingStation", ImageLoader.loadImage(this, "img/goal/battery-frame3.png"));
-        imageMap.put("wall", ImageLoader.loadImage(this, "img/red_brick.png"));
+        imageMap.put("wall", ImageLoader.loadImage(this, "img/black.png"));
         imageMap.put("newLevel1", ImageLoader.loadImage(this, "img/response/new-level-1.png"));
         imageMap.put("newLevel2", ImageLoader.loadImage(this, "img/response/new-level-2.png"));
         imageMap.put("done", ImageLoader.loadImage(this, "img/response/done.png"));
@@ -315,21 +317,24 @@ public class GameField extends PApplet {
 
     public void handleInput(String input) {
         assert pui != null;
-
+        LOGGER.log(Level.INFO, "Input: " + input);
         puiLed.blink(PhysicalLed.LEDType.BLUE);
         LOGGER.log(Level.FINE,
             "handleInput queue item !" + input + "!" + "    nextLevel" + nextLevel + "    player.isInPlace()"
                 + player.isInPlace());
 
         if (RFID_EASY.contains(input)) {
+            LOGGER.log(Level.WARNING, "EASY RFID LEVEL CHANGE");
             difficulty = 0;
             setup();
         }
         if (RFID_MEDIUM.contains(input)) {
+            LOGGER.log(Level.WARNING, "MEDIUM RFID LEVEL CHANGE");
             difficulty = 1;
             setup();
         }
         if (RFID_HARD.contains(input)) {
+            LOGGER.log(Level.WARNING, "HARD RFID LEVEL CHANGE");
             difficulty = 2;
             setup();
         }
@@ -383,6 +388,7 @@ public class GameField extends PApplet {
     }
 
     public void keyPressed() {
+
         if (key == '1') {
             difficulty = 0;
             setup();
@@ -395,11 +401,14 @@ public class GameField extends PApplet {
             difficulty = 2;
             setup();
         }
-        if (key == 'r') {
+        if (Character.toLowerCase(key) == 'r') {
             restart();
         }
-        if (key == 'h') {
+        if (Character.toLowerCase(key) == 'h') {
             turnMode = !turnMode;
+        }
+        if (Character.toLowerCase(key) == 'o') {
+            addRFIDCard.openDialog(pui.getRfid());
         } else if (player.isInPlace()) {
             //Options
             if (turnMode) {
@@ -456,5 +465,9 @@ public class GameField extends PApplet {
             pui.shutdown();
         }
         super.exit();
+    }
+
+    public List<String> getLastInputs() {
+        return lastInputs;
     }
 }

@@ -93,12 +93,14 @@ public class LevelManager {
             }
         }
         Random r = new Random();
-        levelName = rightLevels.get(r.nextInt(rightLevels.size())).replace(".csv", "");
-        if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-            return fullPath + "/" + rightLevels.get(r.nextInt(rightLevels.size()));
-        }
-        return "files/level/" + rightLevels.get(r.nextInt(rightLevels.size()));
+        String levelPath = rightLevels.get(r.nextInt(rightLevels.size()));
+        levelName = levelPath.replace(".csv", "");
+        return fullPath + "/" + levelPath;
+
+
     }
+
+    static List<Sprite> obstacles = new ArrayList<>();
 
     /**
      * Creates platforms and obstacles for the specified game field based on the level file.
@@ -106,7 +108,12 @@ public class LevelManager {
      * @param gameField The game field to create platforms for.
      * @param filename  The name of the level file.
      */
-    public void createPlatforms(GameField gameField, String filename) {
+    public static void createPlatforms(GameField gameField, String filename) {
+
+        LOGGER.log(Level.INFO, "loading game objects from file " + filename);
+        obstacles = new ArrayList<>();
+
+
         gameField.nextLevel = false;
         gameField.obstacles = new ArrayList<>();
         gameField.goal = new ArrayList<>();
@@ -126,7 +133,7 @@ public class LevelManager {
                 switch (values[col]) {
                 case "g" -> {
                     Goal loadedGoal =
-                        new Goal(gameField, gameField.imageMap.get("chargingStation"), SPRITE_SIZE * 0.009f);
+                        new Goal(gameField, gameField.imageMap.get("chargingStation"), SPRITE_SIZE * 0.007f);
                     loadedGoal.centerX = SPRITE_SIZE / 2 + colOffset * SPRITE_SIZE;
                     loadedGoal.centerY = SPRITE_SIZE / 2 + rowOffset * SPRITE_SIZE;
                     gameField.goal.add(loadedGoal);
@@ -140,32 +147,8 @@ public class LevelManager {
                     player.centerY = SPRITE_SIZE / 2 + rowOffset * SPRITE_SIZE;
                     gameField.player = player;
                 }
-                case "1" -> {
-                    createObstacle(gameField, 0, colOffset, rowOffset);
-                }
-                case "2" -> {
-                    createObstacle(gameField, 1, colOffset, rowOffset);
-                }
-                case "3" -> {
-                    createObstacle(gameField, 2, colOffset, rowOffset);
-                }
-                case "4" -> {
-                    createObstacle(gameField, 3, colOffset, rowOffset);
-                }
-                case "5" -> {
-                    createObstacle(gameField, 4, colOffset, rowOffset);
-                }
-                case "6" -> {
-                    createObstacle(gameField, 5, colOffset, rowOffset);
-                }
-                case "7" -> {
-                    createObstacle(gameField, 6, colOffset, rowOffset);
-                }
-                case "8" -> {
-                    createObstacle(gameField, 7, colOffset, rowOffset);
-                }
-                case "9" -> {
-                    createObstacle(gameField, 8, colOffset, rowOffset);
+                case "1","2","3","4","5","6","7","8","9" -> {
+                    createObstacle(gameField, values[col], colOffset, rowOffset);
                 }
                 // RANDOM OBSTACLES
                 case "r" -> {
@@ -195,29 +178,28 @@ public class LevelManager {
                     createObstacle(gameField, couch.get(1), colOffset, rowOffset);
                 }
                 // Air does nothing
-                case "" -> {
+                case "", "0" -> {
                 }
                 //0 does nothing
-                case "0" -> {
-                }
                 default -> LOGGER.log(Level.WARNING, "Illegal Character in csv file: " + values[col]);
                 }
             }
         }
+        gameField.obstacles.addAll(obstacles);
     }
 
-    public void createObstacle(GameField gameField, int i, int col, int row) {
+    public static void createObstacle(GameField gameField, int i, int col, int row) {
         Sprite s = new Sprite(gameField, gameField.pImageListObstacles.get(i), SPRITE_SCALE);
         s.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
         s.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
-        gameField.obstacles.add(s);
+        obstacles.add(s);
     }
 
-    public void createObstacle(GameField gameField, PImage pImage, int col, int row) {
+    public static void createObstacle(GameField gameField, PImage pImage, int col, int row) {
         Sprite s = new Sprite(gameField, pImage, SPRITE_SCALE);
         s.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
         s.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
-        gameField.obstacles.add(s);
+        obstacles.add(s);
 
     }
 }
