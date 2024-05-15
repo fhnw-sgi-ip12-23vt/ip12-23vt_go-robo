@@ -106,7 +106,24 @@ public class LevelManager {
      * Creates platforms and obstacles for the specified game field based on the level file.
      *
      * @param gameField The game field to create platforms for.
-     * @param filename  The name of the level file.
+     * @param filename  The name of the level file
+     * g: goal
+     * p: player
+     * w: black wall
+     * 1: ball
+     * 2: bookshelf
+     * 3: computer
+     * 4: game console
+     * 5: shelf
+     * 6: paper
+     * 7: cushion
+     * 8: plant
+     * 9: plant
+     * t: teddy
+     * r: random
+     * a,b,c,d: bett
+     * e,f: couch
+     * 0: air
      */
     public static void createPlatforms(GameField gameField, String filename) {
 
@@ -172,6 +189,9 @@ public class LevelManager {
                 }
                 case "9" -> {
                     createObstacle(gameField, 8, colOffset, rowOffset);
+                }
+                case "t" -> {
+                    createObstacle(gameField, 9, colOffset, rowOffset);
                 }
                 // RANDOM OBSTACLES
                 case "r" -> {
