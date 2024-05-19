@@ -326,17 +326,17 @@ public class GameField extends PApplet {
 
         if (RFID_EASY.contains(input)) {
             LOGGER.log(Level.WARNING, "EASY RFID LEVEL CHANGE");
-            difficulty = 0;
+            difficulty = 2;
             setup();
         }
         if (RFID_MEDIUM.contains(input)) {
             LOGGER.log(Level.WARNING, "MEDIUM RFID LEVEL CHANGE");
-            difficulty = 1;
+            difficulty = 0;
             setup();
         }
         if (RFID_HARD.contains(input)) {
             LOGGER.log(Level.WARNING, "HARD RFID LEVEL CHANGE");
-            difficulty = 2;
+            difficulty = 1;
             setup();
         }
         if (RFID_TURN.contains(input)) {
