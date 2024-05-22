@@ -324,9 +324,9 @@ public class GameField extends PApplet {
         assert pui != null;
         LOGGER.log(Level.INFO, "Input: " + input);
         puiLed.blink(PhysicalLed.LEDType.BLUE);
-        LOGGER.log(Level.FINE,
+        LOGGER.log(Level.INFO,
             "handleInput queue item !" + input + "!" + "    nextLevel" + nextLevel + "    player.isInPlace()"
-                + player.isInPlace());
+                + player.isInPlace() + " " + currentLevel + " diff " + difficulty);
 
         if (RFID_EASY.contains(input)) {
             LOGGER.log(Level.INFO, "EASY RFID LEVEL CHANGE");
@@ -413,7 +413,7 @@ public class GameField extends PApplet {
 
     public void keyPressed() {
         if (key == 'l') {
-            pui.test("0DC7149B");
+            pui.test("7DCD159B");
         }
 
         if (key == '1') {
