@@ -220,9 +220,15 @@ public class GameField extends PApplet {
      * Sets up the initial game state.
      */
     public void setup() {
-        lastInputs.clear();
-        imageMode(CENTER);
         loadImages();
+
+        levelSetup();
+    }
+
+    private void levelSetup() {
+        imageMode(CENTER);
+
+        lastInputs.clear();
 
         levelManager.setDifficulty(difficulty);
         currentLevel = levelManager.getNextLevel();
@@ -236,8 +242,6 @@ public class GameField extends PApplet {
     public void restart() {
         lastInputs.clear();
         imageMode(CENTER);
-        loadImages();
-
         createPlatforms(currentLevel);
     }
 
@@ -313,7 +317,7 @@ public class GameField extends PApplet {
      * @param filename The filename of the level file.
      */
     private void createPlatforms(String filename) {
-        levelManager.createPlatforms(this, filename);
+        LevelManager.createPlatforms(this, filename);
     }
 
     public void handleInput(String input) {
@@ -327,17 +331,17 @@ public class GameField extends PApplet {
         if (RFID_EASY.contains(input)) {
             LOGGER.log(Level.WARNING, "EASY RFID LEVEL CHANGE");
             difficulty = 2;
-            setup();
+            levelSetup();
         }
         if (RFID_MEDIUM.contains(input)) {
             LOGGER.log(Level.WARNING, "MEDIUM RFID LEVEL CHANGE");
             difficulty = 0;
-            setup();
+            levelSetup();
         }
         if (RFID_HARD.contains(input)) {
             LOGGER.log(Level.WARNING, "HARD RFID LEVEL CHANGE");
             difficulty = 1;
-            setup();
+            levelSetup();
         }
         if (RFID_TURN.contains(input)) {
             turnMode = !turnMode;
