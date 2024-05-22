@@ -330,23 +330,24 @@ public class GameField extends PApplet {
 
         if (RFID_EASY.contains(input)) {
             LOGGER.log(Level.WARNING, "EASY RFID LEVEL CHANGE");
-            difficulty = 2;
+            difficulty = 0;
             levelSetup();
         }
         if (RFID_MEDIUM.contains(input)) {
             LOGGER.log(Level.WARNING, "MEDIUM RFID LEVEL CHANGE");
-            difficulty = 0;
+            difficulty = 1;
             levelSetup();
         }
         if (RFID_HARD.contains(input)) {
             LOGGER.log(Level.WARNING, "HARD RFID LEVEL CHANGE");
-            difficulty = 1;
+            difficulty = 2;
             levelSetup();
         }
         if (RFID_TURN.contains(input)) {
             turnMode = !turnMode;
         }
         if (RFID_RESET.contains(input)) {
+            LOGGER.log(Level.WARNING, "RESET");
             restart();
         } else if (player.isInPlace()) {
             puiLed.ledOff(PhysicalLed.LEDType.YELLOW);
@@ -393,6 +394,9 @@ public class GameField extends PApplet {
     }
 
     public void keyPressed() {
+        if (key == 'l') {
+            pui.test("0DC7149B");
+        }
 
         if (key == '1') {
             difficulty = 0;

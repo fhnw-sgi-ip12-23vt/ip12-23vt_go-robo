@@ -58,6 +58,11 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
 
     }
 
+    public void test(String a) {
+        controller.enqueue(a);
+
+    }
+
     public RfidComponent getRfid() {
         return rfid;
     }
