@@ -21,7 +21,8 @@ public class PhysicalModel implements PropertyChangeListener {
     public Queue<String> inputQueue = new LinkedList<>();
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        LOGGER.log(Level.INFO, "Trigger handleInput " + evt.getPropertyName() + " " + evt.getNewValue());
+        LOGGER.log(Level.INFO, "Trigger class " + this);
+        LOGGER.log(Level.INFO, "Trigger handleInput " + evt.getPropertyName());
         gm.handleInput(inputQueue.poll());
     }
 
