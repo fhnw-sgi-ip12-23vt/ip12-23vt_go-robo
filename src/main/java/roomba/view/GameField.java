@@ -325,6 +325,7 @@ public class GameField extends PApplet {
     }
 
     public void handleInput(String input) {
+
         assert pui != null;
         LOGGER.log(Level.INFO, "Input: " + input);
         puiLed.blink(PhysicalLed.LEDType.BLUE);
