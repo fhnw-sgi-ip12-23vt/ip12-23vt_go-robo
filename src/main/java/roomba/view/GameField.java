@@ -64,6 +64,7 @@ public class GameField extends PApplet {
     private boolean loadingNextLevel = false;
     private int completionWindowStartTime;
     private String currentLevel;
+    private boolean isSetup = true;
 
     /**
      * Constructs a GameField instance.
@@ -220,9 +221,12 @@ public class GameField extends PApplet {
      * Sets up the initial game state.
      */
     public void setup() {
-        loadImages();
+        if (isSetup) {
+            isSetup = false;
+            loadImages();
 
-        levelSetup();
+            levelSetup();
+        }
     }
 
     private void levelSetup() {
