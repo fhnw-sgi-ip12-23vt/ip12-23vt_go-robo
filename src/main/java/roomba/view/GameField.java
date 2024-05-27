@@ -11,6 +11,7 @@ import roomba.model.Sprite;
 import roomba.script.addRFIDCard;
 
 import java.nio.file.Path;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,7 +65,7 @@ public class GameField extends PApplet {
     private boolean loadingNextLevel = false;
     private int completionWindowStartTime;
     private String currentLevel;
-    private boolean isSetup = true;
+    private boolean skipNextSetup;
 
     /**
      * Constructs a GameField instance.
@@ -76,6 +77,7 @@ public class GameField extends PApplet {
         this.pui = pui;
         this.puiLed = puiLed;
         levelManager = new LevelManager();
+        skipNextSetup = false;
         pui.getController().setGm(this);
         if (FULLSCREEN) {
             collisionHandler = new CollisionHandler(HEIGHT, WIDTH, HEADER_SIZE);
@@ -221,28 +223,22 @@ public class GameField extends PApplet {
      * Sets up the initial game state.
      */
     public void setup() {
-        if (isSetup && (System.getProperty("os.name").toLowerCase().contains("nix")
-            || System.getProperty("os.name").toLowerCase().contains("nux"))) {
-
-            isSetup = false;
-            loadImages();
-            levelSetup();
+        loadImages();
+        if (skipNextSetup) {
+            skipNextSetup = false;
         } else {
-
-            isSetup = false;
-            loadImages();
             levelSetup();
         }
     }
 
     private void levelSetup() {
         imageMode(CENTER);
-
+        LOGGER.log(Level.INFO, "levelSETUP");
         lastInputs.clear();
 
         levelManager.setDifficulty(difficulty);
         currentLevel = levelManager.getNextLevel();
-        createPlatforms(currentLevel);
+        createPlatforms(currentLevel, java.time.LocalTime.now());
         difficulty = levelManager.getDifficulty();
     }
 
@@ -252,7 +248,7 @@ public class GameField extends PApplet {
     public void restart() {
         lastInputs.clear();
         imageMode(CENTER);
-        createPlatforms(currentLevel);
+        createPlatforms(currentLevel, java.time.LocalTime.now());
     }
 
     /**
@@ -326,12 +322,11 @@ public class GameField extends PApplet {
      *
      * @param filename The filename of the level file.
      */
-    private void createPlatforms(String filename) {
-        LevelManager.createPlatforms(this, filename);
+    private void createPlatforms(String filename, LocalTime date) {
+        LevelManager.createPlatforms(this, filename, date);
     }
 
     public void handleInput(String input) {
-
         assert pui != null;
         LOGGER.log(Level.INFO, "Input: " + input);
         puiLed.blink(PhysicalLed.LEDType.BLUE);
@@ -343,16 +338,19 @@ public class GameField extends PApplet {
             LOGGER.log(Level.INFO, "EASY RFID LEVEL CHANGE");
             difficulty = 0;
             levelSetup();
+            skipNextSetup = true;
         }
         if (RFID_MEDIUM.contains(input)) {
             LOGGER.log(Level.INFO, "MEDIUM RFID LEVEL CHANGE");
             difficulty = 1;
             levelSetup();
+            skipNextSetup = true;
         }
         if (RFID_HARD.contains(input)) {
             LOGGER.log(Level.INFO, "HARD RFID LEVEL CHANGE");
             difficulty = 2;
             levelSetup();
+            skipNextSetup = true;
         }
         if (RFID_TURN.contains(input)) {
             LOGGER.log(Level.INFO, "TURN MODE");
@@ -361,6 +359,7 @@ public class GameField extends PApplet {
         if (RFID_RESET.contains(input)) {
             LOGGER.log(Level.INFO, "RESET");
             restart();
+            skipNextSetup = true;
         } else if (player.isInPlace()) {
             LOGGER.log(Level.INFO, "MOV");
 
