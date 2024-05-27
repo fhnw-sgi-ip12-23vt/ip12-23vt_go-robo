@@ -221,10 +221,16 @@ public class GameField extends PApplet {
      * Sets up the initial game state.
      */
     public void setup() {
-        if (isSetup) {
+        if (isSetup && (System.getProperty("os.name").toLowerCase().contains("nix")
+            || System.getProperty("os.name").toLowerCase().contains("nux"))) {
+
             isSetup = false;
             loadImages();
+            levelSetup();
+        } else {
 
+            isSetup = false;
+            loadImages();
             levelSetup();
         }
     }
