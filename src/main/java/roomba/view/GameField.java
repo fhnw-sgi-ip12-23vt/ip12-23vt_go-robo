@@ -237,6 +237,11 @@ public class GameField extends PApplet {
         difficulty = levelManager.getDifficulty();
     }
 
+    private void levelSetup(int i){
+        LOGGER.log(Level.WARNING, Integer.toString(i));
+        levelSetup();
+    }
+
     /**
      * restart current level
      */
@@ -322,6 +327,7 @@ public class GameField extends PApplet {
     }
 
     private boolean handlingInput = false;
+    int countEasy = 0;
     public void handleInput(String input) {
         if (!handlingInput) {
             handlingInput = true;
@@ -334,8 +340,7 @@ public class GameField extends PApplet {
             if (RFID_EASY.contains(input)) {
                 LOGGER.log(Level.INFO, "EASY RFID LEVEL CHANGE");
                 difficulty = 0;
-                levelSetup();
-                return;
+                levelSetup(countEasy++);
             }
             if (RFID_MEDIUM.contains(input)) {
                 LOGGER.log(Level.INFO, "MEDIUM RFID LEVEL CHANGE");
