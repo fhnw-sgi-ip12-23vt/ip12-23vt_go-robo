@@ -131,7 +131,6 @@ public class LevelManager {
 
         if (date.minusSeconds(10).compareTo(java.time.LocalTime.now()) < 0) {
             LOGGER.log(Level.WARNING, "Stopped level switch, did not pass time threshold check");
-            return;
         }
 
         LOGGER.log(Level.INFO, "loading game objects from file " + filename + " DATE " + date);

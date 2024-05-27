@@ -335,6 +335,7 @@ public class GameField extends PApplet {
                 LOGGER.log(Level.INFO, "EASY RFID LEVEL CHANGE");
                 difficulty = 0;
                 levelSetup();
+                return;
             }
             if (RFID_MEDIUM.contains(input)) {
                 LOGGER.log(Level.INFO, "MEDIUM RFID LEVEL CHANGE");
