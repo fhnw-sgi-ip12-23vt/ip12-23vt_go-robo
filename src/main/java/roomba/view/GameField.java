@@ -65,6 +65,7 @@ public class GameField extends PApplet {
     private boolean loadingNextLevel = false;
     private int completionWindowStartTime;
     private String currentLevel;
+    private boolean skipNextSetup;
 
     /**
      * Constructs a GameField instance.
@@ -76,6 +77,7 @@ public class GameField extends PApplet {
         this.pui = pui;
         this.puiLed = puiLed;
         levelManager = new LevelManager();
+        skipNextSetup = false;
         pui.getController().setGm(this);
         if (FULLSCREEN) {
             collisionHandler = new CollisionHandler(HEIGHT, WIDTH, HEADER_SIZE);
@@ -222,8 +224,11 @@ public class GameField extends PApplet {
      */
     public void setup() {
         loadImages();
-
-        levelSetup();
+        if (skipNextSetup) {
+            skipNextSetup = false;
+        } else {
+            levelSetup();
+        }
     }
 
     private void levelSetup() {
@@ -235,11 +240,6 @@ public class GameField extends PApplet {
         currentLevel = levelManager.getNextLevel();
         createPlatforms(currentLevel, java.time.LocalTime.now());
         difficulty = levelManager.getDifficulty();
-    }
-
-    private void levelSetup(int i) {
-        LOGGER.log(Level.WARNING, Integer.toString(i));
-        levelSetup();
     }
 
     /**
@@ -327,7 +327,6 @@ public class GameField extends PApplet {
     }
 
     private boolean handlingInput = false;
-    int countEasy = 0;
     public void handleInput(String input) {
         if (!handlingInput) {
             handlingInput = true;
@@ -340,17 +339,20 @@ public class GameField extends PApplet {
             if (RFID_EASY.contains(input)) {
                 LOGGER.log(Level.INFO, "EASY RFID LEVEL CHANGE");
                 difficulty = 0;
-                levelSetup(countEasy++);
+                levelSetup();
+                skipNextSetup = true;
             }
             if (RFID_MEDIUM.contains(input)) {
                 LOGGER.log(Level.INFO, "MEDIUM RFID LEVEL CHANGE");
                 difficulty = 1;
                 levelSetup();
+                skipNextSetup = true;
             }
             if (RFID_HARD.contains(input)) {
                 LOGGER.log(Level.INFO, "HARD RFID LEVEL CHANGE");
                 difficulty = 2;
                 levelSetup();
+                skipNextSetup = true;
             }
             if (RFID_TURN.contains(input)) {
                 LOGGER.log(Level.INFO, "TURN MODE");
@@ -359,6 +361,7 @@ public class GameField extends PApplet {
             if (RFID_RESET.contains(input)) {
                 LOGGER.log(Level.INFO, "RESET");
                 restart();
+                skipNextSetup = true;
             } else if (player.isInPlace()) {
                 LOGGER.log(Level.INFO, "MOV");
                 puiLed.ledOff(PhysicalLed.LEDType.YELLOW);
