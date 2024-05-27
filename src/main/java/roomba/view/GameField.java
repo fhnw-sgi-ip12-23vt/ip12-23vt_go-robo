@@ -237,7 +237,7 @@ public class GameField extends PApplet {
         difficulty = levelManager.getDifficulty();
     }
 
-    private void levelSetup(int i){
+    private void levelSetup(int i) {
         LOGGER.log(Level.WARNING, Integer.toString(i));
         levelSetup();
     }
