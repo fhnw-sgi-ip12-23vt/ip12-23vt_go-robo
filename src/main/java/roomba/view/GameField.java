@@ -223,10 +223,10 @@ public class GameField extends PApplet {
      * Sets up the initial game state.
      */
     public void setup() {
-        loadImages();
         if (skipNextSetup) {
             skipNextSetup = false;
         } else {
+            loadImages();
             levelSetup();
         }
     }
