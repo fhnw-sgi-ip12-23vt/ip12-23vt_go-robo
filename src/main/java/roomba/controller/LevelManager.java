@@ -132,12 +132,13 @@ public class LevelManager {
 
         LOGGER.log(Level.INFO, "loading game objects from file " + filename);
         obstacles = new ArrayList<>();
-        String[] objects = {"ball","bookshelf","computer","console","bookshelf","paper","pillow","plant1","plant2"};
+        String[] objects =
+            {"ball", "bookshelf", "computer", "console", "bookshelf", "paper", "pillow", "plant1", "plant2"};
         gameField.nextLevel = false;
         gameField.obstacles = new ArrayList<>();
         gameField.goal = new ArrayList<>();
-        Map<String,PImage> bed = gameField.pImageMultiImageObstacles.get("bed");
-        Map<String,PImage> couch = gameField.pImageMultiImageObstacles.get("couch");
+        Map<String, PImage> bed = gameField.pImageMultiImageObstacles.get("bed");
+        Map<String, PImage> couch = gameField.pImageMultiImageObstacles.get("couch");
         String[] lines = gameField.loadStrings(filename);
         int offsetX = 0, offsetY = 0;
         if (System.getProperty("os.name").toLowerCase().contains("mac")) {
@@ -172,14 +173,14 @@ public class LevelManager {
                     gameField.player = player;
                 }
                 case "1", "2", "3", "4", "5", "6", "7", "8", "9" -> {
-                    createObstacle(gameField,objects[Integer.parseInt(values[col]) - 1], colOffset, rowOffset);
+                    createObstacle(gameField, objects[Integer.parseInt(values[col]) - 1], colOffset, rowOffset);
                 }
                 case "t" -> {
                     createObstacle(gameField, "teddy", colOffset, rowOffset);
                 }
                 // RANDOM OBSTACLES
                 case "r" -> {
-                    Map<String,PImage> allObstacleImages = gameField.pImageMapObstacles;
+                    Map<String, PImage> allObstacleImages = gameField.pImageMapObstacles;
                     Random random = new Random();
                     int i = random.nextInt(allObstacleImages.size());
                     createObstacle(gameField, objects[i], colOffset, rowOffset);

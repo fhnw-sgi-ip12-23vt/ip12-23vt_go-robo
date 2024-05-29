@@ -1,6 +1,7 @@
 package roomba.model;
 
 import roomba.controller.ImageLoader;
+
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.FileInputStream;
@@ -60,7 +61,7 @@ public final class Constants {
 
             moveSpeed = Float.parseFloat(appProps.getProperty("MOVE_SPEED"));
             spriteSize = Float.parseFloat(appProps.getProperty("SPRITE_SIZE"));
-            spriteScale = spriteSize /128;
+            spriteScale = spriteSize / 128;
             fullscreen = Boolean.parseBoolean(appProps.getProperty("FULLSCREEN"));
 
             if (fullscreen) {
