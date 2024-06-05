@@ -8,6 +8,7 @@ import roomba.view.GameField;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -108,6 +109,7 @@ public class LevelManager {
      *
      * @param gameField The game field to create platforms for.
      * @param filename  The name of the level file
+     * @param date      Exact date
      *                  g: goal
      *                  p: player
      *                  w: black wall
@@ -126,11 +128,13 @@ public class LevelManager {
      *                  e,f: couch
      *                  0: air
      */
+    public static void createPlatforms(GameField gameField, String filename, LocalTime date) {
 
+        if (date.minusSeconds(10).compareTo(java.time.LocalTime.now()) < 0) {
+            LOGGER.log(Level.WARNING, "Stopped level switch, did not pass time threshold check");
+        }
 
-    public static void createPlatforms(GameField gameField, String filename) {
-
-        LOGGER.log(Level.INFO, "loading game objects from file " + filename);
+        LOGGER.log(Level.INFO, "loading game objects from file " + filename + " DATE " + date);
         obstacles = new ArrayList<>();
         String[] objects =
             {"ball", "bookshelf", "computer", "console", "bookshelf", "paper", "pillow", "plant1", "plant2"};

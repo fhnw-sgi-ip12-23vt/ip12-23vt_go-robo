@@ -36,12 +36,12 @@ public class PhysicalController extends ControllerBase<PhysicalModel> {
         String old = model.inputQueue.peek();
         model.inputQueue.offer(st);
         this.triggerPropertyChange("RFID_ID", old, st);
-        LOGGER.log(Level.FINE, "queue:  " + st);
+        LOGGER.log(Level.INFO, "queue:  " + st);
     }
 
     public void setGm(GameField gm) {
         assert gm != null;
-        LOGGER.log(Level.FINE, "gm set");
+        LOGGER.log(Level.INFO, "gm set" + gm);
         model.addGameField(gm);
     }
 

@@ -50,11 +50,16 @@ public class PhysicalScanner extends PuiBase<PhysicalModel, PhysicalController> 
     public void setupUiToActionBindings(PhysicalController controller) {
 
         rfid.onCardDetected(rfidCard -> {
-                LOGGER.log(Level.INFO, "Card: " + rfidCard);
+                LOGGER.log(Level.INFO, "Card: " + rfidCard.getSerial());
 
                 controller.enqueue(rfidCard.getSerial());
             }
         );
+
+    }
+
+    public void test(String a) {
+        controller.enqueue(a);
 
     }
 

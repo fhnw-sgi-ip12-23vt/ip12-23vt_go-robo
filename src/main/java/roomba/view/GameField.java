@@ -11,6 +11,7 @@ import roomba.model.Sprite;
 import roomba.script.addRFIDCard;
 
 import java.nio.file.Path;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,6 +65,7 @@ public class GameField extends PApplet {
     private boolean loadingNextLevel = false;
     private int completionWindowStartTime;
     private String currentLevel;
+    private boolean skipNextSetup;
 
     /**
      * Constructs a GameField instance.
@@ -75,6 +77,7 @@ public class GameField extends PApplet {
         this.pui = pui;
         this.puiLed = puiLed;
         levelManager = new LevelManager();
+        skipNextSetup = false;
         pui.getController().setGm(this);
         if (FULLSCREEN) {
             collisionHandler = new CollisionHandler(HEIGHT, WIDTH, HEADER_SIZE);
@@ -185,7 +188,7 @@ public class GameField extends PApplet {
         float viewY = 0;
         text("Level: " + levelManager.getLevelName(), viewX + 50, viewY + yLbl);
         if (turnMode) {
-            text("╰(*°▽°*)╯", viewX + 400, viewY + yLbl);
+            text("TURN MODE", viewX + 400, viewY + yLbl);
         }
         int end = Math.min(lastInputs.size(), 5); // End index for the loop
         boolean first = true;
@@ -220,13 +223,22 @@ public class GameField extends PApplet {
      * Sets up the initial game state.
      */
     public void setup() {
-        lastInputs.clear();
+        if (skipNextSetup) {
+            skipNextSetup = false;
+        } else {
+            loadImages();
+            levelSetup();
+        }
+    }
+
+    private void levelSetup() {
         imageMode(CENTER);
-        loadImages();
+        LOGGER.log(Level.INFO, "levelSETUP");
+        lastInputs.clear();
 
         levelManager.setDifficulty(difficulty);
         currentLevel = levelManager.getNextLevel();
-        createPlatforms(currentLevel);
+        createPlatforms(currentLevel, java.time.LocalTime.now());
         difficulty = levelManager.getDifficulty();
     }
 
@@ -236,9 +248,7 @@ public class GameField extends PApplet {
     public void restart() {
         lastInputs.clear();
         imageMode(CENTER);
-        loadImages();
-
-        createPlatforms(currentLevel);
+        createPlatforms(currentLevel, java.time.LocalTime.now());
     }
 
     /**
@@ -316,74 +326,97 @@ public class GameField extends PApplet {
      *
      * @param filename The filename of the level file.
      */
-    private void createPlatforms(String filename) {
-        levelManager.createPlatforms(this, filename);
+    private void createPlatforms(String filename, LocalTime date) {
+        LevelManager.createPlatforms(this, filename, date);
     }
 
     public void handleInput(String input) {
         assert pui != null;
         LOGGER.log(Level.INFO, "Input: " + input);
         puiLed.blink(PhysicalLed.LEDType.BLUE);
-        LOGGER.log(Level.FINE,
+        LOGGER.log(Level.INFO,
             "handleInput queue item !" + input + "!" + "    nextLevel" + nextLevel + "    player.isInPlace()"
-                + player.isInPlace());
+                + player.isInPlace() + " " + currentLevel + " diff " + difficulty);
 
         if (RFID_EASY.contains(input)) {
-            LOGGER.log(Level.WARNING, "EASY RFID LEVEL CHANGE");
-            difficulty = 2;
-            setup();
+            LOGGER.log(Level.INFO, "EASY RFID LEVEL CHANGE");
+            difficulty = 0;
+            levelSetup();
+            skipNextSetup = true;
         }
         if (RFID_MEDIUM.contains(input)) {
-            LOGGER.log(Level.WARNING, "MEDIUM RFID LEVEL CHANGE");
-            difficulty = 0;
-            setup();
+            LOGGER.log(Level.INFO, "MEDIUM RFID LEVEL CHANGE");
+            difficulty = 1;
+            levelSetup();
+            skipNextSetup = true;
         }
         if (RFID_HARD.contains(input)) {
-            LOGGER.log(Level.WARNING, "HARD RFID LEVEL CHANGE");
-            difficulty = 1;
-            setup();
+            LOGGER.log(Level.INFO, "HARD RFID LEVEL CHANGE");
+            difficulty = 2;
+            levelSetup();
+            skipNextSetup = true;
         }
         if (RFID_TURN.contains(input)) {
+            LOGGER.log(Level.INFO, "TURN MODE");
             turnMode = !turnMode;
         }
         if (RFID_RESET.contains(input)) {
+            LOGGER.log(Level.INFO, "RESET");
             restart();
+            skipNextSetup = true;
         } else if (player.isInPlace()) {
+            LOGGER.log(Level.INFO, "MOV");
+
             puiLed.ledOff(PhysicalLed.LEDType.YELLOW);
             if (turnMode) {
                 if (RFID_RIGHT.contains(input)) {
+                    LOGGER.log(Level.INFO, "RIGHT");
                     lastInputs.add("→");
                     player.turnPlayer(RIGHT_FACING);
                 }
                 if (RFID_LEFT.contains(input)) {
+                    LOGGER.log(Level.INFO, "LEFT");
+
                     lastInputs.add("←");
                     player.turnPlayer(LEFT_FACING);
                 }
                 if (RFID_UP.contains(input)) {
+                    LOGGER.log(Level.INFO, "UP");
+
                     lastInputs.add("↑");
                     player.movePlayer(UP_FACING);
                 }
                 if (RFID_DOWN.contains(input)) {
+                    LOGGER.log(Level.INFO, "DOWN");
+
                     lastInputs.add("↓");
                     player.movePlayer(DOWN_FACING);
                 }
             } else {
                 if (RFID_RIGHT.contains(input)) {
+                    LOGGER.log(Level.INFO, "RIGHT 2");
+
                     lastInputs.add("→");
                     player.movePlayer(RIGHT_FACING);
                     puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
                 }
                 if (RFID_LEFT.contains(input)) {
+                    LOGGER.log(Level.INFO, "LEFT 2");
+
                     lastInputs.add("←");
                     player.movePlayer(LEFT_FACING);
                     puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
                 }
                 if (RFID_UP.contains(input)) {
+                    LOGGER.log(Level.INFO, "UP 2");
+
                     lastInputs.add("↑");
                     player.movePlayer(UP_FACING);
                     puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
                 }
                 if (RFID_DOWN.contains(input)) {
+                    LOGGER.log(Level.INFO, "DOWN 2");
+
                     lastInputs.add("↓");
                     player.movePlayer(DOWN_FACING);
                     puiLed.ledOn(PhysicalLed.LEDType.YELLOW);
@@ -393,6 +426,9 @@ public class GameField extends PApplet {
     }
 
     public void keyPressed() {
+        if (key == 'l') {
+            pui.test("7DCD159B");
+        }
 
         if (key == '1') {
             difficulty = 0;
