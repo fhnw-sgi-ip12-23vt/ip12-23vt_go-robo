@@ -186,7 +186,7 @@ public class LevelManager {
                 case "r" -> {
                     Map<String, PImage> allObstacleImages = gameField.pImageMapObstacles;
                     Random random = new Random();
-                    int i = random.nextInt(allObstacleImages.size());
+                    int i = random.nextInt(allObstacleImages.size() - 1);
                     createObstacle(gameField, objects[i], colOffset, rowOffset);
                 }
                 // BED
