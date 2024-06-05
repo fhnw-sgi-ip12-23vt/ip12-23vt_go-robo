@@ -54,8 +54,8 @@ public class GameField extends PApplet {
     public List<Sprite> obstacles;
     public List<Sprite> goal;
     public Map<String, PImage> imageMap = new HashMap<>();
-    public List<PImage> pImageListObstacles = new ArrayList<>();
-    public Map<String, List<PImage>> pImageMultiImageObstacles = new HashMap<>();
+    public Map<String, PImage> pImageMapObstacles = new HashMap<>();
+    public Map<String, Map<String, PImage>> pImageMultiImageObstacles = new HashMap<>();
     public Player player;
     private int difficulty = 0;
     private PImage backgroundImage;
@@ -269,20 +269,24 @@ public class GameField extends PApplet {
         assert files != null;
         for (var file : files) {
             if (!file.isHidden() && file.getName().endsWith(".png")) {
-                pImageListObstacles.add(ImageLoader.loadImage(this, "img/obstacles/" + file.getName()));
+                pImageMapObstacles.put(
+                    file.getName().substring(0, file.getName().indexOf(".png")),
+                    ImageLoader.loadImage(this, "img/obstacles/" + file.getName()));
             }
 
             if (!file.isHidden() && file.isDirectory()) {
                 String newName = file.getName();
-                List<PImage> newList = new ArrayList<>();
+                Map<String, PImage> newMap = new HashMap<>();
                 var content = file.listFiles();
                 assert content != null;
                 for (var c : content) {
                     if (!c.isHidden() && c.getName().endsWith(".png")) {
-                        newList.add(ImageLoader.loadImage(this, "img/obstacles/" + newName + "/" + c.getName()));
+                        newMap.put(
+                            c.getName().substring(0, c.getName().indexOf(".png")),
+                            ImageLoader.loadImage(this, "img/obstacles/" + newName + "/" + c.getName()));
                     }
                 }
-                pImageMultiImageObstacles.put(newName, newList);
+                pImageMultiImageObstacles.put(newName, newMap);
             }
         }
         if (FULLSCREEN) {

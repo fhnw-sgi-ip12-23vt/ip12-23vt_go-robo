@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import java.util.logging.Level;
@@ -135,13 +136,13 @@ public class LevelManager {
 
         LOGGER.log(Level.INFO, "loading game objects from file " + filename + " DATE " + date);
         obstacles = new ArrayList<>();
-
-
+        String[] objects =
+            {"ball", "bookshelf", "computer", "console", "bookshelf", "paper", "pillow", "plant1", "plant2"};
         gameField.nextLevel = false;
         gameField.obstacles = new ArrayList<>();
         gameField.goal = new ArrayList<>();
-        List<PImage> bed = gameField.pImageMultiImageObstacles.get("bed");
-        List<PImage> couch = gameField.pImageMultiImageObstacles.get("couch");
+        Map<String, PImage> bed = gameField.pImageMultiImageObstacles.get("bed");
+        Map<String, PImage> couch = gameField.pImageMultiImageObstacles.get("couch");
         String[] lines = gameField.loadStrings(filename);
         int offsetX = 0, offsetY = 0;
         if (System.getProperty("os.name").toLowerCase().contains("mac")) {
@@ -176,37 +177,37 @@ public class LevelManager {
                     gameField.player = player;
                 }
                 case "1", "2", "3", "4", "5", "6", "7", "8", "9" -> {
-                    createObstacle(gameField, Integer.parseInt(values[col]) - 1, colOffset, rowOffset);
+                    createObstacle(gameField, objects[Integer.parseInt(values[col]) - 1], colOffset, rowOffset);
                 }
                 case "t" -> {
-                    createObstacle(gameField, 9, colOffset, rowOffset);
+                    createObstacle(gameField, "teddy", colOffset, rowOffset);
                 }
                 // RANDOM OBSTACLES
                 case "r" -> {
-                    List<PImage> allObstacleImages = gameField.pImageListObstacles;
+                    Map<String, PImage> allObstacleImages = gameField.pImageMapObstacles;
                     Random random = new Random();
                     int i = random.nextInt(allObstacleImages.size());
-                    createObstacle(gameField, i, colOffset, rowOffset);
+                    createObstacle(gameField, objects[i], colOffset, rowOffset);
                 }
                 // BED
                 case "a" -> {
-                    createObstacle(gameField, bed.get(0), colOffset, rowOffset);
+                    createObstacle(gameField, bed.get("bed1"), colOffset, rowOffset);
                 }
                 case "b" -> {
-                    createObstacle(gameField, bed.get(2), colOffset, rowOffset);
+                    createObstacle(gameField, bed.get("bed2"), colOffset, rowOffset);
                 }
                 case "c" -> {
-                    createObstacle(gameField, bed.get(1), colOffset, rowOffset);
+                    createObstacle(gameField, bed.get("bed3"), colOffset, rowOffset);
                 }
                 case "d" -> {
-                    createObstacle(gameField, bed.get(3), colOffset, rowOffset);
+                    createObstacle(gameField, bed.get("bed4"), colOffset, rowOffset);
                 }
                 // COUCH
                 case "e" -> {
-                    createObstacle(gameField, couch.get(0), colOffset, rowOffset);
+                    createObstacle(gameField, couch.get("couch1"), colOffset, rowOffset);
                 }
                 case "f" -> {
-                    createObstacle(gameField, couch.get(1), colOffset, rowOffset);
+                    createObstacle(gameField, couch.get("couch2"), colOffset, rowOffset);
                 }
                 // Air does nothing
                 case "", "0" -> {
@@ -219,8 +220,8 @@ public class LevelManager {
         gameField.obstacles.addAll(obstacles);
     }
 
-    public static void createObstacle(GameField gameField, int i, int col, int row) {
-        Sprite s = new Sprite(gameField, gameField.pImageListObstacles.get(i), SPRITE_SCALE);
+    public static void createObstacle(GameField gameField, String key, int col, int row) {
+        Sprite s = new Sprite(gameField, gameField.pImageMapObstacles.get(key), SPRITE_SCALE);
         s.centerX = SPRITE_SIZE / 2 + col * SPRITE_SIZE;
         s.centerY = SPRITE_SIZE / 2 + row * SPRITE_SIZE;
         obstacles.add(s);

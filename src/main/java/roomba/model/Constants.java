@@ -1,6 +1,7 @@
 package roomba.model;
 
 import roomba.controller.ImageLoader;
+
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.FileInputStream;
