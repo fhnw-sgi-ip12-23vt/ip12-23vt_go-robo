@@ -259,7 +259,6 @@ public class GameField extends PApplet {
         assert files != null;
         for (var file : files) {
             if (!file.isHidden() && file.getName().endsWith(".png")) {
-                System.out.println(file.getName().substring(0, file.getName().indexOf(".png")));
                 pImageMapObstacles.put(
                     file.getName().substring(0, file.getName().indexOf(".png")),
                     ImageLoader.loadImage(this, "img/obstacles/" + file.getName()));
